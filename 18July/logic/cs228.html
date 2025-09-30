@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://www.iitgoa.ac.in/~sreejithav/18July/logic/cs228.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="initial-scale=1"><meta name="viewport" content="user-scalable=yes,width=device-width,initial-scale=1"><title>CS228: Logic for Computer Science</title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--[if lte IE 8]><script src="../../assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="./cs228_files/main.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="../../assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="../../assets/css/ie9.css" /><![endif]-->
+<link rel="stylesheet" href="./cs228_files/font-awesome.min.css">
+ <link rel="shortcut icon" href="http://www.iitgoa.ac.in/~sreejithav/images/iitgoa_logo_wx.png" type="image/x-icon">
+	</head>
+	<body class="">
+
+
+		<!-- Nav -->
+			<nav id="nav">
+				<ul class="container">
+					<li><a href="http://www.iitgoa.ac.in/~sreejithav/index.html#home" class="scrolly">Home</a></li>
+					<li><a href="http://www.iitgoa.ac.in/~sreejithav/index.html#research" class="scrolly">Research</a></li>
+					<li><a href="http://www.iitgoa.ac.in/~sreejithav/index.html#teaching" class="scrolly">Teaching</a></li>
+					<li><a href="http://www.iitgoa.ac.in/~sreejithav/index.html#publications" class="scrolly">Publications</a></li>
+					<li><a href="http://www.iitgoa.ac.in/~sreejithav/index.html#links" class="scrolly">Links</a></li>
+				</ul>
+			</nav>
+
+		<!-- Computer Networks -->
+			<div class="wrapper style1 first">
+				<article class="container" id="network">
+					<header>
+						<h2>Logic for Computer Science (CS 228), July 2018</h2>
+					</header>
+					<div align="left">
+						<strong>Time</strong><br> T3, Monday 11.30am - 1.00pm<br> T1, Tuesday 10.30am - 11.30am<br>
+                        T1, Wednesday 2.00pm - 3.30pm<br>
+						<strong>Textbook</strong><br> [HR] Logic in Computer Science by <i>Huth and Ryan</i>. <br>
+                        [Sm] Mathematical Logic by <i>R. M. Smullyan</i><br>
+
+						<strong>Reference books</strong><br> Logic for Computer Scientists by <i>Uwe Schoning</i><br>
+                        A mathematical introduction to Logic by <i>Enderton</i><br>
+                        [BM] The calculus of computation by <i>Bradley and Manna</i><br>
+                        Mathematical Logic for Computer Science by <i>Ben-Ari</i><br>
+                        Artificial Intelligence by <i>Russell and Norvig</i><br>
+						<strong>Grading Scheme</strong><br> Assignment 1 (15%), Midsem (30%), Assignment 2 (15%), Endsem (40%)<br>
+                        <strong>[LN] Lecture Notes </strong> <a href="http://www.iitgoa.ac.in/~sreejithav/18July/logic/logicNotes.pdf">[PDF <i class="fa fa-download"></i>]</a><br>
+                        <strong>Video Lectures</strong><br>
+                        1. NPTEL Video by Prof. S Arun Kumar: <a href="https://www.youtube.com/playlist?list=PLQCSqmEUDAMxW71O3fSUh7t0U3b6IuL9p">click here</a>
+                        <br> 2. Video lecture by Prof. Shai Ben-David: <a href="https://www.youtube.com/channel/UCg9V0y9_RxG7hg5GjcyS2OA">click here</a>
+                        <br><strong>Video Help</strong>
+                        <br>[Kos] Strongly connected graph component: <a href="https://www.youtube.com/watch?v=RpgcYiky7uw"> Kosaraju's algorithm</a>
+                        <br>[Asp] 2-CNF satisfiability algorithm: <a href="https://www.youtube.com/watch?v=0nNYy3rltgA">Aspvall et al.</a>
+                        <br>[Erik] NP-hardness of SAT, 3-SAT: <a href="https://www.youtube.com/watch?v=x-Ik9YAFAPo">MIT courseware</a>
+
+                        <br><strong>Assignments </strong> <br>
+                        1. Lecture room scheduling <a href="http://www.iitgoa.ac.in/~sreejithav/18July/logic/assignment1.pdf">[PDF <i class="fa fa-download"></i>]</a><br>
+                        2. Keen puzzle solution <a href="http://www.iitgoa.ac.in/~sreejithav/18July/logic/assignment2.pdf">[PDF <i class="fa fa-download"></i>]</a><br>
+
+						<strong>Course Contents</strong><br>
+						<table>
+								<thead align="center">
+									<tr>
+											<th>#</th>
+											<th>Date</th>
+											<th>Contents</th>
+											<th>Source</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr align="center">
+											<th>1</th>
+											<td> 30 July, Mon</td>
+											<td>Introduction, Motivation and History of Logic </td>
+											<td></td>
+									</tr>
+									<tr align="center">
+											<th>2</th>
+											<td> 1 Aug, Wed</td>
+											<td>Propositional Logic, truth table, semantic entailment </td>
+											<td>HR 1.1, LN 2.1 - 2.5, Sm 5</td>
+									</tr>
+									<tr align="center">
+											<th>3</th>
+											<td> 6 Aug, Mon (1.5hr)</td>
+											<td>Encoding problems using Propositional logic </td>
+											<td>LN 2.5</td>
+									</tr>
+									<tr align="center">
+											<th>4</th>
+											<td> 7 Aug, Tue</td>
+											<td>Natural Deduction</td>
+											<td>HR 1.2, LN 3.1</td>
+									</tr>
+									<tr align="center">
+											<th>5</th>
+											<td> 8 Aug, Wed</td>
+											<td>Natural Deduction continued..</td>
+											<td></td>
+									</tr>
+									<tr align="center">
+											<th>6</th>
+											<td> 13 Aug, Mon (1.5hr)</td>
+											<td>Natural Deduction continued. Exercises.</td>
+											<td></td>
+									</tr>
+									<tr align="center">
+											<th>7</th>
+											<td> 14 Aug, Tue</td>
+											<td>Mathematical Induction. Soundness theorem.</td>
+											<td>HR 1.4, LN 1.1, LN 3.3</td>
+									</tr>
+									<tr align="center">
+											<th>8</th>
+											<td> 20 Aug, Mon</td>
+											<td>Tutorial (conducted by Prince)</td>
+											<td><a href="http://www.iitgoa.ac.in/~sreejithav/18July/logic/tutorial1.pdf">[PDF <i class="fa fa-download"></i>]</a></td>
+									</tr>
+									<tr align="center">
+											<th>9</th>
+											<td> 21 Aug, Tue</td>
+											<td>Introduction to Z3 (by Prince)</td>
+											<td><a href="https://rise4fun.com/z3/tutorial">Z3 in browser</a> , <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.225.8231&amp;rep=rep1&amp;type=pdf">Tutorial</a></td>
+									</tr>
+									<tr align="center">
+											<th>10</th>
+											<td> 24 Aug, Fri</td>
+											<td>Completeness Theorem</td>
+											<td>HR 1.4, LN 3.4</td>
+									</tr>
+ 									<tr align="center">
+											<th>11</th>
+											<td> 27 Aug, Mon (1.5hr)</td>
+											<td>SAT, CNF, 3-CNF, NP-completness of 3-CNF</td>
+											<td>HR 1.5, LN 4.1-4.2, see <a href="https://www.youtube.com/watch?v=x-Ik9YAFAPo">[Eric] <i class="fa fa-youtube-play fa-2x"></i></a></td>
+									</tr>
+ 									<tr align="center">
+											<th>12</th>
+											<td> 28 Aug, Tue</td>
+											<td>Linear Time algorithm: 2-CNF satisfiability</td>
+											<td>LN 4.3, see <a href="https://www.youtube.com/watch?v=0nNYy3rltgA">[Asp] <i class="fa fa-youtube-play fa-2x"></i></a> </td>
+									</tr>
+ 									<tr align="center">
+											<th>13</th>
+											<td> 29 Aug, Wed (1.5hr)</td>
+											<td>2-CNF SAT, Horn Clause satisfiability</td>
+											<td>HR 1.5, LN 4.4</td>
+									</tr>
+ 									<tr align="center">
+											<th>14</th>
+											<td> 3 Sep, Mon (1.5hr)</td>
+											<td>DPLL algorithm</td>
+											<td>LN 4.5</td>
+									</tr>
+ 									<tr align="center">
+											<th>15</th>
+											<td> 4 Sep, Tue (1hr)</td>
+											<td>DPLL continued with examples</td>
+											<td></td>
+									</tr>
+ 									<tr align="center">
+											<th>16</th>
+											<td> 5 Sep, Wed (1.5hr)</td>
+											<td>Revision of Propositional Logic</td>
+											<td></td>
+									</tr>
+ 									<tr align="center">
+											<th>17</th>
+											<td> 15 Sep, Sat </td>
+											<td>Mid Sem</td>
+											<td><a href="http://www.iitgoa.ac.in/~sreejithav/18July/logic/midsem.pdf">[PDF <i class="fa fa-download"></i>]</a></td>
+									</tr>
+
+ 									<tr align="center">
+											<th>18</th>
+											<td> 17 Sep, Mon </td>
+											<td>Introduction to First order logic</td>
+											<td>LN 5.1, HR 2.1</td>
+									</tr>
+
+ 									<tr align="center">
+											<th>19</th>
+											<td> 18 Sep, Tue </td>
+											<td>First order logic: Terms and Formulas</td>
+											<td>LN 5.2, HR 2.2</td>
+									</tr>
+ 									<tr align="center">
+											<th>20</th>
+											<td> 19 Sep, Wed </td>
+											<td>Semantics of first order: Models</td>
+											<td>HR 2.4</td>
+									</tr>
+
+ 									<tr align="center">
+											<th>21</th>
+											<td> 24 Sep, Mon </td>
+											<td>Natural deduction for first order</td>
+											<td>HR 2.3</td>
+									</tr>
+ 									<tr align="center">
+											<th>22</th>
+											<td> 25 Sep, Tue </td>
+											<td>Soundness, Completeness and Compactness of FO</td>
+											<td>HR 2.4</td>
+									</tr>
+ 									<tr align="center">
+											<th>23</th>
+											<td> 26 Sep, Wed </td>
+											<td>Tutorial (conducted by Prince) </td>
+											<td><a href="http://www.iitgoa.ac.in/~sreejithav/18July/logic/tutorial2.pdf">[PDF <i class="fa fa-download"></i>]</a></td>
+									</tr>
+ 									<tr align="center">
+											<th>24</th>
+											<td> 1 Oct, Mon </td>
+											<td>Tutorial (conducted by Prince) </td>
+											<td></td>
+									</tr>
+ 									<tr align="center">
+											<th>25</th>
+											<td> 8 Oct, Mon </td>
+											<td>Program Verification: Introduction</td>
+											<td>HR 4.1, 4.2</td>
+									</tr>
+ 									<tr align="center">
+											<th>26</th>
+											<td> 9 Oct, Tue </td>
+											<td>Hoare triples</td>
+											<td>HR 4.2 </td>
+									</tr>
+ 									<tr align="center">
+											<th>27</th>
+											<td> 10 Oct, Wed </td>
+											<td>Partial Correctness: Factorial example</td>
+											<td>HR 4.3</td>
+									</tr>
+ 									<tr align="center">
+											<th>28</th>
+											<td> 22 Oct, Mon </td>
+											<td>Partial Correctness: Minimum Sum-section example</td>
+											<td>HR 4.4</td>
+									</tr>
+ 									<tr align="center">
+											<th>29</th>
+											<td> 23 Oct, Tue </td>
+											<td>Total Correctness</td>
+											<td>HR 4.5</td>
+									</tr>
+ 									<tr align="center">
+											<th>30</th>
+											<td> 24 Oct, Wed </td>
+											<td>First order theory</td>
+											<td>LN 7.1, BM 3.1</td>
+									</tr>
+ 									<tr align="center">
+											<th>31</th>
+											<td> 29 Oct, Mon </td>
+											<td>Theory of Equality, Peano arithmetic</td>
+											<td>LN 7.2, BM 3.2/3.3</td>
+									</tr>
+ 									<tr align="center">
+											<th>32</th>
+											<td> 30 Oct, Tue </td>
+											<td>Presburger arithmetic, Theory of Reals</td>
+											<td>BM 3.3</td>
+									</tr>
+ 									<tr align="center">
+											<th>33</th>
+											<td> 31 Oct, Wed </td>
+											<td>Mid-Sem paper review</td>
+											<td></td>
+									</tr>
+ 									<tr align="center">
+											<th>34</th>
+											<td> 5 Nov, Mon </td>
+											<td>Theory of Arrays</td>
+											<td>BM 3.4</td>
+									</tr>
+ 									<tr align="center">
+											<th>35</th>
+											<td> 6 Nov, Tue </td>
+											<td>Course Summary</td>
+											<td></td>
+									</tr>
+ 									<tr align="center">
+											<th>36</th>
+											<td> 12 Nov, Mon </td>
+											<td>Review of assignment 1</td>
+											<td></td>
+									</tr>
+              </tbody>
+						</table>
+					</div>
+				</article>
+			</div>
+
+		<!-- Scripts -->
+			<script src="./cs228_files/jquery.min.js"></script>
+			<script src="./cs228_files/jquery.scrolly.min.js"></script>
+			<script src="./cs228_files/skel.min.js"></script>
+			<script src="./cs228_files/skel-viewport.min.js"></script>
+			<script src="./cs228_files/util.js"></script>
+			<!--[if lte IE 8]><script src="../../assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="./cs228_files/main.js"></script>
+
+	
+
+</body></html>

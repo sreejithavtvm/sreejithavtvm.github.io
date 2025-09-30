@@ -1,0 +1,657 @@
+	<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+	<title>Sreejith A V</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Faculty website of Sreejith A V, Associate Professor at IIT Goa">
+    <meta name="keywords" content="Sreejith, faculty, IIT Goa, computer science, research, formal methods">
+    <meta name="author" content="Sreejith A V">
+ 	<meta name="robots" content="index, follow, archive">
+	<meta name="revisit-after" content="7 days">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="./assets/bootstrap.min.css" rel=	"stylesheet">
+	<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	<link href="./assets/styles.css" rel="stylesheet">
+	<style>
+		table.prt p {
+			text-indent: 15px;
+		}
+
+		.section-header {
+            color: #0b0601; 
+            margin-top: 30px;
+            border-bottom: 1px solid #dbd5ce;
+            /*display: inline-block;*/
+            padding-bottom: 5px;
+        }
+	</style>
+</head>
+<style>
+    .disabled-link{
+        cursor: default;
+        pointer-events: none;
+        text-decoration: none;
+        color: grey;
+    }
+</style>
+
+<body>
+
+	<a id="home"></a>
+	<div id="masthead">
+		<div class="container">
+			<div class="row">
+  				<div class="col-md-5">
+					<img src="./images/sav.jpg" class="img-rounded img-responsive" width="50%">
+				</div>
+				<div class="col-md-7">
+					<h1>Sreejith A V / <a href="https://en.wikipedia.org/wiki/Malayalam">ശ്രീജിത്ത് എ വി</a>
+						<p class="lead" style="font-size: 50%;">Associate Professor, Department of computer science <br>
+							<font style="font-size: 80%;"> <i class="fa fa-envelope-o"> <a
+										href="mailto:sreejithav@iitgoa.ac.in">sreejithav@iitgoa.ac.in</a></i><br>
+								<i class="fa fa-laptop"> F6, Academic building</i>, IIT Goa, Farmagudi, Ponda, Goa-403401</i>
+							</font>
+						</p>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-10">
+				<h2 class="section-header" id = "home2">About me</h2>
+					I am interested in theoretical computer science, especially formal methods. <br><br>
+
+					I did my Bachelor of Technology (B.Tech) from <span style="text-decoration: underline;"></span><a href="http://www.cet.ac.in/">College of
+						engineering,Thiruvananthapuram (CET)</a>, followed by a Master of Technology (MTech) from <a href="https://www.iitm.ac.in/">IIT, Madras</a>.
+						My Ph.D was done under the guidance of Prof. <a href="https://www.imsc.res.in/%7Ekamal/">Kamal Lodaya</a> in
+						 <a href="http://www.imsc.res.in/">Institute of Mathematical Sciences, Chennai</a>. I also held research positions in <a
+						href="https://www.uni-tuebingen.de/en/faculties/faculty-of-science/departments/computer-science/department/wilhelm-schickard-institute.html">University
+						of Tubingen</a>,
+					<a href="http://www.tifr.res.in/">TIFR - Mumbai</a>, <a href="https://www.irif.fr/">LIAFA - Paris</a>,
+					<a href="http://www.cmi.ac.in/">CMI - Chennai</a>, and <a href="https://www.mimuw.edu.pl/">University of Warsaw - Poland</a>.
+
+					<h2 class="section-header" id = "research">Research</h2>
+					<h5>One-counter automata (<a onclick="myFunction('doca')">click for details</a>)</h5> <ul>
+						<div id="doca" style="display: none;">
+					<p>
+						<b>Introduction</b>:
+						Finite automata models complex systems, from computational processes to biological
+						phenomena. Deterministic one-counter automata (DOCA) extend finite automata with an
+						integer counter, enabling the modeling of certain infinite-state systems. DOCAs are
+						strictly more expressive than finite automata, making them promising candidates for replacing finite
+						automata in applications, provided scalable algorithms can be developed. This research aims to
+						advance the understanding and applicability of DOCAs.
+					</p>
+					<p><b>Contributions</b>: We addressed two key problems. <br>
+						<i>Equivalence of weighted DOCA:</i> For a large subclass we showed the problem is in P 
+						[<a href="https://arxiv.org/abs/2301.13456">fsttcs23</a>, <a href="https://arxiv.org/abs/2411.03066">icla25</a>].
+						To prove this, we introduced a reachability problem. Using combinatorial techniques 
+						along with linear algebra we showed that the problem is in P.
+						The equivalence problem for the full class remains a fundamental open problem.<br>
+
+						<i>Active learning algorithms for DOCAs:</i>  
+								Developed a SAT-based algorithm [<a href="https://arxiv.org/abs/2411.08815">tacas25</a>]
+								that learns a minimal DOCA. Since minimization is NP-hard, we cannot avoid SAT to 
+								learn a minimal DOCA. However, we can learn a DOCA in polynomial time (not necessarily minimal) as shown in our work [<a href="https://arxiv.org/abs/2503.04525">lics25</a>].
+							</p>
+						</div>
+				</ul>
+				<h5>Countable words (<a onclick="myFunction('countable')">click for details</a>)</h5> <ul>
+					<div id="countable" style="display: none;">
+				<p>
+					<b>Introduction</b>: This work is at the meeting point of two important branches of language theory: 
+					(1) Extension of finite word language theories: This branch explores structures beyond finite words, 
+					such as infinite words and infinite trees. 
+					(2) Characterization of logics: This branch focuses on identifying and classifying logics. The 
+					classic work of Schutzenberger on the equivalence
+					of first-order logic and aperiodic monoids in finite words falls here.
+					
+					We study countable words, the largest extension that is known to have a theory of recognizability.
+				</p>
+				<p>
+					<b>Contributions</b>: In [<a href="papers/countableLinearOrder_CS.pdf">icalp15</a>] we provided the 
+					first algebraic characterization of intermediate logics like first-order logic (FO), and its various extensions
+					like FO with cuts, weak MSO, FO with ordinal quantifiers, and FO with scattered quantifiers. The paper
+					gives a structure theorem for o-monoids. This enables a deep understanding of various classes of o-monoids.
+					In a subsequent paper, [<a href="papers/mfcs16_MS.pdf">mfcs16</a>] we showed a similar characterization for FO2. 
+					Subsequently, in a series of papers we characterized various FO extensions like FO[infinity], temporal logic and 
+					provide the first decomposition results for o-monoids [<a href="papers/BPPandFO.pdf">lics19</a>,
+					<a href="papers/fct21.pdf">fct21</a>, <a href="papers/jcss23.pdf">jcss23</a>,
+					<a href="papers/blockproductCLO.pdf">block-product</a>]. 
+				</p>
+				</div>
+				</ul>
+				<h5>Descriptive complexity (<a onclick="myFunction('desc')">click for details</a>)</h5> <ul>
+				<div id="desc" style="display: none;">
+				<p>
+					<b>Introduction</b>:
+					Logic provides a precise framework to express mathematical properties unambiguously. It plays a 
+					vital role in areas like descriptive complexity, and set theory 
+					(see <a href="https://www.cs.cmu.edu/~rwh/papers/unreasonable/basl.pdf">survey</a>). 
+				</p>
+				<p>
+					<b>Contributions</b>:
+					Our work introduced modulo counting operators, thereby enhancing the expressiveness of logics.
+					Key contributions (see <a href="papers/RegularQuantifiersThesis_sreejithav.pdf">my thesis</a> ) include 
+					(1) Extending Linear temporal logic (LTL) with modulo counting operators, enhancing its expressive-
+					ness while retaining PSPACE complexity for model checking [<a href="papers/ltlmod.pdf">m4m11</a>,
+					<a href="papers/LTLsuccinct_LS.pdf">atva10</a>].
+					(2) Extending first-order logic with modulo counting operators [<a href="papers/dlt17_LS.pdf">dlt17</a>].
+					When the logic has the predicate addition, they form highly uniform circuit classes. In 
+					[<a href="papers/CraneBeachFOGRP_KS.pdf">lics12</a>] we show separation results among these logics.
+				</p>
+				</div>
+				</ul>
+				<h5>Geospatial image analysis for Water research (<a onclick="myFunction('water')">click for details</a>)</h5> <ul>
+				<div id="water" style="display: none;">
+				<p>
+					<b>Introduction</b>: Remote sensing for water research works on the principle that there is huge difference
+					between the dielectric constant of water (approximately 80) and dry soil
+					(approximately 6). 
+				</p><p>
+					<b>Contributions</b>: We analyse satellite images and in-situ measurements to 
+					estimate properties of rivers like river discharge [<a href="papers/riverdischarge.pdf">esd20</a>]. 
+					We are currently working on a method for soil-moisture estimation.
+				</p>
+				</div>
+				</ul>
+				<h5>Formal methods in machine learning (<a onclick="myFunction('fmml')">click for details</a>)</h5> <ul>
+				<div id="fmml" style="display: none;">
+				<p>
+					<b>Introduction</b>: This is an ongoing work on applying formal methods in machine learning.
+				</p>
+				</div>
+				</ul>
+
+				<h2 class="section-header" id = "lecture-notes">Survey / Lecture Notes</h2>				
+					<li>Pooled testing (with Somenath Biswas) <a href="papers/pooled.pdf">pdf</a></li>
+					<li>Epidemiology SIR model (with Somenath Biswas) <a href="papers/sir.pdf">pdf</a></li>
+					<li>Parity games <a href="papers/parity.pdf">pdf</a> </li>
+					<li>Logic for computer science <a href="18July/logic/logicNotes.pdf">pdf</a> </li>
+					<li>Linear programming: Introduction <a href="20Jan/combinatorial-optimization/lp.pdf">pdf</a>, 
+					Ellipsoid method <a href="misc/ellipsoid.pdf">pdf</a>
+					</li>
+					<li>Machine learning, theory: VC dimension <a href="misc/erm.pdf">pdf</a>  </li>
+					<li>MaxCut approximation <a href="misc/maxcut.pdf">pdf</a> </li>
+
+				<h2 class="section-header" id = "publications">Publications</h2>				
+
+				<li><i>Regular expressions over countable words</i>,
+					with <a href="https://www.irif.fr/~colcombe/">Thomas Colcombet</a>, 
+				   <span style="color: rgb(153, 153, 153); font-style: italic;">unpublished</span>
+				   (<a href="https://arxiv.org/abs/2505.01039">arXiv</a>, 
+				   <a onclick="myFunction('regexcw')">abstract</a>).
+				   <div id="regexcw" style="display: none;"><br>
+					   <b> Abstract </b>:
+					   <span>
+						We investigate the expressive power of regular expressions for languages of countable words and establish their expressive equivalence with logical and algebraic characterizations. Our goal is to extend the classical theory of regular languages - defined over finite words and characterized by automata, monadic second-order logic, and regular expressions - to the setting of countable words. In this paper, we introduce and study five classes of expressions: marked star-free expressions, marked expressions, power-free expressions, scatter-free expressions, and scatter expressions. We show that these expression classes characterize natural fragments of logic over countable words and possess decidable algebraic characterizations. As part of our algebraic analysis, we provide a precise description of the relevant classes in terms of their J-class structure. These results complete a triad of equivalences - between logic, algebra, and expressions - in this richer setting, thereby generalizing foundational results from classical formal language theory.  
+					   </span>
+				   </div><br></li>
+   
+				<li><i>Learning deterministic one-counter automata in polynomial time</i>,
+				 with <a href="https://prince-iitgoa.github.io/">Prince Mathew</a>, and <a href="https://www.labri.fr/perso/vpenelle/?l=en">Vincent Penelle</a>, 
+				<span style="color: rgb(153, 153, 153); font-style: italic;">LICS 2025</span>
+				(<a href="https://arxiv.org/abs/2503.04525">arXiv</a>, 
+				<a onclick="myFunction('docainp')">abstract</a>).
+				<div id="docainp" style="display: none;"><br>
+					<b> Abstract </b>:
+					<span>
+						We give an active learning algorithm for deterministic one-counter automata (DOCAs) where the learner can ask the teacher membership and minimal equivalence queries. The algorithm called OL* learns a DOCA in time polynomial in the size of the smallest DOCA, recognising the target language. <br>
+						
+						All existing algorithms for learning DOCAs, even for the subclasses of deterministic real-time one-counter automata (DROCAs) and visibly one-counter automata (VOCAs), in the worst case, run in exponential time with respect to the size of the DOCA under learning. Furthermore, previous learning algorithms are "grey-box" algorithms relying on an additional query type - counter value query - where the teacher returns the counter value reached on reading a given word. In contrast, our algorithm is a "black-box" algorithm. <br>
+						
+						It is known that the minimisation of VOCAs is NP-hard. However, OL* can be used for approximate minimisation of DOCAs. In this case, the output size is at most polynomial in the size of a minimal DOCA.  
+					</span>
+				</div><br></li>
+
+			<li><i>Learning real-time one-counter automata using polynomially many queries</i>,
+				 with <a href="https://prince-iitgoa.github.io/">Prince Mathew</a>, and <a href="https://www.labri.fr/perso/vpenelle/?l=en">Vincent Penelle</a>, 
+				<span style="color: rgb(153, 153, 153); font-style: italic;">TACAS 2025</span>
+				(<a href="https://arxiv.org/abs/2411.08815">arXiv</a>, 
+				<a onclick="myFunction('abstacas25')">abstract</a>).
+				<div id="abstacas25" style="display: none;"><br>
+					<b> Abstract </b>:
+					<span>
+						In this paper, we introduce a novel method for active learning of deterministic real-time one-counter 
+						automata (DROCA). The existing techniques for learning DROCA rely on observing the behaviour of the 
+						DROCA up to exponentially large counter-values. Our algorithm eliminates this need and requires only a 
+						polynomial number of queries. Additionally, our method differs from existing techniques as we learn a 
+						minimal counter-synchronous DROCA, resulting in much smaller counter-examples on equivalence queries. 
+						Learning a minimal counter-synchronous DROCA cannot be done in polynomial time unless P = NP, even in 
+						the case of visibly one-counter automata. We use a SAT solver to overcome this difficulty. The solver 
+						is used to compute a minimal separating DFA from a given set of positive and negative samples.<br> <br>
+						
+						We prove that the equivalence of two counter-synchronous DROCAs can be checked significantly faster 
+						than that of general DROCAs. For visibly one-counter automata, we have discovered an even faster 
+						algorithm for equivalence checking. We implemented the proposed learning algorithm and tested it on 
+						randomly generated DROCAs. Our evaluations show that the proposed method outperforms the existing 
+						techniques on the test set. 
+					</span>
+				</div><br></li>
+
+			<li><i>Equivalence of deterministic weighted real-time one-counter automata</i>,
+				with <a href="https://prince-iitgoa.github.io/">Prince Mathew</a>, <a href="https://www.labri.fr/perso/vpenelle/?l=en">Vincent Penelle</a>, and <a href="https://www.imsc.res.in/prakash_saivasan">Prakash Saivasan</a>, 
+				<span style="color: rgb(153, 153, 153); font-style: italic;">
+					ICLA 2025</span> (<a href="https://arxiv.org/abs/2411.03066">arXiv	</a>, 
+					<a onclick="myFunction('absicla25')">abstract</a>).
+					<div id="absicla25" style="display: none;"><br>
+						<b> Abstract </b>:
+						<span>
+							This paper introduces deterministic weighted real-time one-counter automaton (DWROCA). A DWROCA is a deterministic 
+							real-time one-counter automaton whose transitions are assigned a weight from a field. Two DWROCAs are equivalent if every 
+							word accepted by one is accepted by the other with the same weight. DWROCA is a sub-class of weighted one-counter automata 
+							with counter-determinacy. It is known that the equivalence problem for this model is in P. 
+							This paper gives a simpler proof and a better polynomial-time algorithm for checking the equivalence of two DWROCAs.		
+					</span>
+					</div><br></li>
+
+				<li><i>Algebraic characterizations and block product decompositions for first order logic and 
+					its infinitary quantifier extensions over countable words</i>,
+				with Bharat Adsul and Saptarshi Sarkar, <span style="color: rgb(153, 153, 153); font-style: italic;">
+					JCSS 2023</span> (<a href="papers/jcss23.pdf">pdf</a>, 
+					<a onclick="myFunction('absjcss23')">abstract</a>).
+					<div id="absjcss23" style="display: none;"><br>
+						<b> Abstract </b>:
+						<span>
+						We contribute to the refined understanding of language-logic-algebra interplay in a recent 
+						algebraic framework over countable words. Algebraic characterizations of the one variable fragment of 
+						FO as well as the boolean closure of the existential fragment of FO are established. We develop a seamless 
+						integration of the block product operation in the countable setting, and generalize well-known 
+						decompositional characterizations of FO and its two variable fragment. We propose an extension of FO 
+						admitting infinitary quantifiers to reason about inherent infinitary properties of countable words, and 
+						obtain a natural hierarchical block-product based characterization of this extension.
+						Properties expressible in this extension can be simultaneously expressed in
+						the classical logical systems such as WMSO and FO[cut]. We also rule out
+						the possibility of a finite-basis for a block-product based characterization of
+						these logical systems. Finally, we report algebraic characterizations of one
+						variable fragments of the hierarchies of the new extension
+					</span>
+					</div><br></li>
+				
+				<li><i>Weighted One-Deterministic-Counter Automata</i>,
+				with <a href="https://prince-iitgoa.github.io/">Prince Mathew</a>, <a href="https://www.labri.fr/perso/vpenelle/?l=en">Vincent Penelle</a>, and <a href="https://www.imsc.res.in/prakash_saivasan">Prakash Saivasan</a>, 
+				<span style="color: rgb(153, 153, 153); font-style: italic;">
+					FSTTCS 2023</span> (<a href="https://arxiv.org/abs/2301.13456">arXiv</a>, 
+					<a onclick="myFunction('absfsttcs23')">abstract</a>).
+					<div id="absfsttcs23" style="display: none;"><br>
+						<b> Abstract </b>:
+						<span>
+							We introduce weighted one-deterministic-counter automata (ODCA). These are weighted one-counter 
+							automata (OCA) with the property of counter-determinacy, meaning that all paths labelled by a given 
+							word starting from the initial configuration have the same counter-effect. Weighted ODCAs are a 
+							strict extension of weighted visibly OCAs, which are weighted OCAs where the input alphabet determines 
+							the actions on the counter. <br> <br>
+							We present a novel problem called the co-VS (complement to a vector space) reachability problem for 
+							weighted ODCAs over fields, which seeks to determine if there exists a run from a given configuration 
+							of a weighted ODCA to another configuration whose weight vector lies outside a given vector space. 
+							We establish two significant properties of witnesses for co-VS reachability: they satisfy a pseudo-
+							pumping lemma, and the lexicographically minimal witness has a special form. It follows that the co-VS 
+							reachability problem is in P. <br> <br>
+							These reachability problems help us to show that the equivalence problem of weighted ODCAs over fields 
+							is in P by adapting the equivalence proof of deterministic real-time OCAs by Böhm et al. This is a step 
+							towards resolving the open question of the equivalence problem of weighted OCAs. Furthermore, we 
+							demonstrate that the regularity problem, the problem of checking whether an input weighted ODCA over a 
+							field is equivalent to some weighted automaton, is in P. Finally, we show that the covering and 
+							coverable equivalence problems for uninitialised weighted ODCAs are decidable in polynomial time. 
+							We also consider boolean ODCAs and show that the equivalence problem for (non-deterministic) boolean 
+							ODCAs is in PSPACE, whereas it is undecidable for (non-deterministic) boolean OCAs. 
+						</span>
+					</div><br></li>
+
+				<li><i>First-Order logic and its Infinitary Quantifier Extensions over Countable Words</i>,
+				with Bharat Adsul and Saptarshi Sarkar,
+				<span style="color: rgb(153, 153, 153); font-style: italic;">FCT 2021</span>
+						(<a href="papers/fct21.pdf">pdf</a>, <a href="papers/fullfct21.pdf">full</a>, 
+						<a onclick="myFunction('absfct21')">abstract</a>).
+						<div id="absfct21" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>
+								We contribute to the refined understanding of the language-logic-algebra interplay in the context of first-order
+								properties of countable words. We establish decidable algebraic characterizations of one variable fragment of FO
+								as
+								well as boolean closure of existential fragment of FO via a strengthening of Simon’s theorem about piecewise
+								testable
+								languages. We propose a new extension of FO which admits infinitary quantifiers to reason about the inherent
+								infinitary
+								properties of countable words. We provide a very natural and hierarchical block-product based characterization
+								of the
+								new extension. We also explicate its role in view of other natural and classical logical systems such as WMSO
+								and
+								FO[cut] - an extension of FO where quantification over Dedekind cuts is allowed. We also rule out the
+								possibility of a
+								finite-basis for a block-product based characterization of these logical systems. Finally, we report simple but
+								novel
+								algebraic characterizations of one variable fragments of the hierarchies of the new proposed extension of FO.
+							</span>
+						</div><br></li>
+
+					<li><i>Coupling threshold theory and satellite image derived channel width to
+							estimate the formative discharge of Himalayan Foreland rivers
+						</i>, with K. Gaurav , F. Métivier , R. Sinha , A. Kumar , and S. K. Tandon,
+						<span style="color: rgb(153, 153, 153); font-style: italic;">Earth Science Dynamics 2021</span>
+						(<a href="papers/riverdischarge.pdf">pdf</a>, <a onclick="myFunction('river')">abstract</a>).
+						<div id="river" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>
+								We propose an innovative methodology to estimate the formative discharge of alluvial rivers from remote sensing
+								images.
+								This procedure involves automatic extraction of the width of a channel from Landsat Thematic Mapper,
+								Landsat 8, and Sentinel-1 satellite images. We translate the channel width extracted from satellite images to
+								discharge by using a width- discharge regime curve established previously by us for the Himalayan Rivers.
+								This regime curve is based on the threshold theory, a simple physical force balance that explains the
+								first-order geometry of alluvial channels. Using this procedure, we estimate the discharge of six major
+								rivers of the Himalayan Foreland: the Brahmaputra, Chenab, Ganga, Indus, Kosi, and Teesta rivers.
+								Except highly regulated rivers (Indus and Chenab), our estimates of the discharge from satellite images
+								can be compared with the mean annual discharge obtained from historical records of gauging stations.
+								We have shown that this procedure applies both to braided and single-thread rivers over a large territory.
+								Further our methodology to estimate discharge from remote sensing images does not rely on continuous ground
+								calibration.
+							</span>
+						</div>
+						<br></li>
+					<li><i>Undecidability of MSO+“ultimately periodic”</i>, with
+						<a href="https://www.mimuw.edu.pl/~bojan/">Mikołaj Bojańczyk</a>, <a href="https://research-portal.uea.ac.uk/en/persons/laure-daviaud">Laure Daviaud</a>, Bruno Guillon, and <a href="https://www.labri.fr/perso/vpenelle/?l=en">Vincent Penelle</a>, <span
+								style="color: rgb(153, 153, 153); font-style: italic;">LMCS 2020</span>
+						(<a href="papers/weakU.pdf">pdf</a>, <a onclick="myFunction('weakU')">abstract</a>).
+						<div id="weakU" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>We prove that MSO on omega-words
+								becomes undecidable if allowing to quantify over sets of positions that are ultimately periodic, i.e., sets X
+								such that for some positive integer p, ultimately either both or none of positions x and x+p belong to X. We
+								obtain it as a corollary of the undecidability of MSO on omega-words extended with the second-order predicate
+								U<sub>1</sub>(X) which says that the distance between consecutive positions in a set X ⊆ N is unbounded. This is
+								achieved by showing that adding U<sub>1</sub> to mso gives a logic with the same expressive power as MSO+U, a
+								logic on omega-words with undecidable satisfiability.</span>
+						</div>
+						<br></li>
+					<li><i>Block Product for finite monoids with generalized associativity</i>, with
+						Saptarshi Sarkar, and Bharat Adsul
+						(<a href="papers/blockproductCLO.pdf">pdf</a>, <a onclick="myFunction('bpclo')">abstract</a>).
+						<div id="bpclo" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>We give the definition of Block Product
+								for finite moniods with generalized associativity.</span>
+						</div>
+						<br></li>
+					<li><i>Block products for algebras over countable words and applications to logic</i>, with
+						Saptarshi Sarkar, and Bharat Adsul, <span style="color: rgb(153, 153, 153); font-style: italic;">LICS
+								2019</span>
+						(<a href="papers/BPPandFO.pdf">pdf</a>, <a onclick="myFunction('BPP')">abstract</a>).
+						<div id="BPP" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>We propose a seamless integration of
+								the block product operation to the recently developed algebraic framework for regular languages of countable
+								words. A simple but subtle accompanying block product principle has been established. Building on this, we
+								generalize the well-known algebraic char- acterizations of first-order logic (resp. first-order logic with two
+								variables) in terms of strongly (resp. weakly) iterated block products. We use this to arrive at a complete
+								analogue of Schu ̈tzenberger-McNaughton-Papert theorem for countable words. We also explicate the role of block
+								products for linear temporal logic by formulating a novel algebraic characterization of a natural fragment.
+							</span>
+						</div>
+						<br></li>
+
+					<li><i>Two-variable first order logic with counting quantifiers: Complexity Results</i>,
+						with <a href="http://www.imsc.res.in/%7Ekamal">Kamal Lodaya</a>, &nbsp;
+						<span style="color: rgb(153, 153, 153); font-style: italic;">DLT 2017</span>
+						(<a href="papers/dlt17_LS.pdf">pdf</a>, <a onclick="myFunction('dlt17')">abstract</a>).
+						<div id="dlt17" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>Etessami,
+								Vardi and Wilke showed that satisfiability of two-variable first order
+								logic FO<sup>2</sup>[&lt;] on word models is Nexptime-complete.
+								We extend this upper bound to the slightly stronger logic
+								FO<sup>2</sup>[&lt;,successor,equiv], which allows checking whether a
+								word
+								position is congruent to r modulo q, for some divisor q and remainder
+								r. If we allow the more powerful modulo counting quantifiers of
+								Straubing, Therien and Thomas (we call this two-variable fragment
+								FOMOD<sup>2</sup>[&lt;,successor]), satisfiability becomes
+								Expspace-complete. A
+								more general counting quantifier, FOCOUNT<sup>2</sup>[&lt;,successor],
+								makes the logic undecidable. </span>
+						</div>
+						<br></li>
+					<li><i>Two-variable logic over countable linear orderings</i>, with <a
+							href="http://www.iitgoa.ac.in/institute/dept/CS/profiles/amal/index.html">Amaldev
+							Manuel</a>,&nbsp; <span style="color: rgb(153, 153, 153); font-style: italic;">MFCS 2016</span>
+						(<a href="papers/mfcs16_MS.pdf">pdf</a>, <a href="papers/mfcs16_full_MS.pdf">full</a>, 
+						<a onclick="myFunction('mfcs16')">abstract</a>).
+						<div id="mfcs16" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>We
+								study the class of
+								languages of finitely-labelled countable linear orderings definable in
+								two-variable first-order logic. We give a number of characterisations,
+								in particular an algebraic one in terms of circle monoids, using
+								equations. This generalises the corresponding characterisation, namely
+								variety DA, over finite words to the countable case. A corollary is
+								that the membership in this class is decidable: for instance given an
+								MSO formula it is possible to check if there is an equivalent
+								two-variable logic formula
+								over countable linear orderings. In addition, we prove that the
+								satisfiability problems for two-variable logic over arbitrary,
+								countable, and scattered linear orderings are
+								Nexptime-complete. </span>
+						</div>
+						<br></li>
+					<li><i>Limited Set quantifiers over Countable Linear Orderings</i>, with
+						<a href="https://www.irif.fr/~colcombe/">Thomas
+							Colcombet</a>, <span style="font-style: italic; color: rgb(153, 153, 153);">ICALP 2015</span>
+						(<a href="papers/countableLinearOrder_CS.pdf">pdf</a>, <a href="papers/countableLinearOrder_full_CS.pdf">full</a>, 
+						<a onclick="myFunction('icalp15')">abstract</a>).
+						<div id="icalp15" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>In
+								this paper, we study several sublogics of monadic second-order logic
+								over countable linear orderings, such as first-order logic, first-order
+								logic on cuts, weak monadic second-order logic, weak monadic
+								second-order logic with cuts, as well as fragments of monadic
+								second-order logic in which sets have to be well ordered or scattered.
+								We give decidable algebraic characterizations of all these logics and
+								compare their respective expressive power. </span>
+						</div>
+						<br></li>
+					<li><i>Counting quantifiers and linear arithmetic on word models</i>, with 
+						<a href="http://www.imsc.res.in/%7Ekamal">Kamal
+							Lodaya</a>,&nbsp;<span style="font-style: italic; color: rgb(153, 153, 153);"> Asian
+							Logic Conference (ALC), 2014</span>
+						(<a href="http://www.imsc.res.in/%7Ekamal/work/cqwm.pdf">pdf</a>). <br></li>
+
+					<li><i>On lower bounds for multiplicative circuits and linear circuits in noncommutative domains</i>, with
+						<a href="http://www.imsc.res.in/%7Earvind">V. Arvind</a> and <a href="http://www.imsc.res.in/%7Erajas/">S. Raja,</a>&nbsp;
+						<span style="font-style: italic; color: rgb(153, 153, 153);">CSR, 2014</span>
+						(<a href="papers/linearCircuits_ARS.pdf">pdf</a>, <a onclick="myFunction('csr14')">abstract</a>).
+						<div id="csr14" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>In
+								this paper we show some lower bounds for the size of multiplicative
+								circuits computing multi-output functions in some noncommutative
+								domains like monoids and finite groups. We also introduce and study a
+								generalization of linear circuits in which the goal is to compute <b>MY</b>
+								where <b>Y</b> is a vector of indeterminates and <b>M</b> is a matrix
+								whose
+								entries come from noncommutative rings. We show some lower
+								bounds in this setting as well. </span>
+						</div>
+						<br></li>
+					<li><i>Non-definability of
+								Languages by Generalized First-order Formulas
+								over (N, +)</i>, with <a
+							href="http://www.uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/lehrstuehle/theoretische-informatik/mitarbeiter/dr-andreas-krebs.html">Andreas
+							Krebs</a>,&nbsp; <span style="font-style: italic; color: rgb(153, 153, 153);">LICS 2012</span>
+						(<a href="papers/CraneBeachFOGRP_KS.pdf">pdf</a>, <a href="papers/CraneBeachFOGRP_full_KS.pdf">full</a>, 
+						<a onclick="myFunction('lics12')">abstract</a>).
+						<div id="lics12" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>We
+								consider first-order logic with monoidal quantifiers. We show that all
+								languages with a neutral letter, definable using the addition numerical
+								predicate are also definable with the order predicate as the only
+								numerical predicate. Since we prove this result for arbitrary subsets
+								of the monoidal quantifiers, the following holds in the presence of a
+								neutral letter: For aperiodic monoids, we get the result of Libkin that
+								FO[&lt;, +] collapses to FO[&lt;]; For solvable monoids, we get the
+								result of Roy and Straubing that FO+MOD[&lt;, +] collapses to
+								FO+MOD[&lt;]; For cyclic groups, we answer an open question of Roy and
+								Straubing, proving that MOD[&lt;, +] collapses to MOD[&lt;].
+								All these results can be viewed as collapse results for the uniformity
+								of constant depth circuits, and in this sense as a separation result
+								for very uniform circuit classes. For example we separate
+								FO[&lt;,+]-uniform CC<sup>0</sup> from FO[&lt;,+]-uniform ACC<sup>0</sup>.
+							</span>
+						</div>
+						<br></li>
+					<li><i>Expressive Completeness for LTL With Modulo Counting and Group Quantifiers</i>, 
+						<span style="font-style: italic; color: rgb(153, 153, 153);">Electronic Notes in Theoretical Comp Sci (ENTCS), 2011</span>
+						(<a href="papers/ltlmod.pdf">pdf</a>, <a onclick="myFunction('m4m11')">abstract</a>).
+						<div id="m4m11" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>Kamp
+								showed that linear temporal logic is expressively complete for
+								first order logic over words. We give a Gabbay style proof to show
+								that linear temporal logic extended with modulo counting and group
+								quantifiers (introduced by Baziramwabo,McKenzie,Th\'erien) is
+								expressively complete for first order logic with modulo counting
+								(introduced by Straubing, Th\'erien, Thomas) and
+								group quantifiers (introduced by Barrington, Immerman,
+								Straubing). </span>
+						</div>
+						<br></li>
+					<li><i>LTL can be more succinct</i>,
+						with <a href="http://www.imsc.res.in/%7Ekamal">Kamal Lodaya</a>,&nbsp;<span
+							style="font-style: italic; color: rgb(153, 153, 153);"> ATVA 2010 </span>
+						(<a href="papers/LTLsuccinct_LS.pdf">pdf</a>, <a onclick="myFunction('atva10')">abstract</a>).
+						<div id="atva10" style="display: none;"><br>
+							<b> Abstract </b>:
+							<span>It
+								is well known that modelchecking and satisfiability of Linear Temporal
+								Logic (LTL) are Pspace-complete. Wolper showed that
+								with grammar operators, this result can be extended to increase the
+								expressiveness of the logic to all regular languages. Other ways of
+								extending the expressiveness of LTL using modular and group modalities
+								have been explored by Baziramwabo, McKenzie and Th\'erien, which are
+								expressively complete for regular languages recognized by solvable
+								monoids and for all regular languages, respectively. In all the papers
+								mentioned, the numeric constants used in the modalities are in unary
+								notation. We show that in some cases (such as the modular and symmetric
+								group modalities) we can use numeric constants in binary notation,
+								and still maintain the Pspace upper bound. Adding modulo counting to
+								LTL[F] (with just the unary future modality) already makes the logic
+								Pspace-hard. We also consider a restricted logic which allows only
+								the modulo counting of length from the beginning of the word. Its
+								satisfiability is Sigmathree-complete.</span>
+						</div></li>
+
+				<h2 class="section-header" id = "students">Students</h2>
+				<b>Ph.D. students</b>
+				<ul>
+					<li><a href="https://prince-iitgoa.github.io">Prince Mathew</a> - Learning and Equivalence of one-counter systems (<a href="papers/Prince-thesis.pdf">pdf</a>)</li>
+				</ul>
+				<b>Masters students</b>
+				<ul> Ankita Chand, Divya Mishra, Anshul Moon, Vaishak D. A, Vaibhav (co-guide:Somenath Biswas), 
+					Rashika (co-guide: Sudakshina), Sumitra (co-guide: Sudakshina), Umang Srivatsav
+				</ul>
+
+				<h2 class="section-header" id = "teaching">Teaching</h2>				
+						CS311: Compilers (shared), Jan-May 2025, BTech core. <br>
+						CS528: Formal methods in machine learning (shared), Jan-May 2025, BTech/MTech elective. <br>
+						CS510: Foundations of theoretical computer science, Aug-Dec 2024, MTech core. <br>
+						CS311: Compilers (shared), Jan-May 2024, BTech core. <br>
+						CS528: Formal methods in machine learning (shared), Jan-May 2024, BTech/MTech elective. <br>
+						CS510: Foundations of theoretical computer science, Aug-Dec 2023, MTech core. <br>
+						CS220: Data structures and algorithms, Aug-Dec 2022, BTech core. <br>
+						CS525: Randomized algorithms, Jan-May 2022, BTech/MTech elective. <br>
+						CS524: Advanced data structures and algorithms with C++, Aug-Dec 2021, MTech course. <br>
+						CS220: <a href="21Aug/cs220.html"> Data structures and algorithms </a>, Aug-Dec 2021 <a
+							href="https://www.youtube.com/playlist?list=PLgOvAyZGFRoQZ0J5ggw5qyJ1h4Bzi_Tef">video lectures-C/C++
+							Programming</a><br>
+						CS531: <a href="21Jan/cs531.html"> High dimensional data science </a>, Jan-May 2021 <a
+							href="https://www.youtube.com/playlist?list=PLgOvAyZGFRoSPWDUTzHmc3OQpQYrBOIx7">video lectures</a>
+						<br>
+						CS220: <a href="20Aug/cs220.html"> Data structures and algorithms </a>, Aug-Dec 2020 <a
+							href="https://www.youtube.com/playlist?list=PLgOvAyZGFRoRjiDfpvnsWZ63D7U0b1Enw">video lectures-C/C++
+							Programming</a>, <a href="https://www.youtube.com/playlist?list=PLgOvAyZGFRoSKBxqG9lbhtz9cVeLDsZnp">video
+							lectures-Data Structures and algorithms</a> <br>
+						CS500: Algorithm design lab, Aug-Dec 2020<br>
+						CS520: <a href="20Jan/combinatorial-optimization/cs520.html"> Combinatorial optimization </a>, Jan-May 2020 <br>
+						CS113: <a href="20Jan/data-structures/cs113.html">Data structures and algorithms </a>, July-Dec 2020 <br>
+						CS228: <a href="19July/logic/cs228.html"> Logic for computer science </a>, July-Dec 2019 <br>
+						CS570: Verification, July-Dec 2019 <br>
+						CS315: <a href="19Jan/AdvancedAlgo/cs315.html"> Advanced algorithms </a>, Jan-May 2019 <br>
+						CS713: Topics in logic and automata theory, July-Dec 2018 <br>
+						CS228: <a href="18July/logic/cs228.html"> Logic for computer science </a>, July-Dec 2018 <br>
+						CS101: <a href="http://www.iitgoa.ac.in/institute/dept/CS/profiles/clint/cs101-summer-2018.html"> Computer programming
+						</a>, Summer 2018 <br>
+						CS348: <a href="18Jan/networking/cs348.html"> Computer Networks Course </a>, Jan-May 2018 <br>
+						CS 378: <a href="18Jan/networking/cs378.html"> Computer Networks Lab </a> Jan-May 2018 <br>
+						<a href="18Jan/logic/logic.html">Reading Logic with Prince</a><br>
+
+				<h2 class="section-header" id = "funding">Funding</h2>				
+				Visiting faculty: University of Bordeaux in 2024 (four months) <br>
+				SERB Matrics grant: Probabilistic pushdown automata <br>
+				CEFIPRA: Formal verification of adaptive control algorithms <br>
+				Ministry of Earth Science (completed): River parameter estimation using satellite images <br>
+
+				<h2 class="section-header" id = "awards">Awards</h2>				
+				<a href="http://awards.acm.org/award_winners/sreejith_9923861.cfm"> ACM India Honourable Mention 2014 </a> for my PhD
+				thesis <a href="papers/RegularQuantifiersThesis_sreejithav.pdf"> Regular quantifiers in Logic</a>
+
+				<h2 class="section-header" id = "links">Interesting links</h2>				
+								<p>Department research talks: <a href="misc/talks.html">link</a> </p>
+
+						<a href="http://www1.ece.neu.edu/~naderi/Claude%20Shannon.html">Shannon on Creative thinking</a><br>
+						<a href="http://liinwww.ira.uka.de/bibliography/">Computer science bibliography collections</a><br>
+						<a href="http://www.lix.polytechnique.fr/~hermann/conf.html"> Computer science conference timelines </a><br>
+						<a href="http://www.ams.org/mathscinet/collaborationDistance.html">Erdos Number</a><br>
+						&#9818 <a href="https://chess24.com/en/watch/live-tournaments">Live chess tournaments</a>
+			</div>
+
+			<div class="col-md-1" id="leftCol">
+				<ul class="nav nav-stacked affix-top" id="sidebar" style="background-color:#F2F2E2;">
+					<li><a href="#home">Home</a></li>
+					<li><a href="#research">Research</a></li>
+					<li><a href="#lecture-notes">Survey / Lecture notes</a></li>
+					<li><a href="#publications">Publications</a></li>
+					<li><a href="#students">Students</a></li>
+					<li><a href="#teaching">Teaching</a></li>
+					<li><a href="#funding">Funding</a></li>
+					<li><a href="#awards">Awards</a></li>
+					<li><a href="#links">Interesting Links</a></li>
+				</ul>
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+	<footer></footer><br>
+	<script src="./assets/jquery.min.js"></script>
+	<script src="./assets/bootstrap.min.js"></script>
+	<script src="./assets/scripts.js"></script>
+
+
+
+	<script>
+		function myFunction(elemdiv) {
+		var x = document.getElementById(elemdiv);
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+		 
+	</script>
+
+</body>
+</html>
