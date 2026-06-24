@@ -399,11 +399,14 @@ h3 {
 }
 
 .publication h3 {
+  display: inline;
+  margin: 0;
   font-size: 1rem;
   line-height: 1.25;
 }
 
 .authors {
+  display: inline;
   margin: 0;
   color: var(--muted);
   font-style: italic;
