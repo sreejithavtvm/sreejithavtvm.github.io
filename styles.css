@@ -398,6 +398,11 @@ h3 {
   margin-top: 3px;
 }
 
+.publication-heading-line {
+  grid-column: 2;
+  min-width: 0;
+}
+
 .publication h3 {
   display: inline;
   margin: 0;

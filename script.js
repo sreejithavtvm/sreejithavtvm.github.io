@@ -9,6 +9,24 @@ let activeFilter = "all";
 let publicationsExpanded = false;
 let coursesExpanded = false;
 
+function combinePublicationTitles() {
+  publications.forEach((paper) => {
+    const title = paper.querySelector("h3");
+    const authors = paper.querySelector(".authors");
+
+    if (!title || !authors || title.parentElement.classList.contains("publication-heading-line")) {
+      return;
+    }
+
+    const line = document.createElement("div");
+    line.className = "publication-heading-line";
+    paper.insertBefore(line, title);
+    line.append(title, document.createTextNode(" "), authors);
+  });
+}
+
+combinePublicationTitles();
+
 function updatePublications() {
   publications.forEach((paper, index) => {
     const tags = (paper.dataset.area || "").split(/\s+/);
