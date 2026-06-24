@@ -81,7 +81,7 @@ a:hover {
 }
 
 .section {
-  width: min(1120px, calc(100% - 36px));
+  width: min(1280px, calc(100% - 36px));
   margin: 0 auto;
   padding: 72px 0;
 }
@@ -693,7 +693,7 @@ h3 {
   }
 
   .section {
-    width: min(100% - 28px, 1120px);
+    width: min(100% - 28px, 1280px);
     padding: 48px 0;
   }
 
