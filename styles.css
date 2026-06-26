@@ -320,9 +320,21 @@ h3 {
 .funding-awards,
 .contact {
   display: grid;
-  grid-template-columns: 0.72fr 1.28fr;
   gap: clamp(28px, 6vw, 80px);
   border-top: 1px solid var(--line);
+}
+
+.two-column,
+.split-band {
+  grid-template-columns: 0.72fr 1.28fr;
+}
+
+.funding-awards {
+  grid-template-columns: minmax(0, 1.28fr) minmax(260px, 0.72fr);
+}
+
+.contact {
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
 }
 
 .prose p {
@@ -646,7 +658,7 @@ h3 {
 }
 
 .contact-actions {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .footer {
