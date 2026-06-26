@@ -28,11 +28,11 @@ function compactPublicationLayout() {
       actions.className = "publication-actions";
       const anchor = abstract || links;
       paper.insertBefore(actions, anchor);
-      if (links) {
-        actions.append(links);
-      }
       if (abstract) {
         actions.append(abstract);
+      }
+      if (links) {
+        actions.append(links);
       }
     }
   });
