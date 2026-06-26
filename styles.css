@@ -518,43 +518,62 @@ h3 {
 
 .notes-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0 28px;
+  grid-template-columns: 1fr;
   border-top: 1px solid var(--line);
 }
 
 .note-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
   min-height: 0;
-  padding: 10px 0;
+  padding: 6px 0;
   border-bottom: 1px solid rgba(205, 209, 201, 0.55);
   background: transparent;
 }
 
 .note-card h3 {
-  margin-bottom: 5px;
+  margin: 0;
   color: #596069;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 600;
+  line-height: 1.35;
 }
 
 .note-card p {
-  margin: 0 0 7px;
+  display: inline;
+  margin: 0;
   color: var(--muted);
   font-size: 0.86rem;
   font-style: italic;
+  line-height: 1.35;
+}
+
+.note-card p::before,
+.note-card a::before,
+.note-links::before {
+  color: var(--muted);
+  content: "- ";
+  font-weight: 400;
 }
 
 .note-card a {
   color: var(--muted);
   font-size: 0.84rem;
   font-weight: 600;
+  line-height: 1.35;
   text-decoration: none;
 }
 
 .note-links {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: 6px 12px;
+  gap: 4px 10px;
+}
+
+.note-links a::before {
+  content: none;
 }
 
 .note-card:hover {
@@ -713,7 +732,6 @@ h3 {
   }
 
   .research-grid,
-  .notes-grid,
   .links-grid {
     grid-template-columns: repeat(2, 1fr);
   }
