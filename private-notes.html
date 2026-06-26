@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <style>
       .private-shell {
-        width: min(980px, calc(100% - 32px));
+        width: min(1480px, calc(100% - 32px));
         margin: 0 auto;
         padding: 56px 0 80px;
       }
@@ -68,7 +68,8 @@
         margin-top: 24px;
       }
 
-      .private-content[hidden] {
+      .private-content[hidden],
+      .unlock-panel[hidden] {
         display: none;
       }
 
@@ -146,6 +147,7 @@
     <script src="private-notes-dashboard.js"></script>
     <script>
       const encryptedPath = "private-notes.enc.json";
+      const unlockPanel = document.querySelector(".unlock-panel");
       const form = document.querySelector("#unlock-form");
       const passphraseInput = document.querySelector("#passphrase");
       const statusNode = document.querySelector("#status");
@@ -198,6 +200,7 @@
           window.PrivateNotesDashboard.activateAll(contentNode);
           contentNode.hidden = false;
           statusNode.textContent = "Decrypted locally.";
+          unlockPanel.hidden = true;
           passphraseInput.value = "";
         } catch (error) {
           statusNode.textContent = "Could not decrypt. Check the passphrase and encrypted file.";
