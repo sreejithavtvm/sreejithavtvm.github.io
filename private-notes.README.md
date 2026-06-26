@@ -59,3 +59,15 @@ For one-off events, you can mark an event with an ISO date. The browser will hid
 ```html
 <div class="week-event" data-event-date="2026-07-03"><em>14:00</em>One-off meeting</div>
 ```
+
+### Calendar week navigation
+
+The plaintext calendar can include buttons such as:
+
+```html
+<button type="button" data-calendar-shift="-7">Previous</button>
+<button type="button" data-calendar-today>Today</button>
+<button type="button" data-calendar-shift="7">Next</button>
+```
+
+The number in `data-calendar-shift` is the number of days to move the visible week. Use `-7` and `7` for previous/next week. Recurring weekly events stay in their weekday column; dated `data-event-date="YYYY-MM-DD"` events appear only when their date is in the visible week.

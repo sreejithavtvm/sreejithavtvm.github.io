@@ -211,9 +211,10 @@
         });
       }
 
-      function hydratePrivateCalendar(root) {
+      function hydratePrivateCalendar(root, baseDate = new Date()) {
         const today = new Date();
-        const weekDates = getWeekDates(today);
+        const viewDate = new Date(baseDate);
+        const weekDates = getWeekDates(viewDate);
         const todayIso = isoDate(today);
         const weekStartIso = isoDate(weekDates[0]);
         const weekEndIso = isoDate(weekDates[6]);
@@ -223,7 +224,9 @@
         });
 
         root.querySelectorAll("[data-week-range]").forEach((node) => {
-          node.textContent = `${formatDate(weekDates[0], { day: "numeric", month: "short" })} - ${formatDate(weekDates[6], { day: "numeric", month: "short", year: "numeric" })}`;
+          const start = formatDate(weekDates[0], { day: "numeric", month: "short" });
+          const end = formatDate(weekDates[6], { day: "numeric", month: "short", year: "numeric" });
+          node.textContent = start + " - " + end;
         });
 
         root.querySelectorAll("[data-week-day]").forEach((node) => {
@@ -249,6 +252,30 @@
         });
       }
 
+      function activatePrivateCalendar(root) {
+        let currentViewDate = new Date();
+
+        function updateCalendar() {
+          hydratePrivateCalendar(root, currentViewDate);
+        }
+
+        root.querySelectorAll("[data-calendar-shift]").forEach((button) => {
+          button.addEventListener("click", () => {
+            currentViewDate.setDate(currentViewDate.getDate() + Number(button.dataset.calendarShift));
+            updateCalendar();
+          });
+        });
+
+        root.querySelectorAll("[data-calendar-today]").forEach((button) => {
+          button.addEventListener("click", () => {
+            currentViewDate = new Date();
+            updateCalendar();
+          });
+        });
+
+        updateCalendar();
+      }
+
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         statusNode.textContent = "Decrypting...";
@@ -272,7 +299,7 @@
 
           contentNode.innerHTML = plaintext;
           activatePrivateTabs(contentNode);
-          hydratePrivateCalendar(contentNode);
+          activatePrivateCalendar(contentNode);
           contentNode.hidden = false;
           statusNode.textContent = "Decrypted locally.";
           passphraseInput.value = "";
