@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <style>
       .private-shell {
-        width: min(1480px, calc(100% - 32px));
+        width: min(1800px, calc(100vw - 24px));
         margin: 0 auto;
         padding: 56px 0 80px;
       }
@@ -65,6 +65,8 @@
       }
 
       .private-content {
+        box-sizing: border-box;
+        width: 100%;
         margin-top: 24px;
       }
 
@@ -200,7 +202,7 @@
           window.PrivateNotesDashboard.activateAll(contentNode);
           contentNode.hidden = false;
           statusNode.textContent = "Decrypted locally.";
-          unlockPanel.hidden = true;
+          unlockPanel.remove();
           passphraseInput.value = "";
         } catch (error) {
           statusNode.textContent = "Could not decrypt. Check the passphrase and encrypted file.";
