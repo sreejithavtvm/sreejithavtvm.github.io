@@ -187,6 +187,68 @@
         });
       }
 
+      function formatDate(date, options) {
+        return new Intl.DateTimeFormat("en-IN", options).format(date);
+      }
+
+      function isoDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function getWeekDates(baseDate) {
+        const monday = new Date(baseDate);
+        const day = monday.getDay() || 7;
+        monday.setDate(monday.getDate() - day + 1);
+        monday.setHours(0, 0, 0, 0);
+
+        return Array.from({ length: 7 }, (_, index) => {
+          const date = new Date(monday);
+          date.setDate(monday.getDate() + index);
+          return date;
+        });
+      }
+
+      function hydratePrivateCalendar(root) {
+        const today = new Date();
+        const weekDates = getWeekDates(today);
+        const todayIso = isoDate(today);
+        const weekStartIso = isoDate(weekDates[0]);
+        const weekEndIso = isoDate(weekDates[6]);
+
+        root.querySelectorAll("[data-today-label]").forEach((node) => {
+          node.textContent = formatDate(today, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+        });
+
+        root.querySelectorAll("[data-week-range]").forEach((node) => {
+          node.textContent = `${formatDate(weekDates[0], { day: "numeric", month: "short" })} - ${formatDate(weekDates[6], { day: "numeric", month: "short", year: "numeric" })}`;
+        });
+
+        root.querySelectorAll("[data-week-day]").forEach((node) => {
+          const index = Number(node.dataset.weekDay);
+          const date = weekDates[index];
+          if (!date) {
+            return;
+          }
+          const dayName = node.querySelector("[data-day-name]");
+          const dayDate = node.querySelector("[data-day-date]");
+          if (dayName) {
+            dayName.textContent = formatDate(date, { weekday: "short" });
+          }
+          if (dayDate) {
+            dayDate.textContent = formatDate(date, { day: "numeric", month: "short" });
+          }
+          node.classList.toggle("is-today", isoDate(date) === todayIso);
+        });
+
+        root.querySelectorAll("[data-event-date]").forEach((event) => {
+          const date = event.dataset.eventDate;
+          event.hidden = date !== todayIso && (date < weekStartIso || date > weekEndIso);
+        });
+      }
+
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         statusNode.textContent = "Decrypting...";
@@ -210,6 +272,7 @@
 
           contentNode.innerHTML = plaintext;
           activatePrivateTabs(contentNode);
+          hydratePrivateCalendar(contentNode);
           contentNode.hidden = false;
           statusNode.textContent = "Decrypted locally.";
           passphraseInput.value = "";

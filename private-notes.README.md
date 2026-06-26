@@ -37,3 +37,25 @@ If you omit `PRIVATE_NOTES_PASSPHRASE`, the script prompts for the passphrase, b
 - Never commit `private-notes.plain.html` or other plaintext private files.
 - Use a strong passphrase. Anyone can download `private-notes.enc.json`.
 - If you forget the passphrase, the encrypted content cannot be recovered.
+
+## Calendar dates and recurring events
+
+The decrypted page automatically fills elements marked with:
+
+```html
+<span data-today-label></span>
+<span data-week-range></span>
+<section class="week-day" data-week-day="0">...</section>
+```
+
+`data-week-day="0"` is Monday, up to `data-week-day="6"` for Sunday. Put weekly recurring meetings directly inside the relevant `week-day` block, for example:
+
+```html
+<div class="week-event"><em>10:00</em>Weekly group meeting</div>
+```
+
+For one-off events, you can mark an event with an ISO date. The browser will hide it unless it belongs to today/current week:
+
+```html
+<div class="week-event" data-event-date="2026-07-03"><em>14:00</em>One-off meeting</div>
+```
