@@ -77,3 +77,25 @@ For a recurring weekly event that begins on a future date, use `data-start-date`
 ```html
 <div class="week-event" data-start-date="2026-07-09"><em>14:00-15:00</em>Weekly meeting</div>
 ```
+
+### Two-week calendar and event colors
+
+Use `data-week-offset` on a calendar panel to show a week relative to the current view:
+
+```html
+<article class="calendar-panel" data-week-offset="0">...</article>
+<article class="calendar-panel" data-week-offset="1">...</article>
+```
+
+Use `data-event-type` to color-code events:
+
+```html
+<div class="week-event" data-event-type="meeting">...</div>
+<div class="week-event" data-event-type="talk">...</div>
+<div class="week-event" data-event-type="class">...</div>
+<div class="week-event" data-event-type="exam">...</div>
+<div class="week-event" data-event-type="travel">...</div>
+<div class="week-event" data-event-type="conference">...</div>
+```
+
+Supported types are `meeting`, `talk`, `class`, `exam`, `travel`, and `conference`.
