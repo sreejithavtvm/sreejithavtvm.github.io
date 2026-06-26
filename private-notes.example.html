@@ -1,0 +1,51 @@
+<div class="private-dashboard">
+  <p class="section-kicker">Private Dashboard</p>
+  <h2>Calendar and Pending Work</h2>
+  <p>Edit a private plaintext copy of this file, encrypt it, and upload only <code>private-notes.enc.json</code>.</p>
+
+  <div class="private-tabs" role="tablist" aria-label="Private dashboard tabs">
+    <button class="private-tab-button" type="button" data-private-tab="calendar" aria-selected="true">Calendar</button>
+    <button class="private-tab-button" type="button" data-private-tab="todo" aria-selected="false">Pending Work</button>
+  </div>
+
+  <section class="private-pane" data-private-pane="calendar">
+    <h2>Calendar</h2>
+    <div class="private-grid">
+      <article class="private-box">
+        <h3>Today</h3>
+        <ul>
+          <li>09:00-10:00: Example meeting</li>
+          <li>14:00-15:00: Example writing block</li>
+        </ul>
+      </article>
+      <article class="private-box">
+        <h3>This Week</h3>
+        <ul>
+          <li>Monday: Example seminar</li>
+          <li>Wednesday: Example project discussion</li>
+          <li>Friday: Example review time</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="private-pane" data-private-pane="todo" hidden>
+    <h2>Pending Work</h2>
+    <div class="private-grid">
+      <article class="private-box">
+        <h3>Projects</h3>
+        <ul>
+          <li>Example project: next concrete action</li>
+          <li>Another project: waiting on notes</li>
+        </ul>
+      </article>
+      <article class="private-box">
+        <h3>Personal TODO</h3>
+        <ul>
+          <li>Example task</li>
+          <li>Another example task</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</div>
