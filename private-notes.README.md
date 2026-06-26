@@ -71,3 +71,9 @@ The plaintext calendar can include buttons such as:
 ```
 
 The number in `data-calendar-shift` is the number of days to move the visible week. Use `-7` and `7` for previous/next week. Recurring weekly events stay in their weekday column; dated `data-event-date="YYYY-MM-DD"` events appear only when their date is in the visible week.
+
+For a recurring weekly event that begins on a future date, use `data-start-date` on the event inside the weekday column:
+
+```html
+<div class="week-event" data-start-date="2026-07-09"><em>14:00-15:00</em>Weekly meeting</div>
+```

@@ -246,9 +246,22 @@
           node.classList.toggle("is-today", isoDate(date) === todayIso);
         });
 
+        root.querySelectorAll("[data-event-date], [data-start-date]").forEach((event) => {
+          event.hidden = false;
+        });
+
         root.querySelectorAll("[data-event-date]").forEach((event) => {
           const date = event.dataset.eventDate;
-          event.hidden = date !== todayIso && (date < weekStartIso || date > weekEndIso);
+          event.hidden = date < weekStartIso || date > weekEndIso;
+        });
+
+        root.querySelectorAll("[data-start-date]").forEach((event) => {
+          const dayNode = event.closest("[data-week-day]");
+          const index = dayNode ? Number(dayNode.dataset.weekDay) : NaN;
+          const visibleDate = weekDates[index];
+          if (visibleDate) {
+            event.hidden = event.hidden || isoDate(visibleDate) < event.dataset.startDate;
+          }
         });
       }
 
