@@ -9,23 +9,36 @@ let activeFilter = "all";
 let publicationsExpanded = false;
 let coursesExpanded = false;
 
-function combinePublicationTitles() {
+function compactPublicationLayout() {
   publications.forEach((paper) => {
     const title = paper.querySelector("h3");
     const authors = paper.querySelector(".authors");
+    const links = paper.querySelector(".paper-links");
+    const abstract = paper.querySelector(".abstract");
 
-    if (!title || !authors || title.parentElement.classList.contains("publication-heading-line")) {
-      return;
+    if (title && authors && !title.parentElement.classList.contains("publication-heading-line")) {
+      const line = document.createElement("div");
+      line.className = "publication-heading-line";
+      paper.insertBefore(line, title);
+      line.append(title, document.createTextNode(" "), authors);
     }
 
-    const line = document.createElement("div");
-    line.className = "publication-heading-line";
-    paper.insertBefore(line, title);
-    line.append(title, document.createTextNode(" "), authors);
+    if ((links || abstract) && !paper.querySelector(".publication-actions")) {
+      const actions = document.createElement("div");
+      actions.className = "publication-actions";
+      const anchor = abstract || links;
+      paper.insertBefore(actions, anchor);
+      if (links) {
+        actions.append(links);
+      }
+      if (abstract) {
+        actions.append(abstract);
+      }
+    }
   });
 }
 
-combinePublicationTitles();
+compactPublicationLayout();
 
 function updatePublications() {
   publications.forEach((paper, index) => {
