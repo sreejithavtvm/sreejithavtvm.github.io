@@ -126,6 +126,10 @@
       }
     });
 
+    root.querySelectorAll("[data-event-date], [data-start-date]").forEach((event) => {
+      event.style.display = event.hidden ? "none" : "";
+    });
+
     root.querySelectorAll(".agenda-list").forEach((list) => {
       const visibleItems = Array.from(list.querySelectorAll(".agenda-item")).some((item) => !item.hidden);
       let empty = list.querySelector(".agenda-empty");
