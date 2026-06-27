@@ -612,10 +612,8 @@ h3 {
 }
 
 .course-list div {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 24px;
-  padding: 10px 0;
+  display: block;
+  padding: 8px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -625,7 +623,8 @@ h3 {
 
 .course-list p {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
 }
 
 .funding-awards ul {
@@ -675,11 +674,11 @@ h3 {
 
 .contact {
   align-items: center;
-  padding-bottom: 84px;
+  padding-bottom: 48px;
 }
 
 .contact h2 {
-  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
 }
 
 .contact-actions {
@@ -806,8 +805,7 @@ h3 {
   }
 
   .course-list div {
-    grid-template-columns: 1fr;
-    gap: 6px;
+    display: block;
   }
 
   .footer {
