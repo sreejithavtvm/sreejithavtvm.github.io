@@ -125,6 +125,18 @@
         event.hidden = event.hidden || isoDate(visibleDate) < event.dataset.startDate;
       }
     });
+
+    root.querySelectorAll(".agenda-list").forEach((list) => {
+      const visibleItems = Array.from(list.querySelectorAll(".agenda-item")).some((item) => !item.hidden);
+      let empty = list.querySelector(".agenda-empty");
+      if (!empty) {
+        empty = document.createElement("p");
+        empty.className = "agenda-empty";
+        empty.textContent = "No events for today.";
+        list.append(empty);
+      }
+      empty.hidden = visibleItems;
+    });
   }
 
   function activatePrivateCalendar(root) {
