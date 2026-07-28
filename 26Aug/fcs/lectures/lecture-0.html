@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 0: Foundations of Computing Systems</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body">
+    <main class="deck" aria-label="Lecture 0 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 0</div>
+        <h1>Welcome to Foundations of Computing Systems</h1>
+        <p class="lead">How does a computer compute?</p>
+        <p class="course-code-line">CS2011 | Laboratory: CS2111</p>
+        <div class="title-route" aria-label="Course route">
+          <span>signals</span><i>&#8594;</i><span>switches</span><i>&#8594;</i><span>logic gates</span><i>&#8594;</i><span>circuits</span><i>&#8594;</i><span>CPU + memory</span><i>&#8594;</i><span>programs</span>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Weekly schedule</div>
+        <h2>When we meet</h2>
+        <div class="schedule-grid">
+          <div><span>Monday</span><strong>11:00 am - noon</strong><small>Lecture, Room A01-102</small></div>
+          <div><span>Wednesday</span><strong>9:00-10:00 am</strong><small>Lecture, Room A01-102</small></div>
+          <div><span>Thursday</span><strong>2:00-3:00 pm</strong><small>Lecture, Room A01-102</small></div>
+          <div class="lab-slot"><span>Thursday</span><strong>3:00-6:00 pm</strong><small>A01-109 Lab</small></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Teaching team</div>
+        <h2>Who will work with you?</h2>
+        <div class="staff-grid">
+          <div>
+            <span>Course instructor</span>
+            <strong>Sreejith A V</strong>
+            <p>Office: Dr. Abdul Kalam Building, first floor</p>
+          </div>
+          <div>
+            <span>Course TA</span>
+            <strong>Sayan Adak</strong>
+            <p>Masters in SoCD</p>
+          </div>
+          <div>
+            <span>Laboratory team</span>
+            <strong>Sreejith and Srimanta</strong>
+            <p>TAs: Nandakumar, Aniket Arjun Madame, Sachin Pal, S. Christie Sajitha</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide light course-promise-slide">
+        <div class="kicker">Course promise</div>
+        <h2>We will open the black box</h2>
+        <p>You already know how to write programs. This course asks what must exist beneath a program for it to run.</p>
+        <div class="course-layer-stack" aria-label="Course layers">
+          <div><strong>Software</strong><span>programs and instructions</span></div>
+          <div><strong>Machine architecture</strong><span>CPU, memory, and control</span></div>
+          <div><strong>Digital circuits</strong><span>arithmetic, storage, and data movement</span></div>
+          <div><strong>Logic gates</strong><span>simple rules made from switches</span></div>
+        </div>
+        <p>We will keep asking the same question at each level: what does this layer need from the layer below?</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Learning outcomes</div>
+        <h2>By the end of the course, you should be able to...</h2>
+        <div class="outcome-list">
+          <div><span>01</span><p>Explain how logic gates grow into arithmetic, memory, and a stored-program computer.</p></div>
+          <div><span>02</span><p>Design, implement, simulate, and test hardware components using HDL.</p></div>
+          <div><span>03</span><p>Reason about machine instructions, data paths, control, and memory.</p></div>
+          <div><span>04</span><p>Connect this machine to ideas you will later meet in operating systems and compilers.</p></div>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Theory assessment</div>
+        <h2>How the course is graded?</h2>
+        <div class="grade-bars" aria-label="Theory grade distribution">
+          <div style="--share: 25%"><span>Test 1</span><strong>25%</strong></div>
+          <div style="--share: 25%"><span>Test 2</span><strong>25%</strong></div>
+          <div class="major-grade" style="--share: 50%"><span>End-semester examination</span><strong>50%</strong></div>
+        </div>
+        <p class="total-line"><span>Theory total</span><strong>100%</strong></p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Laboratory assessment</div>
+        <h2>Build, test, and explain</h2>
+        <div class="lab-grade-layout">
+          <div class="lab-math">
+            <span>11 lab sessions</span>
+            <strong>5% each</strong>
+            <i>&#8595;</i>
+            <span>Best 10 counted</span>
+            <strong>50% total</strong>
+          </div>
+          <div class="grade-summary">
+            <div><span>Best 10 lab sessions</span><strong>50%</strong></div>
+            <div><span>Mid-semester lab examination</span><strong>20%</strong></div>
+            <div><span>End project</span><strong>30%</strong></div>
+            <div class="grade-total"><span>Laboratory total</span><strong>100%</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Collaboration and integrity</div>
+        <h2>Discuss ideas. Submit your own work.</h2>
+        <div class="integrity-split">
+          <div class="permitted">
+            <strong>Permitted in labs</strong>
+            <ul>
+              <li>Discussing concepts and approaches</li>
+              <li>Asking classmates and staff questions</li>
+              <li>Explaining why a test fails</li>
+            </ul>
+          </div>
+          <div class="not-permitted">
+            <strong>Not permitted</strong>
+            <ul>
+              <li>Copying another student's implementation</li>
+              <li>Plagiarism in labs or projects</li>
+              <li>Copying or unauthorized collaboration in examinations</li>
+            </ul>
+          </div>
+        </div>
+        <p>Collaboration should improve your understanding, not replace your thinking.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">A reliable learning loop</div>
+        <h2>Small habits compound</h2>
+        <div class="learning-loop">
+          <div><span>Before class</span><p>Recall and briefly review the previous lecture.</p></div>
+          <i>&#8594;</i>
+          <div><span>During class</span><p>Take notes and work ideas out with pen and paper.</p></div>
+          <i>&#8594;</i>
+          <div><span>After class</span><p>Recall the main ideas on the same day, without first looking at your notes.</p></div>
+          <i>&#8634;</i>
+        </div>
+        <p>Reading feels familiar; retrieval reveals what you can actually explain.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">What we expect from you</div>
+        <h2>Be an active builder</h2>
+        <div class="expectation-grid">
+          <div><strong>Attempt</strong><span>Predict an answer before it is revealed.</span></div>
+          <div><strong>Explain</strong><span>Be able to say why your circuit works.</span></div>
+          <div><strong>Test</strong><span>Use evidence, not hope, while debugging.</span></div>
+          <div><strong>Prepare</strong><span>Come with the previous lecture reasonably fresh.</span></div>
+          <div><strong>Ask</strong><span>Seek help before confusion becomes a backlog.</span></div>
+          <div><strong>Own</strong><span>Submit work that reflects your understanding.</span></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hard work and discipline</div>
+        <h2>There is no substitute for doing the work</h2>
+        <div class="quote-grid">
+          <blockquote>
+            <p>&ldquo;It's important to work hard - there's no short cut around that.&rdquo;</p>
+            <cite>Sachin Tendulkar</cite>
+          </blockquote>
+          <blockquote>
+            <p>&ldquo;Discipline is doing what you hate to do, but nonetheless doing it like you love it.&rdquo;</p>
+            <cite>Mike Tyson</cite>
+          </blockquote>
+        </div>
+        <p>Motivation varies. A regular process keeps moving when motivation does not.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Textbook</div>
+        <h2>The book that will guide our journey</h2>
+        <div class="textbook-entry">
+          <p class="textbook-authors">Noam Nisan and Shimon Schocken</p>
+          <h3><a href="https://mitpress.mit.edu/9780262640688/the-elements-of-computing-systems/"><em>The Elements of Computing Systems: Building a Modern Computer from First Principles</em></a></h3>
+          <p>The MIT Press</p>
+          <div class="isbn-list" aria-label="Book identifiers">
+            <span><strong>ISBN-10</strong> 0262640686</span>
+            <span><strong>ISBN-13</strong> 978-0262640688</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Let us begin</div>
+        <h2>What invention made modern computing possible?</h2>
+        <p>Lecture 1 begins with your answers, travels through the invention of the transistor, and ends at the first layer of computer design: logic gates.</p>
+        <p><a class="button-link" href="lecture-1.html">Continue to Lecture 1</a></p>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls">
+      <a href="../index.html">Home</a>
+      <button type="button" data-prev aria-label="Previous slide">&#8592;</button>
+      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>13</span></span>
+      <button type="button" data-next aria-label="Next slide">&#8594;</button>
+    </nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

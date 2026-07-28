@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 2: Boolean Algebra and Gate Logic</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body">
+    <main class="deck" aria-label="Lecture 2 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 2</div>
+        <h1>Boolean Algebra and Gate Logic</h1>
+        <p class="lead">A precise language for describing what a logic gate must do.</p>
+        <div class="title-route" aria-label="Lecture route">
+          <span>values</span><i>&#8594;</i><span>expressions</span><i>&#8594;</i><span>truth tables</span><i>&#8594;</i><span>gates</span>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Recall</div>
+        <h2>We ended with a black box</h2>
+        <div class="logic-flow">
+          <div><span>Input signals</span><code>0 or 1</code></div>
+          <i>&#8594;</i>
+          <div class="logic-gate"><span>Gate</span><strong>?</strong></div>
+          <i>&#8594;</i>
+          <div><span>Output signal</span><code>0 or 1</code></div>
+        </div>
+        <p>We need a way to state the rule inside the box completely, concisely, and independently of its physical construction.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Boolean algebra</div>
+        <h2>An algebra with only two values</h2>
+        <p>George Boole developed an algebra for reasoning about true and false statements. Digital designers use the same structure for signals with two logical states.</p>
+        <div class="two-col">
+          <div class="panel">
+            <h3>Values</h3>
+            <p><code>0</code> and <code>1</code></p>
+          </div>
+          <div class="panel">
+            <h3>Operations</h3>
+            <p><code>NOT</code>, <code>AND</code>, <code>OR</code>, and combinations of them</p>
+          </div>
+        </div>
+        <p>Like ordinary algebra, it gives us variables, expressions, identities, and rules for transformation.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Meaning</div>
+        <h2>A bit can represent any two-way distinction</h2>
+        <div class="bit-pairs">
+          <div><code>0</code><span>false</span><code>1</code><span>true</span></div>
+          <div><code>0</code><span>off</span><code>1</code><span>on</span></div>
+          <div><code>0</code><span>closed</span><code>1</code><span>open</span></div>
+          <div><code>0</code><span>no carry</span><code>1</code><span>carry</span></div>
+        </div>
+        <p>The symbols do not carry meaning by themselves. The designer defines what each value means in the current problem.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Boolean variables</div>
+        <h2>Name the facts that matter</h2>
+        <p>A <strong>Boolean variable</strong> can hold exactly one of two values: <code>0</code> or <code>1</code>.</p>
+        <div class="code-story">
+          <code>doorOpen = 1</code>
+          <code>armed = 1</code>
+          <code>correctPin = 0</code>
+        </div>
+        <p>Once facts are encoded as variables, Boolean operators can combine them into new facts.</p>
+        <p class="prompt">For each variable above, say in words what <code>0</code> and <code>1</code> mean.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Operator 1</div>
+        <h2>NOT reverses one Boolean value</h2>
+        <div class="operator-layout">
+          <div>
+            <p><code>NOT a</code> is true exactly when <code>a</code> is false.</p>
+            <p>Common notation: <code>&not;a</code>, <code>!a</code>, or <code>a'</code>.</p>
+            <p>Example: if <code>doorOpen = 1</code>, then <code>NOT doorOpen = 0</code>.</p>
+          </div>
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>NOT a</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Operator 2</div>
+        <h2>AND requires every condition</h2>
+        <div class="operator-layout">
+          <div>
+            <p><code>a AND b</code> is true only when both inputs are true.</p>
+            <p>Common notation: <code>a &and; b</code>, <code>a &amp; b</code>, or <code>a &middot; b</code>.</p>
+            <p>An ATM dispenses cash if the PIN is correct <strong>AND</strong> the balance is sufficient.</p>
+          </div>
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>a AND b</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>0</td></tr>
+              <tr><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>1</td><td>1</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Operator 3</div>
+        <h2>OR accepts either condition</h2>
+        <div class="operator-layout">
+          <div>
+            <p><code>a OR b</code> is true when at least one input is true. It is also true when both are true.</p>
+            <p>Common notation: <code>a &or; b</code> or <code>a + b</code>.</p>
+            <p>A phone unlocks with a valid fingerprint <strong>OR</strong> the correct PIN.</p>
+          </div>
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>a OR b</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>1</td></tr>
+              <tr><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Tutorial 1</div>
+        <h2>Translate a rule into Boolean logic</h2>
+        <p>A lab door should unlock when a student has a valid ID card and the lab is open.</p>
+        <div class="given">
+          <code>validCard</code>
+          <code>labOpen</code>
+          <code>unlock</code>
+        </div>
+        <p>Write an expression for <code>unlock</code>. Then test it for all four possible input combinations.</p>
+        <button class="reveal" type="button" data-reveal="door-rule">Reveal solution</button>
+        <div id="door-rule" class="answer">
+          <p><code>unlock = validCard AND labOpen</code></p>
+          <p>The output is <code>1</code> only for <code>validCard = 1</code> and <code>labOpen = 1</code>.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Composition</div>
+        <h2>Expressions turn simple facts into policies</h2>
+        <p>Suppose staff may enter even when the lab is closed:</p>
+        <div class="expression-display">
+          <code>unlock = validCard AND (labOpen OR staffOverride)</code>
+        </div>
+        <ol class="evaluation-steps">
+          <li>Evaluate the expression inside the parentheses.</li>
+          <li>Use that result as an input to the outer AND.</li>
+          <li>The final value becomes the output <code>unlock</code>.</li>
+        </ol>
+        <p>Parentheses make the intended grouping explicit, just as in arithmetic.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Tutorial 2</div>
+        <h2>Evaluate from the inside out</h2>
+        <p>Let <code>validCard = 1</code>, <code>labOpen = 0</code>, and <code>staffOverride = 1</code>.</p>
+        <div class="expression-display dark-expression">
+          <code>validCard AND (labOpen OR staffOverride)</code>
+        </div>
+        <div class="quiz horizontal-quiz">
+          <input id="expression-answer" inputmode="numeric" placeholder="Final output: 0 or 1" aria-label="Expression result">
+          <button type="button" data-check="expression-answer" data-answer="1" data-feedback="expression-feedback">Check answer</button>
+          <div id="expression-feedback" class="feedback" aria-live="polite"></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="expression-work">Show working</button>
+        <div id="expression-work" class="answer">
+          <p><code>(0 OR 1) = 1</code>, then <code>1 AND 1 = 1</code>. The door unlocks.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Complete specification</div>
+        <h2>A truth table leaves no input case unstated</h2>
+        <div class="truth-anatomy">
+          <div><strong>Input columns</strong><span>Every variable the rule receives</span></div>
+          <div><strong>One row per case</strong><span>Every possible input combination</span></div>
+          <div><strong>Output column</strong><span>The required result for each case</span></div>
+        </div>
+        <p>Two expressions are equivalent if their output columns match for every row.</p>
+        <p>A truth table describes <em>what</em> a component does without saying <em>how</em> it is built.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Constructing a truth table</div>
+        <h2>List the inputs systematically</h2>
+        <div class="operator-layout">
+          <div>
+            <p>With <code>n</code> Boolean inputs, there are <code>2<sup>n</sup></code> combinations.</p>
+            <ul>
+              <li>1 input gives 2 rows.</li>
+              <li>2 inputs give 4 rows.</li>
+              <li>3 inputs give 8 rows.</li>
+            </ul>
+            <p>The input rows count in binary: <code>00</code>, <code>01</code>, <code>10</code>, <code>11</code>.</p>
+          </div>
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>output</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>?</td></tr>
+              <tr><td>0</td><td>1</td><td>?</td></tr>
+              <tr><td>1</td><td>0</td><td>?</td></tr>
+              <tr><td>1</td><td>1</td><td>?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Tutorial 3</div>
+        <h2>Complete a truth table</h2>
+        <p>An alarm sounds when the system is armed and the door is not closed:</p>
+        <div class="expression-display dark-expression"><code>alarm = armed AND (NOT closed)</code></div>
+        <div id="alarm-table">
+          <table class="truth-table">
+            <thead><tr><th>armed</th><th>closed</th><th>alarm</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td><input data-answer="0" aria-label="Alarm for armed 0 closed 0"></td></tr>
+              <tr><td>0</td><td>1</td><td><input data-answer="0" aria-label="Alarm for armed 0 closed 1"></td></tr>
+              <tr><td>1</td><td>0</td><td><input data-answer="1" aria-label="Alarm for armed 1 closed 0"></td></tr>
+              <tr><td>1</td><td>1</td><td><input data-answer="0" aria-label="Alarm for armed 1 closed 1"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><button class="reveal" type="button" data-check-table="alarm-table" data-feedback="alarm-feedback">Check table</button></p>
+        <div id="alarm-feedback" class="feedback" aria-live="polite"></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Counting functions</div>
+        <h2>How many rules can two inputs define?</h2>
+        <p>Two inputs create four rows. For each row, we may independently choose output <code>0</code> or output <code>1</code>.</p>
+        <div class="function-count">
+          <div><strong>4</strong><span>input combinations</span></div>
+          <i>&#8594;</i>
+          <div><strong>2 choices</strong><span>for each output row</span></div>
+          <i>&#8594;</i>
+          <div class="count-result"><strong>2<sup>4</sup> = 16</strong><span>two-input Boolean functions</span></div>
+        </div>
+        <p>The familiar AND and OR functions are only two members of this set of sixteen.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Quick check</div>
+        <h2>How many three-input Boolean functions?</h2>
+        <p>Three inputs produce <code>2<sup>3</sup> = 8</code> truth-table rows. Each row's output can independently be <code>0</code> or <code>1</code>.</p>
+        <div class="quiz horizontal-quiz">
+          <input id="functions-answer" inputmode="numeric" placeholder="Number of functions" aria-label="Number of three-input Boolean functions">
+          <button type="button" data-check="functions-answer" data-answer="256" data-feedback="functions-feedback">Check answer</button>
+          <div id="functions-feedback" class="feedback" aria-live="polite"></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="functions-work">Show reasoning</button>
+        <div id="functions-work" class="answer">
+          <p>There are two output choices for each of eight rows: <code>2<sup>8</sup> = 256</code> functions.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Canonical representation</div>
+        <h2>Every truth table can become an expression</h2>
+        <p>Focus on the rows where the required output is <code>1</code>.</p>
+        <div class="canonical-steps">
+          <div><span>1</span><p>Write one AND term that matches each selected row.</p></div>
+          <div><span>2</span><p>Use the variable for a <code>1</code> and its NOT for a <code>0</code>.</p></div>
+          <div><span>3</span><p>OR all those row terms together.</p></div>
+        </div>
+        <p>This construction is called a <strong>sum of products</strong>: an OR of several AND terms.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Matching one row</div>
+        <h2>Build a term that selects exactly one case</h2>
+        <p>Suppose we want a term that is <code>1</code> only for the row <code>a = 0</code>, <code>b = 1</code>.</p>
+        <div class="row-to-term">
+          <div><code>a = 0</code><span>use <code>NOT a</code></span></div>
+          <div><code>b = 1</code><span>use <code>b</code></span></div>
+          <i>&#8594;</i>
+          <div class="term-result"><code>(NOT a) AND b</code><span>true only for row 01</span></div>
+        </div>
+        <p>Such a term is often called a <strong>minterm</strong>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Worked example</div>
+        <h2>Derive XOR from its truth table</h2>
+        <div class="operator-layout">
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>XOR</th><th>matching term</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td><td>-</td></tr>
+              <tr><td>0</td><td>1</td><td>1</td><td><code>(NOT a) AND b</code></td></tr>
+              <tr><td>1</td><td>0</td><td>1</td><td><code>a AND (NOT b)</code></td></tr>
+              <tr><td>1</td><td>1</td><td>0</td><td>-</td></tr>
+            </tbody>
+          </table>
+          <div>
+            <p>OR the terms belonging to the two output-1 rows:</p>
+            <div class="expression-display">
+              <code>XOR = ((NOT a) AND b) OR (a AND (NOT b))</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Tutorial 4</div>
+        <h2>Synthesize a rule from a table</h2>
+        <table class="truth-table compact-table">
+          <thead><tr><th>a</th><th>b</th><th>f</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td></tr>
+          </tbody>
+        </table>
+        <p>Write one minterm for each output-1 row, then OR the terms.</p>
+        <button class="reveal" type="button" data-reveal="canonical-answer">Reveal expression</button>
+        <div id="canonical-answer" class="answer">
+          <p><code>f = ((NOT a) AND (NOT b)) OR (a AND b)</code></p>
+          <p>This is the equality function: its output is <code>1</code> when the two inputs match.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">From algebra to hardware</div>
+        <h2>An operator can become a gate</h2>
+        <div class="logic-flow">
+          <div><span>Inputs</span><code>a, b</code></div>
+          <i>&#8594;</i>
+          <div class="logic-gate"><span>Rule</span><strong>AND</strong></div>
+          <i>&#8594;</i>
+          <div><span>Output</span><code>out</code></div>
+        </div>
+        <p>A <strong>logic gate</strong> is a physical component that implements a Boolean function.</p>
+        <p>The truth table is its public contract. Its internal circuit is its implementation.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Gate logic</div>
+        <h2>Primitive and composite gates</h2>
+        <div class="comparison light-comparison">
+          <div>
+            <span class="comparison-label">Primitive</span>
+            <p>Treated as an available building block at the current level.</p>
+            <p>In our course, NAND is the primitive gate.</p>
+          </div>
+          <div>
+            <span class="comparison-label accent-label">Composite</span>
+            <p>Built by connecting simpler gates.</p>
+            <p>Once built, it can itself be used as a new building block.</p>
+          </div>
+        </div>
+        <p>Whether a gate is “primitive” depends on the abstraction level, not on nature.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Design discipline</div>
+        <h2>Separate specification from implementation</h2>
+        <div class="spec-implementation">
+          <div>
+            <span>Specification</span>
+            <strong>What must happen?</strong>
+            <p>Inputs, outputs, truth table, and required behavior.</p>
+          </div>
+          <i>&#8594;</i>
+          <div>
+            <span>Implementation</span>
+            <strong>How will it happen?</strong>
+            <p>Connections among available lower-level gates.</p>
+          </div>
+          <i>&#8594;</i>
+          <div>
+            <span>Test</span>
+            <strong>Do they match?</strong>
+            <p>Check every input case against the specification.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Exit ticket</div>
+        <h2>Three things to explain</h2>
+        <div class="exit-grid">
+          <div><span>1</span><p>Why does a two-input truth table have four rows?</p></div>
+          <div><span>2</span><p>How does a minterm select one truth-table row?</p></div>
+          <div><span>3</span><p>What is the difference between a gate's specification and implementation?</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Next lecture</div>
+        <h2>Can one gate build every other gate?</h2>
+        <p>We will begin with NAND, construct the basic gates, and express those connections in a Hardware Description Language.</p>
+        <div class="next-actions">
+          <a class="button-link" href="lecture-1.html">Previous lecture</a>
+          <a class="button-link" href="../index.html">Course home</a>
+        </div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls">
+      <a href="../index.html">Home</a>
+      <button type="button" data-prev aria-label="Previous slide">&#8592;</button>
+      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>25</span></span>
+      <button type="button" data-next aria-label="Next slide">&#8594;</button>
+    </nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

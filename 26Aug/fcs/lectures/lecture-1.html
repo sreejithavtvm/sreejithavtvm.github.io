@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 1: The Story of Chips</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-one">
+    <main class="deck" aria-label="Lecture 1 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 1</div>
+        <h1>The Story of Chips</h1>
+        <p class="lead">How humans learned to control electrical signals and made modern computation possible.</p>
+        <div class="title-route" aria-label="Lecture route">
+          <span>inventions</span><i>&#8594;</i><span>war and calculation</span><i>&#8594;</i><span>chip industry</span><i>&#8594;</i><span>logic gates</span>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Opening poll</div>
+        <h2>What are humanity's greatest inventions?</h2>
+        <p>Suggest one invention. We will collect the class's ideas and vote.</p>
+        <form class="poll-form" data-poll="invention-list">
+          <input name="idea" autocomplete="off" placeholder="Type an invention" aria-label="Invention">
+          <input name="votes" autocomplete="off" inputmode="numeric" placeholder="Votes" aria-label="Number of votes">
+          <button type="submit">Add to the poll</button>
+        </form>
+        <ul id="invention-list" class="poll-list" aria-live="polite"></ul>
+      </section>
+
+      <section class="slide story-section">
+        <div class="kicker">The story begins</div>
+        <h2>A tiny switch becomes a source of power</h2>
+        <div class="power-equation">
+          <span>Scientific idea</span><i>&times;</i><span>Manufacturing</span><i>&times;</i><span>Markets</span><i>&times;</i><span>Institutions</span>
+        </div>
+        <p>No single invention changes the world by itself. It must be made reliable, manufactured at scale, paid for, and woven into human life.</p>
+        <p class="source-note">Historical narrative adapted from Chris Miller, <em>Chip War</em> (2022).</p>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">World War II</div>
+          <h2>Industrial power meets information</h2>
+          <p>Factories still decided how many aircraft, ships, and tanks a nation could deploy. But radar, rockets, cryptanalysis, and precision instruments showed that calculation was becoming military power too.</p>
+          <p>A mechanical bombsight combined altitude, airspeed, wind, and geometry to estimate when a bomb should be released.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/norden-bombsight.jpg" alt="A Norden mechanical bombsight displayed in a museum">
+          <figcaption>
+            Norden bombsight. Rama,
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/fr/">CC BY-SA 3.0 FR</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Norden_bombsight-IMG_6399.JPG">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">The demand for calculation</div>
+          <h2>Why did computing need vacuum tubes?</h2>
+          <p>A wire carries current and a resistor limits it, but neither lets one small signal control another, larger signal. </p>
+          <p>A triode vacuum tube introduced the crucial new ability: a small voltage at its control grid could regulate a much larger current, with no moving contact. It could therefore <strong>amplify</strong> a weak signal or act as a fast electronic <strong>switch</strong>.</p>
+          <p>ENIAC used roughly 18,000 such switches, gaining electronic speed at the cost of heat, power, size, and reliability.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/eniac.jpg" alt="Betty Snyder and Glen Beck programming the room-sized ENIAC computer">
+          <figcaption>
+            Betty Snyder and Glen Beck program ENIAC, circa 1947.
+            <a href="https://commons.wikimedia.org/wiki/File:Eniac.jpg">U.S. Army photograph</a>, public domain.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">The engineering question</div>
+        <h2>Could a solid replace a vacuum tube?</h2>
+        <div class="comparison light-comparison">
+          <div>
+            <span class="comparison-label">Vacuum tube</span>
+            <ul>
+              <li>Glass enclosure and heated filament</li>
+              <li>Bulky and power hungry</li>
+              <li>Difficult to pack densely</li>
+            </ul>
+          </div>
+          <div>
+            <span class="comparison-label accent-label">Semiconductor device</span>
+            <ul>
+              <li>No heated filament</li>
+              <li>Electrical behavior can be controlled</li>
+              <li>Can be made tiny at scale</li>
+            </ul>
+          </div>
+        </div>
+        <p>William Shockley believed the next switch would be built from a semiconductor: a material whose conductivity can be deliberately changed.</p>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">Bell Labs</div>
+          <h2>Brilliance, collaboration, and rivalry</h2>
+          <p>Shockley was a gifted theorist and an abrasive colleague. In 1945 he proposed controlling current through silicon with an electric field, but his experimental device produced no useful measurable result.</p>
+          <p>John Bardeen's theoretical insight and Walter Brattain's experimental skill found a different route through the problem.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/transistor-team.jpg" alt="John Bardeen, William Shockley, and Walter Brattain at Bell Labs">
+          <figcaption>
+            Bardeen, Shockley, and Brattain, 1948. AT&amp;T publicity photograph,
+            <a href="https://commons.wikimedia.org/wiki/File:Bardeen_Shockley_Brattain_1948.JPG">public domain in the United States</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide reading-slide">
+        <div class="image-copy">
+          <div class="kicker">December 16, 1947</div>
+          <h2>The current finally moves</h2>
+          <p>Bardeen and Brattain placed two closely spaced gold contacts on germanium. A small signal at one contact controlled a larger current at the other.</p>
+          <p>The point-contact transistor proved that a solid-state device could amplify and control an electrical signal.</p>
+          <p class="further-reading"><strong>Further reading:</strong> Computer History Museum, <a href="https://www.computerhistory.org/siliconengine/invention-of-the-point-contact-transistor/">“Invention of the Point-Contact Transistor.”</a></p>
+        </div>
+        <figure>
+          <img src="../assets/images/first-transistor.jpg" alt="Replica of the first Bell Labs point-contact transistor">
+          <figcaption>
+            Replica of the first point-contact transistor.
+            <a href="https://commons.wikimedia.org/wiki/File:The_First_Transistor_ever_made,_built_in_1947_-_Bell_Labs.jpg">Windell Oskay</a>,
+            <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Shockley's response</div>
+        <h2>Frustration becomes a second design</h2>
+        <div class="hotel-story">
+          <div><span>Before</span><p>Shockley's field-effect concept had failed experimentally.</p></div>
+          <i>&#8594;</i>
+          <div><span>Trigger</span><p>Bardeen and Brattain demonstrated transistor action first.</p></div>
+          <i>&#8594;</i>
+          <div><span>After</span><p>Working intensely and privately, Shockley conceived the junction transistor.</p></div>
+        </div>
+        <p>His three-layer semiconductor “sandwich” could use a small input to control a much larger current: amplification, and also switching - on, off, on, off.</p>
+      </section>
+
+      <section class="slide light attribution-slide">
+        <div class="kicker">A human invention</div>
+        <h2>Who invented the transistor?</h2>
+        <div class="three-col">
+          <div class="panel">
+            <span class="panel-number">Research direction</span>
+            <h3>Shockley</h3>
+            <p>Led the Bell Labs group and pursued a solid-state amplifier; after the point-contact breakthrough, he conceived the junction transistor.</p>
+          </div>
+          <div class="panel">
+            <span class="panel-number">Physics and design</span>
+            <h3>Bardeen</h3>
+            <p>Explained the surface-state barrier that defeated the earlier field-effect idea and co-developed the point-contact transistor.</p>
+          </div>
+          <div class="panel">
+            <span class="panel-number">Experimental invention</span>
+            <h3>Brattain</h3>
+            <p>Designed and refined the experiments with Bardeen, creating the contacts that produced reliable amplification.</p>
+          </div>
+        </div>
+        <p class="award-note"><strong>1956 Nobel Prize in Physics:</strong> Shockley, Bardeen, and Brattain shared the prize for semiconductor research and the discovery of the transistor effect. <a href="https://www.nobelprize.org/prizes/physics/1956/summary/">Nobel Prize record</a></p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Invention is only step one</div>
+        <h2>A laboratory device is not yet an industry</h2>
+        <div class="scale-grid">
+          <div><span>1</span><strong>Works once</strong><p>A researcher demonstrates the effect.</p></div>
+          <div><span>2</span><strong>Works reliably</strong><p>Engineers control materials and processes.</p></div>
+          <div><span>3</span><strong>Can be repeated</strong><p>Factories achieve acceptable yield.</p></div>
+          <div><span>4</span><strong>Becomes affordable</strong><p>Volume lowers cost and creates markets.</p></div>
+        </div>
+        <p>The decisive contest moved from discovering transistors to manufacturing millions of nearly identical ones.</p>
+      </section>
+
+      <section class="slide image-slide reading-slide">
+        <div class="image-copy">
+          <div class="kicker">California, 1956-1968</div>
+          <h2>Birth of Silicon Valley</h2>
+          <p>Shockley left Bell Labs and founded Shockley Semiconductor Laboratory in California. He recruited exceptional young engineers, then drove eight of them away through suspicion and poor leadership.</p>
+          <p>The "traitorous eight" founded Fairchild Semiconductor and helped create Silicon Valley's startup culture.</p>
+          <p>Robert Noyce and Gordon Moore later left Fairchild to found Intel: “integrated electronics.”</p>
+          <p class="further-reading"><strong>Further reading:</strong> Michael S. Malone, <a href="https://openlibrary.org/works/OL17762218W/The_Intel_Trinity"><em>The Intel Trinity</em></a>, on Robert Noyce, Gordon Moore, Andy Grove, and the making of Intel.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/moore-noyce.webp" alt="Gordon Moore and Robert Noyce at Intel in 1970">
+          <figcaption>
+            Gordon Moore and Robert Noyce, 1970. Intel Free Press,
+            <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Gordon_Moore_and_Robert_Noyce_at_Intel_in_1970.png">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide reading-slide">
+        <div class="image-copy">
+          <div class="kicker">Texas Instruments and Fairchild, 1958-1959</div>
+          <h2>Kilby and Noyce make the integrated circuit</h2>
+          <p>Working independently, Jack Kilby and Robert Noyce eliminated the need for wires to connect transistors.</p>
+          <p>This made the silicon integrated circuit practical to manufacture at scale.</p>
+          <p>Although Kilby and Noyce are recognized as co-inventors of the integrated circuit, Noyce did not receive the Nobel Prize because he died before the prize was awarded.</p>
+          <p class="award-note"><strong>2000 Nobel Prize in Physics:</strong> Kilby received half of the prize for his part in inventing the integrated circuit. <a href="https://www.nobelprize.org/prizes/physics/2000/kilby/facts/">Nobel Prize record</a></p>
+          <p class="further-reading"><strong>Further reading:</strong> T. R. Reid, <a href="https://openlibrary.org/books/OL2859426M/The_chip"><em>The Chip: How Two Americans Invented the Microchip and Launched a Revolution</em></a>.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/kilby-ic-replica.webp" alt="Museum replica of Jack Kilby's first integrated circuit">
+          <figcaption>
+            Replica of Kilby's first integrated circuit. Florian Schäffer,
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Replica_IC.png">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">The manufacturing revolution</div>
+          <h2>Print circuits with light</h2>
+          <p>Jay Lathrop and James Nall pioneered photolithographic techniques for semiconductor devices. Their work turned photographic patterning into a repeatable chipmaking method.</p>
+          <ol class="lithography-steps">
+            <li><strong>Coat:</strong> cover the wafer with light-sensitive photoresist.</li>
+            <li><strong>Expose:</strong> project a circuit pattern through a photomask.</li>
+            <li><strong>Develop:</strong> reveal selected regions of the pattern.</li>
+            <li><strong>Process and repeat:</strong> etch or add material, one layer at a time.</li>
+          </ol>
+          <p class="credit-note"><strong>Credit:</strong> Lathrop and Nall filed their semiconductor photolithography patent in 1957.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/photolithography-wafer-track.jpg" alt="A photolithography wafer-track system in a yellow-lit semiconductor cleanroom">
+          <figcaption>
+            Photolithography wafer-track system at HP Labs. Alison Chaiken,
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Wafertraksystem.jpg">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Who paid at the beginning?</div>
+        <h2>Military demand bought expensive first versions</h2>
+        <div class="demand-shift">
+          <div>
+            <span>Early market</span>
+            <strong>Military and space systems</strong>
+            <p>High value was placed on smaller size, lower weight, and guidance capability.</p>
+          </div>
+          <i>&#8594;</i>
+          <div>
+            <span>Learning</span>
+            <strong>Factories improve yield</strong>
+            <p>Each production run teaches engineers how to reduce defects and cost.</p>
+          </div>
+          <i>&#8594;</i>
+          <div>
+            <span>Mass market</span>
+            <strong>Computers and consumer devices</strong>
+            <p>Falling prices create new uses, which drive still greater production.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">A self-reinforcing cycle</div>
+        <h2>Smaller, cheaper, more widely used</h2>
+        <div class="chip-cycle">
+          <div><strong>Better processes</strong></div>
+          <i>&#8594;</i>
+          <div><strong>More transistors per chip</strong></div>
+          <i>&#8594;</i>
+          <div><strong>Lower cost per function</strong></div>
+          <i>&#8594;</i>
+          <div><strong>New markets and volume</strong></div>
+          <i>&#8634;</i>
+        </div>
+        <p>Moore's Law described the industry's repeated increase in integrated-circuit complexity. It was not a law of nature; it became a shared target for an enormous industrial ecosystem.</p>
+      </section>
+
+      <section class="slide story-section">
+        <div class="kicker">The story becomes global</div>
+        <h2>Hard problems were solved across the world</h2>
+        <div class="world-contributions">
+          <div><strong>United States</strong><span>transistor, integrated circuit, chip design</span></div>
+          <div><strong>Soviet Union</strong><span>semiconductor science and space electronics</span></div>
+          <div><strong>Japan</strong><span>portable consumer electronics</span></div>
+          <div><strong>South Korea</strong><span>memory manufacturing at scale</span></div>
+          <div><strong>Taiwan</strong><span>the dedicated chip foundry</span></div>
+          <div><strong>Netherlands</strong><span>advanced lithography machines</span></div>
+          <div><strong>China</strong><span>telecom systems and 5G equipment</span></div>
+        </div>
+        <p>No single country mastered every layer. Different communities solved different scientific, manufacturing, and systems-engineering challenges.</p>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">Soviet Union</div>
+          <h2>The danger of a “copy first” strategy</h2>
+          <p>The USSR had world-class physicists and made major achievements in space and semiconductor research. Its microelectronics system, however, was secretive, centrally directed, and heavily oriented toward copying foreign designs.</p>
+          <p>Replication can close yesterday's gap. It is much less effective when manufacturing knowledge and designs are changing continuously.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/zelenograd.jpg" alt="Architectural model of a proposed Soviet microelectronics complex in Zelenograd">
+          <figcaption>
+            Proposed Zelenograd microelectronics complex. Audire Silentium,
+            <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Unrealized_Soviet_project_on_creation_in_the_city_of_Zelenograd.jpg">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">Japan</div>
+          <h2>Sony finds the consumers</h2>
+          <p>Akio Morita and Masaru Ibuka of Sony saw that small, low-power transistors could make electronics personal and portable.</p>
+          <p> Sony licensed transistor technology, then competed through product design, manufacturing, and marketing.</p>
+          <p>Transistor radios turned a military-era technology into an object people could carry through daily life.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/akio-morita.jpg" alt="Sony co-founder Akio Morita presenting an electronic product in 1972">
+          <figcaption>
+            Akio Morita presents a Sony television, 1972. Avelino Ginjo / São Paulo State Archives,
+            <a href="https://commons.wikimedia.org/wiki/File:Akio_Morita_e_Laudo_Natel_(1972).jpg">public domain in Brazil</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">South Korea</div>
+          <h2>Bet the company on manufacturing scale</h2>
+          <p>Samsung began as a trading business. In 1983, founder Lee Byung-chul committed the company to semiconductors despite the enormous cost and risk.</p>
+          <p>Government priorities, bank finance, large conglomerates, and relentless capital investment helped South Korea become a memory-chip powerhouse.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/lee-byung-chul.jpg" alt="Samsung founder Lee Byung-chul">
+          <figcaption>
+            Samsung founder Lee Byung-chul, circa 1950. Unknown photographer,
+            <a href="https://commons.wikimedia.org/wiki/File:Lee_Byung-chul_(crop).jpg">public domain in South Korea</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide reading-slide">
+        <div class="image-copy">
+          <div class="kicker">Taiwan</div>
+          <h2>Manufacture for everyone, compete with no customer</h2>
+          <p>Morris Chang proposed a dedicated foundry: TSMC would manufacture chips designed by other companies instead of selling competing chip designs of its own.</p>
+          <p>The model lowered the cost of starting a chip-design firm. It also concentrated advanced manufacturing expertise in one extraordinary company and island.</p>
+          <p class="further-reading"><strong>Further reading:</strong> Wesley Shu, <a href="https://www.textbookx.com/book/TSMC-How-One-Company-Came-to-Run-the-Worlds-Chips-Focus-Discipline-and-the-Architecture-of-Modern-Technology/9798245102610/"><em>TSMC: How One Company Came to Run the World's Chips</em></a>.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/morris-chang.jpg" alt="TSMC founder Morris Chang">
+          <figcaption>
+            Morris Chang, 2018. Mori / Office of the President, Taiwan,
+            <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Morris_Chang_2018-11-12.jpg">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">Netherlands</div>
+          <h2>ASML builds the tool behind the most advanced chips</h2>
+          <p>ASML makes the world's most advanced chipmaking tools. Its leading systems use extreme ultraviolet light, or <strong>EUV</strong>, to print extraordinarily small circuit patterns on silicon wafers.</p>
+          <p><strong>TSMC uses ASML's EUV machines</strong> to manufacture leading-edge chips designed by companies around the world.</p>
+          <p>The Dutch achievement combines optics, lasers, sensors, mechatronics, software, and a global supplier network into one reliable production system.</p>
+          <p class="further-reading"><strong>Further reading:</strong> <a href="https://worksinprogress.co/issue/the-worlds-most-complex-machine/">“The world's most complex machine”</a>, a detailed account of ASML and EUV lithography from <em>Works in Progress</em>.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/asml-euv-prototype.webp" alt="An engineer working beside an ASML prototype extreme ultraviolet lithography system">
+          <figcaption>
+            ASML prototype EUV lithography system. &copy; ASML, via
+            <a href="https://worksinprogress.co/issue/the-worlds-most-complex-machine/"><em>Works in Progress</em></a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="image-copy">
+          <div class="kicker">China</div>
+          <h2>Huawei helps make 5G a global reality</h2>
+          <p>Huawei became a global leader in <strong>5G telecom equipment</strong>, supplying radios, antennas, base stations, and networking systems used to carry mobile data.</p>
+          <p>Its success required difficult engineering across radio communication, signal processing, networking, semiconductors, software, and equipment that must operate reliably at enormous scale.</p>
+          <p>China demonstrated advanced capability in an entire communication system, not only in one component.</p>
+          <p class="further-reading"><strong>Further reading:</strong> Eva Dou, <a href="https://www.penguinrandomhouse.com/books/721789/house-of-huawei-by-eva-dou/"><em>House of Huawei</em></a>, a reported history of the company and its geopolitical importance.</p>
+        </div>
+        <figure>
+          <img src="../assets/images/huawei-hq.jpg" alt="Huawei headquarters campus in Shenzhen, China">
+          <figcaption>
+            Huawei headquarters, Shenzhen, 2012. fading,
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>,
+            <a href="https://commons.wikimedia.org/wiki/File:Huawei_Headquarter,_Bantian,_Shenzhen_-_panoramio.jpg">Wikimedia Commons</a>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Semiconductors and human life</div>
+        <h2>From rare military component to invisible infrastructure</h2>
+        <div class="dependency-grid">
+          <div><strong>Communication</strong><span>phones, networks, satellites</span></div>
+          <div><strong>Health</strong><span>imaging, monitors, implants</span></div>
+          <div><strong>Mobility</strong><span>vehicles, navigation, traffic control</span></div>
+          <div><strong>Light</strong><span>LED lamps, displays, indicators</span></div>
+          <div><strong>Knowledge</strong><span>computers, cloud systems, research</span></div>
+          <div><strong>Security</strong><span>radar, guidance, communications</span></div>
+        </div>
+        <p>Humans gained remarkable capability while becoming deeply dependent on a technology most people never see.</p>
+      </section>
+
+      <section class="slide light">
+        <div class="kicker">Why chips are geopolitical</div>
+        <h2>No country makes an advanced chip alone</h2>
+        <div class="supply-chain">
+          <div><strong>Ideas and design tools</strong><span>specialized knowledge and software</span></div>
+          <i>&#8594;</i>
+          <div><strong>Manufacturing equipment</strong><span>lithography, deposition, inspection</span></div>
+          <i>&#8594;</i>
+          <div><strong>Fabrication</strong><span>capital-intensive wafer factories</span></div>
+          <i>&#8594;</i>
+          <div><strong>Packaging and systems</strong><span>chips become usable products</span></div>
+        </div>
+        <p>Specialization creates efficiency, but also dependence. A disruption at one hard-to-replace link can affect economies, public services, and national security.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">The larger lesson</div>
+        <h2>A chip is condensed human organization</h2>
+        <div class="story-equation">
+          <span>Physics</span><i>+</i><span>Engineering</span><i>+</i><span>Factories</span><i>+</i><span>Capital</span><i>+</i><span>Policy</span><i>+</i><span>People</span>
+        </div>
+        <p>Inside a phone is not merely silicon. It is decades of accumulated knowledge, institutions, rivalry, cooperation, supply chains, and choices about who controls production.</p>
+      </section>
+
+      <section class="slide light compact-slide">
+        <div class="kicker">Back to our computer</div>
+        <h2>Use one signal to control another path</h2>
+        <div class="controlled-path">
+          <div class="path-row path-off">
+            <span class="control-value">control = 0</span>
+            <i>&#8594;</i>
+            <div class="channel-state"><strong>channel unavailable</strong><span class="blocked-path">source <b></b> output</span></div>
+            <i>&#8594;</i>
+            <span class="result-value">output = 0</span>
+          </div>
+          <div class="path-row path-on">
+            <span class="control-value">control = 1</span>
+            <i>&#8594;</i>
+            <div class="channel-state"><strong>channel available</strong><span class="conducting-path">source <b></b> output</span></div>
+            <i>&#8594;</i>
+            <span class="result-value">output = 1</span>
+          </div>
+        </div>
+        <p>This is a functional model, not a physical cross-section. A small control signal changes whether another electrical path conducts.</p>
+        <p>From here onward, we hide the device physics and reason with two states: <code>0</code> and <code>1</code>.</p>
+        <p class="further-reading"><strong>Further study:</strong> <a href="https://nptel.ac.in/courses/108101091">NPTEL Basic Electronics</a> by Prof. M. B. Patil, IIT Bombay, covers electronic devices and semiconductor fundamentals.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Logic gates</div>
+        <h2>Connect switches to make a tiny decision-maker</h2>
+        <div class="logic-flow">
+          <div><span>Input signals</span><code>0 or 1</code></div>
+          <i>&#8594;</i>
+          <div class="logic-gate"><span>Gate</span><strong>fixed rule</strong></div>
+          <i>&#8594;</i>
+          <div><span>Output signal</span><code>0 or 1</code></div>
+        </div>
+        <p>A logic gate hides its transistors and exposes only inputs, an output, and a rule.</p>
+        <p class="prompt">How can we describe that rule precisely without discussing the internal transistors?</p>
+      </section>
+
+      <section class="slide light">
+        <h2>Boolean Algebra</h2>
+        <p class="lead">The mathematics behind chip design</p>
+        <div class="next-actions">
+          <a class="button-link" href="../index.html">Course home</a>
+          <span class="availability">Lecture 2 slides coming soon</span>
+        </div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls">
+      <a href="../index.html">Home</a>
+      <button type="button" data-prev aria-label="Previous slide">&#8592;</button>
+      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>29</span></span>
+      <button type="button" data-next aria-label="Next slide">&#8594;</button>
+    </nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
