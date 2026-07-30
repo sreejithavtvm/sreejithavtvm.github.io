@@ -3,86 +3,91 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lecture 2: Boolean Algebra and Gate Logic</title>
+    <title>Lecture 2: Boolean Algebra</title>
     <link rel="stylesheet" href="../assets/site.css">
   </head>
-  <body class="deck-body">
+  <body class="deck-body lecture-two">
     <main class="deck" aria-label="Lecture 2 slides">
       <section class="slide current title-slide">
         <div class="kicker">Lecture 2</div>
-        <h1>Boolean Algebra and Gate Logic</h1>
-        <p class="lead">A precise language for describing what a logic gate must do.</p>
+        <h1>Boolean Algebra</h1>
+        <p class="lead">The mathematics behind chip design.</p>
         <div class="title-route" aria-label="Lecture route">
-          <span>values</span><i>&#8594;</i><span>expressions</span><i>&#8594;</i><span>truth tables</span><i>&#8594;</i><span>gates</span>
+          <span>variables</span><i>&#8594;</i><span>functions</span><i>&#8594;</i><span>representations</span><i>&#8594;</i><span>equivalence</span><i>&#8594;</i><span>universality</span>
         </div>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Recall</div>
-        <h2>We ended with a black box</h2>
-        <div class="logic-flow">
-          <div><span>Input signals</span><code>0 or 1</code></div>
-          <i>&#8594;</i>
-          <div class="logic-gate"><span>Gate</span><strong>?</strong></div>
-          <i>&#8594;</i>
-          <div><span>Output signal</span><code>0 or 1</code></div>
-        </div>
-        <p>We need a way to state the rule inside the box completely, concisely, and independently of its physical construction.</p>
       </section>
 
       <section class="slide">
-        <div class="kicker">Boolean algebra</div>
-        <h2>An algebra with only two values</h2>
-        <p>George Boole developed an algebra for reasoning about true and false statements. Digital designers use the same structure for signals with two logical states.</p>
-        <div class="two-col">
-          <div class="panel">
-            <h3>Values</h3>
-            <p><code>0</code> and <code>1</code></p>
-          </div>
-          <div class="panel">
-            <h3>Operations</h3>
-            <p><code>NOT</code>, <code>AND</code>, <code>OR</code>, and combinations of them</p>
-          </div>
+        <div class="kicker">Definition</div>
+        <h2>Boolean Algebra</h2>
+        <p class="slide-subtitle">An algebra with only two values.</p>
+        <p>George Boole developed an algebra for reasoning about true and false statements. Digital designers use the same mathematical structure for signals with two logical states.</p>
+        <div class="definition-strip">
+          <div><strong>Values</strong><span><code>0</code> and <code>1</code></span></div>
+          <div><strong>Variables</strong><span>Names that hold Boolean values</span></div>
+          <div><strong>Operations</strong><span>NOT, AND, OR, and their combinations</span></div>
         </div>
-        <p>Like ordinary algebra, it gives us variables, expressions, identities, and rules for transformation.</p>
+        <p>Like ordinary algebra, Boolean algebra gives us variables, expressions, identities, and rules for transformation.</p>
       </section>
 
-      <section class="slide light">
-        <div class="kicker">Meaning</div>
-        <h2>A bit can represent any two-way distinction</h2>
-        <div class="bit-pairs">
-          <div><code>0</code><span>false</span><code>1</code><span>true</span></div>
-          <div><code>0</code><span>off</span><code>1</code><span>on</span></div>
-          <div><code>0</code><span>closed</span><code>1</code><span>open</span></div>
-          <div><code>0</code><span>no carry</span><code>1</code><span>carry</span></div>
-        </div>
-        <p>The symbols do not carry meaning by themselves. The designer defines what each value means in the current problem.</p>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Boolean variables</div>
-        <h2>Name the facts that matter</h2>
-        <p>A <strong>Boolean variable</strong> can hold exactly one of two values: <code>0</code> or <code>1</code>.</p>
+      <section class="slide">
+        <div class="kicker">Definition</div>
+        <h2>Boolean Variables</h2>
+        <p class="slide-subtitle">A Boolean variable can hold exactly one of two values: <code>0</code> or <code>1</code>.</p>
+        <p>A value restricted to two possibilities is called a <strong>binary value</strong>. We will use <code>0</code> and <code>1</code>, although they may represent distinctions such as false/true, off/on, or closed/open.</p>
         <div class="code-story">
           <code>doorOpen = 1</code>
           <code>armed = 1</code>
           <code>correctPin = 0</code>
         </div>
-        <p>Once facts are encoded as variables, Boolean operators can combine them into new facts.</p>
+        <p>Once facts are encoded as variables, rules can combine them to produce new Boolean values.</p>
         <p class="prompt">For each variable above, say in words what <code>0</code> and <code>1</code> mean.</p>
       </section>
 
       <section class="slide">
-        <div class="kicker">Operator 1</div>
-        <h2>NOT reverses one Boolean value</h2>
+        <div class="kicker">Definition</div>
+        <h2>Boolean Functions</h2>
+        <p class="slide-subtitle">A Boolean function operates on inputs that are <code>0</code> or <code>1</code> and returns an output that is <code>0</code> or <code>1</code>.</p>
+        <div class="function-machine">
+          <div><span>Boolean inputs</span><code>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub></code></div>
+          <i>&#8594;</i>
+          <div class="function-box"><strong>f</strong><span>Boolean rule</span></div>
+          <i>&#8594;</i>
+          <div><span>Boolean output</span><code>0 or 1</code></div>
+        </div>
+        <p>Computer hardware represents and manipulates <strong>binary</strong> values. Boolean functions therefore give us a precise language for describing hardware behavior.</p>
+        <p>Learning to formulate and analyze these functions is the first step toward constructing a computer.</p>
+        <p class="next-step"><strong>Next:</strong> How can we represent a Boolean function precisely?</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Representing Boolean functions</div>
+        <h2>Truth Tables</h2>
+        <p class="slide-subtitle">A truth table lists the output of a Boolean function for every possible input combination.</p>
+          <table class="truth-table compact-table">
+            <thead><tr><th>x</th><th>y</th><th>f</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>1</td></tr>
+              <tr><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Let us examine the standard Boolean functions NOT, AND, and OR.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Standard Boolean function</div>
+        <h2>NOT</h2>
+        <p class="slide-subtitle">NOT returns <code>1</code> exactly when its input is <code>0</code>.</p>
         <div class="operator-layout">
-          <div>
-            <p><code>NOT a</code> is true exactly when <code>a</code> is false.</p>
-            <p>Common notation: <code>&not;a</code>, <code>!a</code>, or <code>a'</code>.</p>
-            <p>Example: if <code>doorOpen = 1</code>, then <code>NOT doorOpen = 0</code>.</p>
+          <div class="operator-copy">
+            <p><strong class="content-marker">Notation</strong><span class="math-expression"><span class="overline">x</span></span></p>
+            <p><strong class="content-marker">Example</strong>If <code>doorOpen = 1</code>, then <code>NOT doorOpen = 0</code>.</p>
           </div>
           <table class="truth-table compact-table">
-            <thead><tr><th>a</th><th>NOT a</th></tr></thead>
+            <thead><tr><th>x</th><th><span class="overline">x</span></th></tr></thead>
             <tbody>
               <tr><td>0</td><td>1</td></tr>
               <tr><td>1</td><td>0</td></tr>
@@ -91,17 +96,17 @@
         </div>
       </section>
 
-      <section class="slide light">
-        <div class="kicker">Operator 2</div>
-        <h2>AND requires every condition</h2>
+      <section class="slide">
+        <div class="kicker">Standard Boolean function</div>
+        <h2>AND</h2>
+        <p class="slide-subtitle">AND returns <code>1</code> only when every input is <code>1</code>.</p>
         <div class="operator-layout">
-          <div>
-            <p><code>a AND b</code> is true only when both inputs are true.</p>
-            <p>Common notation: <code>a &and; b</code>, <code>a &amp; b</code>, or <code>a &middot; b</code>.</p>
-            <p>An ATM dispenses cash if the PIN is correct <strong>AND</strong> the balance is sufficient.</p>
+          <div class="operator-copy">
+            <p><strong class="content-marker">Notation</strong><span class="math-expression">x &middot; y</span>, or simply <span class="math-expression">xy</span></p>
+            <p><strong class="content-marker">Example</strong>An ATM dispenses cash if the PIN is correct <strong>AND</strong> the balance is sufficient.</p>
           </div>
           <table class="truth-table compact-table">
-            <thead><tr><th>a</th><th>b</th><th>a AND b</th></tr></thead>
+            <thead><tr><th>x</th><th>y</th><th>x &middot; y</th></tr></thead>
             <tbody>
               <tr><td>0</td><td>0</td><td>0</td></tr>
               <tr><td>0</td><td>1</td><td>0</td></tr>
@@ -113,16 +118,17 @@
       </section>
 
       <section class="slide">
-        <div class="kicker">Operator 3</div>
-        <h2>OR accepts either condition</h2>
+        <div class="kicker">Standard Boolean function</div>
+        <h2>OR</h2>
+        <p class="slide-subtitle">OR returns <code>1</code> when at least one input is <code>1</code>.</p>
         <div class="operator-layout">
-          <div>
-            <p><code>a OR b</code> is true when at least one input is true. It is also true when both are true.</p>
-            <p>Common notation: <code>a &or; b</code> or <code>a + b</code>.</p>
-            <p>A phone unlocks with a valid fingerprint <strong>OR</strong> the correct PIN.</p>
+          <div class="operator-copy">
+            <p><strong class="content-marker">Notation</strong><span class="math-expression">x + y</span></p>
+            <p><strong class="content-marker">Note</strong>The result is also <code>1</code> when both inputs are <code>1</code>.</p>
+            <p><strong class="content-marker">Example</strong>A phone unlocks with a valid fingerprint <strong>OR</strong> the correct PIN.</p>
           </div>
           <table class="truth-table compact-table">
-            <thead><tr><th>a</th><th>b</th><th>a OR b</th></tr></thead>
+            <thead><tr><th>x</th><th>y</th><th>x + y</th></tr></thead>
             <tbody>
               <tr><td>0</td><td>0</td><td>0</td></tr>
               <tr><td>0</td><td>1</td><td>1</td></tr>
@@ -131,11 +137,12 @@
             </tbody>
           </table>
         </div>
+        <p class="next-step"><strong>Next:</strong> We will combine these operations into expressions and test the resulting functions.</p>
       </section>
 
-      <section class="slide light">
+      <section class="slide">
         <div class="kicker">Tutorial 1</div>
-        <h2>Translate a rule into Boolean logic</h2>
+        <h2>Translate a Rule into Boolean Logic</h2>
         <p>A lab door should unlock when a student has a valid ID card and the lab is open.</p>
         <div class="given">
           <code>validCard</code>
@@ -145,270 +152,513 @@
         <p>Write an expression for <code>unlock</code>. Then test it for all four possible input combinations.</p>
         <button class="reveal" type="button" data-reveal="door-rule">Reveal solution</button>
         <div id="door-rule" class="answer">
-          <p><code>unlock = validCard AND labOpen</code></p>
-          <p>The output is <code>1</code> only for <code>validCard = 1</code> and <code>labOpen = 1</code>.</p>
+          <p><code>unlock = validCard &middot; labOpen</code></p>
+          <p>The output is <code>1</code> only when both inputs are <code>1</code>.</p>
         </div>
       </section>
 
       <section class="slide">
         <div class="kicker">Composition</div>
-        <h2>Expressions turn simple facts into policies</h2>
-        <p>Suppose staff may enter even when the lab is closed:</p>
-        <div class="expression-display">
-          <code>unlock = validCard AND (labOpen OR staffOverride)</code>
+        <h2>Boolean Expressions</h2>
+        <p class="slide-subtitle">Boolean expressions combine variables and operations to describe more complex functions.</p>
+        <div class="notation-grid">
+          <div><span>AND</span><strong>x &middot; y</strong><small>or simply <strong>xy</strong></small></div>
+          <div><span>OR</span><strong>x + y</strong></div>
+          <div><span>NOT</span><strong><span class="overline">x</span></strong></div>
         </div>
-        <ol class="evaluation-steps">
-          <li>Evaluate the expression inside the parentheses.</li>
-          <li>Use that result as an input to the outer AND.</li>
-          <li>The final value becomes the output <code>unlock</code>.</li>
-        </ol>
+        <p>Suppose staff may enter even when the lab is closed:</p>
+        <div class="expression-display light-expression">
+          <span class="math-expression">unlock = validCard &middot; (labOpen + staffOverride)</span>
+        </div>
         <p>Parentheses make the intended grouping explicit, just as in arithmetic.</p>
       </section>
 
-      <section class="slide light">
+      <section class="slide">
         <div class="kicker">Tutorial 2</div>
-        <h2>Evaluate from the inside out</h2>
+        <h2>Evaluate an Expression from the Inside Out</h2>
         <p>Let <code>validCard = 1</code>, <code>labOpen = 0</code>, and <code>staffOverride = 1</code>.</p>
-        <div class="expression-display dark-expression">
-          <code>validCard AND (labOpen OR staffOverride)</code>
+        <div class="expression-display light-expression">
+          <span class="math-expression">validCard &middot; (labOpen + staffOverride)</span>
         </div>
         <div class="quiz horizontal-quiz">
           <input id="expression-answer" inputmode="numeric" placeholder="Final output: 0 or 1" aria-label="Expression result">
-          <button type="button" data-check="expression-answer" data-answer="1" data-feedback="expression-feedback">Check answer</button>
+          <button type="button" data-check="expression-answer" data-answer="1" data-feedback="expression-feedback" data-success="Correct. First evaluate (0 + 1) = 1, and then 1 · 1 = 1.">Check answer</button>
           <div id="expression-feedback" class="feedback" aria-live="polite"></div>
         </div>
         <button class="reveal secondary-reveal" type="button" data-reveal="expression-work">Show working</button>
         <div id="expression-work" class="answer">
-          <p><code>(0 OR 1) = 1</code>, then <code>1 AND 1 = 1</code>. The door unlocks.</p>
+          <p><code>(0 + 1) = 1</code>, then <code>1 &middot; 1 = 1</code>. The door unlocks.</p>
         </div>
+        <p class="next-step"><strong>Next:</strong> Build complete truth tables for increasingly complex expressions.</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Complete specification</div>
-        <h2>A truth table leaves no input case unstated</h2>
-        <div class="truth-anatomy">
-          <div><strong>Input columns</strong><span>Every variable the rule receives</span></div>
-          <div><strong>One row per case</strong><span>Every possible input combination</span></div>
-          <div><strong>Output column</strong><span>The required result for each case</span></div>
-        </div>
-        <p>Two expressions are equivalent if their output columns match for every row.</p>
-        <p>A truth table describes <em>what</em> a component does without saying <em>how</em> it is built.</p>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Constructing a truth table</div>
-        <h2>List the inputs systematically</h2>
-        <div class="operator-layout">
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Build the Truth Table</h2>
+        <div class="exercise-layout">
           <div>
-            <p>With <code>n</code> Boolean inputs, there are <code>2<sup>n</sup></code> combinations.</p>
-            <ul>
-              <li>1 input gives 2 rows.</li>
-              <li>2 inputs give 4 rows.</li>
-              <li>3 inputs give 8 rows.</li>
-            </ul>
-            <p>The input rows count in binary: <code>00</code>, <code>01</code>, <code>10</code>, <code>11</code>.</p>
+            <p>Complete the output column for:</p>
+            <div class="expression-display compact-expression"><span class="math-expression">f(x,y,z) = x &middot; y + z</span></div>
+            <p>AND is evaluated before OR, so this means <span class="math-expression">(x &middot; y) + z</span>.</p>
+            <button class="reveal" type="button" data-check-table="exercise-table-1" data-feedback="exercise-feedback-1" data-success="Correct. The output is 1 when both x and y are 1, or whenever z is 1.">Check table</button>
+            <div id="exercise-feedback-1" class="feedback" aria-live="polite"></div>
           </div>
-          <table class="truth-table compact-table">
-            <thead><tr><th>a</th><th>b</th><th>output</th></tr></thead>
-            <tbody>
-              <tr><td>0</td><td>0</td><td>?</td></tr>
-              <tr><td>0</td><td>1</td><td>?</td></tr>
-              <tr><td>1</td><td>0</td><td>?</td></tr>
-              <tr><td>1</td><td>1</td><td>?</td></tr>
-            </tbody>
-          </table>
+          <div id="exercise-table-1">
+            <table class="truth-table exercise-table">
+              <thead><tr><th>x</th><th>y</th><th>z</th><th>f</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 1 row 000"></td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 1 row 001"></td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 1 row 010"></td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 1 row 011"></td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 1 row 100"></td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 1 row 101"></td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 1 row 110"></td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 1 row 111"></td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
-      <section class="slide light">
-        <div class="kicker">Tutorial 3</div>
-        <h2>Complete a truth table</h2>
-        <p>An alarm sounds when the system is armed and the door is not closed:</p>
-        <div class="expression-display dark-expression"><code>alarm = armed AND (NOT closed)</code></div>
-        <div id="alarm-table">
-          <table class="truth-table">
-            <thead><tr><th>armed</th><th>closed</th><th>alarm</th></tr></thead>
-            <tbody>
-              <tr><td>0</td><td>0</td><td><input data-answer="0" aria-label="Alarm for armed 0 closed 0"></td></tr>
-              <tr><td>0</td><td>1</td><td><input data-answer="0" aria-label="Alarm for armed 0 closed 1"></td></tr>
-              <tr><td>1</td><td>0</td><td><input data-answer="1" aria-label="Alarm for armed 1 closed 0"></td></tr>
-              <tr><td>1</td><td>1</td><td><input data-answer="0" aria-label="Alarm for armed 1 closed 1"></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p><button class="reveal" type="button" data-check-table="alarm-table" data-feedback="alarm-feedback">Check table</button></p>
-        <div id="alarm-feedback" class="feedback" aria-live="polite"></div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Counting functions</div>
-        <h2>How many rules can two inputs define?</h2>
-        <p>Two inputs create four rows. For each row, we may independently choose output <code>0</code> or output <code>1</code>.</p>
-        <div class="function-count">
-          <div><strong>4</strong><span>input combinations</span></div>
-          <i>&#8594;</i>
-          <div><strong>2 choices</strong><span>for each output row</span></div>
-          <i>&#8594;</i>
-          <div class="count-result"><strong>2<sup>4</sup> = 16</strong><span>two-input Boolean functions</span></div>
-        </div>
-        <p>The familiar AND and OR functions are only two members of this set of sixteen.</p>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Quick check</div>
-        <h2>How many three-input Boolean functions?</h2>
-        <p>Three inputs produce <code>2<sup>3</sup> = 8</code> truth-table rows. Each row's output can independently be <code>0</code> or <code>1</code>.</p>
-        <div class="quiz horizontal-quiz">
-          <input id="functions-answer" inputmode="numeric" placeholder="Number of functions" aria-label="Number of three-input Boolean functions">
-          <button type="button" data-check="functions-answer" data-answer="256" data-feedback="functions-feedback">Check answer</button>
-          <div id="functions-feedback" class="feedback" aria-live="polite"></div>
-        </div>
-        <button class="reveal secondary-reveal" type="button" data-reveal="functions-work">Show reasoning</button>
-        <div id="functions-work" class="answer">
-          <p>There are two output choices for each of eight rows: <code>2<sup>8</sup> = 256</code> functions.</p>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Canonical representation</div>
-        <h2>Every truth table can become an expression</h2>
-        <p>Focus on the rows where the required output is <code>1</code>.</p>
-        <div class="canonical-steps">
-          <div><span>1</span><p>Write one AND term that matches each selected row.</p></div>
-          <div><span>2</span><p>Use the variable for a <code>1</code> and its NOT for a <code>0</code>.</p></div>
-          <div><span>3</span><p>OR all those row terms together.</p></div>
-        </div>
-        <p>This construction is called a <strong>sum of products</strong>: an OR of several AND terms.</p>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Matching one row</div>
-        <h2>Build a term that selects exactly one case</h2>
-        <p>Suppose we want a term that is <code>1</code> only for the row <code>a = 0</code>, <code>b = 1</code>.</p>
-        <div class="row-to-term">
-          <div><code>a = 0</code><span>use <code>NOT a</code></span></div>
-          <div><code>b = 1</code><span>use <code>b</code></span></div>
-          <i>&#8594;</i>
-          <div class="term-result"><code>(NOT a) AND b</code><span>true only for row 01</span></div>
-        </div>
-        <p>Such a term is often called a <strong>minterm</strong>.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Worked example</div>
-        <h2>Derive XOR from its truth table</h2>
-        <div class="operator-layout">
-          <table class="truth-table compact-table">
-            <thead><tr><th>a</th><th>b</th><th>XOR</th><th>matching term</th></tr></thead>
-            <tbody>
-              <tr><td>0</td><td>0</td><td>0</td><td>-</td></tr>
-              <tr><td>0</td><td>1</td><td>1</td><td><code>(NOT a) AND b</code></td></tr>
-              <tr><td>1</td><td>0</td><td>1</td><td><code>a AND (NOT b)</code></td></tr>
-              <tr><td>1</td><td>1</td><td>0</td><td>-</td></tr>
-            </tbody>
-          </table>
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Build the Truth Table</h2>
+        <div class="exercise-layout">
           <div>
-            <p>OR the terms belonging to the two output-1 rows:</p>
-            <div class="expression-display">
-              <code>XOR = ((NOT a) AND b) OR (a AND (NOT b))</code>
+            <p>Complete the output column for:</p>
+            <div class="expression-display compact-expression"><span class="math-expression">f(x,y,z) = <span class="overline">x</span> + y &middot; z</span></div>
+            <p>The output is immediately <code>1</code> whenever <code>x = 0</code>. When <code>x = 1</code>, inspect <code>y &middot; z</code>.</p>
+            <button class="reveal" type="button" data-check-table="exercise-table-2" data-feedback="exercise-feedback-2" data-success="Correct. NOT x supplies 1 for the first four rows; for x = 1, only y = 1 and z = 1 produces 1.">Check table</button>
+            <div id="exercise-feedback-2" class="feedback" aria-live="polite"></div>
+          </div>
+          <div id="exercise-table-2">
+            <table class="truth-table exercise-table">
+              <thead><tr><th>x</th><th>y</th><th>z</th><th>f</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 2 row 000"></td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 2 row 001"></td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 2 row 010"></td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 2 row 011"></td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 2 row 100"></td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 2 row 101"></td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 2 row 110"></td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 2 row 111"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Build the Truth Table</h2>
+        <div class="exercise-layout">
+          <div>
+            <p>Complete the output column for:</p>
+            <div class="expression-display compact-expression"><span class="math-expression">f(x,y,z) = (x + y) &middot; <span class="overline">z</span></span></div>
+            <p>Evaluate the parentheses and the negation before applying AND.</p>
+            <button class="reveal" type="button" data-check-table="exercise-table-3" data-feedback="exercise-feedback-3" data-success="Correct. The output is 1 exactly when x or y is 1 and z is 0.">Check table</button>
+            <div id="exercise-feedback-3" class="feedback" aria-live="polite"></div>
+          </div>
+          <div id="exercise-table-3">
+            <table class="truth-table exercise-table">
+              <thead><tr><th>x</th><th>y</th><th>z</th><th>f</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 3 row 000"></td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 3 row 001"></td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 3 row 010"></td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 3 row 011"></td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 3 row 100"></td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 3 row 101"></td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="Exercise 3 row 110"></td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td><input data-answer="0" inputmode="numeric" aria-label="Exercise 3 row 111"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Meet three useful functions built from NOT, AND, and OR.</p>
+      </section>
+
+      <section class="slide derived-functions-slide">
+        <div class="kicker">Derived Boolean functions</div>
+        <h2>NAND, NOR, and XOR</h2>
+        <p class="slide-subtitle">Each function combines operations we already know.</p>
+        <div class="derived-functions-grid">
+          <article>
+            <h3>NAND</h3>
+            <p><strong>NOT of AND:</strong> it is <code>0</code> only when both inputs are <code>1</code>.</p>
+            <p class="function-expression"><span class="math-expression"><span class="overline">x &middot; y</span></span></p>
+            <table class="truth-table mini-function-table">
+              <thead><tr><th>x</th><th>y</th><th>NAND</th></tr></thead>
+              <tbody><tr><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody>
+            </table>
+          </article>
+          <article>
+            <h3>NOR</h3>
+            <p><strong>NOT of OR:</strong> it is <code>1</code> only when both inputs are <code>0</code>.</p>
+            <p class="function-expression"><span class="math-expression"><span class="overline">x + y</span></span></p>
+            <table class="truth-table mini-function-table">
+              <thead><tr><th>x</th><th>y</th><th>NOR</th></tr></thead>
+              <tbody><tr><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody>
+            </table>
+          </article>
+          <article>
+            <h3>XOR</h3>
+            <p><strong>Exclusive OR:</strong> it is <code>1</code> exactly when the inputs differ.</p>
+            <p class="function-expression"><span class="math-expression"><span class="overline">x</span> &middot; y + x &middot; <span class="overline">y</span></span></p>
+            <table class="truth-table mini-function-table">
+              <thead><tr><th>x</th><th>y</th><th>XOR</th></tr></thead>
+              <tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody>
+            </table>
+          </article>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Can every truth table be turned into a Boolean expression?</p>
+      </section>
+
+      <section class="slide canonical-slide">
+        <div class="kicker">Canonical representation</div>
+        <h2>Every Boolean Function Can Be Represented by an Expression</h2>
+        <p class="slide-subtitle">A standard construction turns every output-1 row into a term, then combines those terms.</p>
+        <div class="canonical-layout">
+          <div class="canonical-copy">
+            <div class="canonical-steps">
+              <div><span>1</span><p>For each output-1 row, write the variable for an input of <code>1</code> and its negation for an input of <code>0</code>.</p></div>
+              <div><span>2</span><p>AND the literals. Row <code>010</code> gives <span class="math-expression"><span class="overline">x</span> &middot; y &middot; <span class="overline">z</span></span>.</p></div>
+              <div><span>3</span><p>Repeat. Row <code>101</code> gives <span class="math-expression">x &middot; <span class="overline">y</span> &middot; z</span>.</p></div>
+            </div>
+            <div class="canonical-conclusion">
+              <p><strong>Verify:</strong> The final expression is <code>1</code> on rows <code>010</code> and <code>101</code>, and <code>0</code> on every other row.</p>
+              <p><strong>Conclusion:</strong> Every Boolean function can be represented using only AND, OR, and NOT. Together, these operations are <strong>universal</strong>.</p>
+              <p><strong>Next:</strong> Practise this construction on familiar functions.</p>
+            </div>
+          </div>
+          <div class="canonical-example">
+            <table class="truth-table compact-table">
+              <thead><tr><th>x</th><th>y</th><th>z</th><th>f</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                <tr class="selected-row"><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr class="selected-row second-selected-row"><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+              </tbody>
+            </table>
+            <div class="row-result">
+              <span>OR the two row terms</span>
+              <strong><span class="overline">x</span>y<span class="overline">z</span> + x<span class="overline">y</span>z</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="slide light">
-        <div class="kicker">Tutorial 4</div>
-        <h2>Synthesize a rule from a table</h2>
-        <table class="truth-table compact-table">
-          <thead><tr><th>a</th><th>b</th><th>f</th></tr></thead>
+      <section class="slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Write the Canonical Expression for XOR</h2>
+        <div class="operator-layout xor-layout">
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>XOR(a,b)</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td></tr>
+              <tr class="selected-row"><td>0</td><td>1</td><td>1</td></tr>
+              <tr class="selected-row"><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+          <div>
+            <p>Write one product term for each highlighted row, then OR the terms.</p>
+            <button class="reveal" type="button" data-reveal="xor-canonical-answer">Show answer</button>
+            <div id="xor-canonical-answer" class="answer">
+              <p class="math-expression">XOR(a,b) = <span class="overline">a</span>b + a<span class="overline">b</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Exercise 5</div>
+        <h2>Write the Canonical Expression for NAND</h2>
+        <div class="operator-layout xor-layout">
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>NAND(a,b)</th></tr></thead>
+            <tbody>
+              <tr class="selected-row"><td>0</td><td>0</td><td>1</td></tr>
+              <tr class="selected-row"><td>0</td><td>1</td><td>1</td></tr>
+              <tr class="selected-row"><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+          <div>
+            <p>Write one product term for each highlighted row, then OR the three terms.</p>
+            <button class="reveal" type="button" data-reveal="nand-canonical-answer">Show answer</button>
+            <div id="nand-canonical-answer" class="answer">
+              <p class="math-expression">NAND(a,b) = <span class="overline">a</span> &middot; <span class="overline">b</span> + <span class="overline">a</span>b + a<span class="overline">b</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Exercise 6</div>
+        <h2>Write the Canonical Expression for NOR</h2>
+        <div class="operator-layout xor-layout">
+          <table class="truth-table compact-table">
+            <thead><tr><th>a</th><th>b</th><th>NOR(a,b)</th></tr></thead>
+            <tbody>
+              <tr class="selected-row"><td>0</td><td>0</td><td>1</td></tr>
+              <tr><td>0</td><td>1</td><td>0</td></tr>
+              <tr><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>1</td><td>1</td><td>0</td></tr>
+            </tbody>
+          </table>
+          <div>
+            <p>Only one row has output <code>1</code>. Write its product term.</p>
+            <button class="reveal" type="button" data-reveal="nor-canonical-answer">Show answer</button>
+            <div id="nor-canonical-answer" class="answer">
+              <p class="math-expression">NOR(a,b) = <span class="overline">a</span> &middot; <span class="overline">b</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Exercise 7</div>
+        <h2>Write the Canonical Expressions for f, g, and h</h2>
+        <div class="practice-layout">
+          <table class="truth-table practice-table">
+            <thead><tr><th>x</th><th>y</th><th>z</th><th>f</th><th>g</th><th>h</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td><td><strong>1</strong></td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>0</td><td>1</td><td>0</td><td><strong>1</strong></td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>0</td><td>0</td><td><strong>1</strong></td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td><strong>1</strong></td></tr>
+              <tr><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>1</strong></td><td>0</td></tr>
+              <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td><strong>1</strong></td></tr>
+              <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>1</strong></td></tr>
+              <tr><td>1</td><td>1</td><td>1</td><td><strong>1</strong></td><td>0</td><td><strong>1</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="practice-answer-panel">
+            <p>Use each bold <code>1</code> to construct a product term.</p>
+            <button class="reveal secondary-reveal" type="button" data-reveal="canonical-practice-answers">Reveal answers</button>
+            <div id="canonical-practice-answers" class="answer compact-answer">
+              <p><strong>f:</strong> <span class="math-expression"><span class="overline">x</span> &middot; <span class="overline">y</span> &middot; <span class="overline">z</span> + x &middot; y &middot; z</span></p>
+              <p><strong>g:</strong> <span class="math-expression"><span class="overline">x</span> &middot; <span class="overline">y</span> &middot; z + <span class="overline">x</span> &middot; y &middot; <span class="overline">z</span> + x &middot; <span class="overline">y</span> &middot; <span class="overline">z</span></span></p>
+              <p><strong>h:</strong> <span class="math-expression"><span class="overline">x</span> &middot; y &middot; z + x &middot; <span class="overline">y</span> &middot; z + x &middot; y &middot; <span class="overline">z</span> + x &middot; y &middot; z</span></p>
+            </div>
+          </div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Review the standard two-input functions before comparing different expressions for the same function.</p>
+      </section>
+
+      <section class="slide equivalence-slide exercise-slide" data-slide-order="22">
+        <div class="kicker">Equivalence</div>
+        <h2>Equivalence of expressions</h2>
+        <p class="slide-subtitle">Two expressions are equivalent if they produce the same output for every possible input.</p>
+        <div class="equivalence-layout">
+          <div>
+            <div class="de-morgan-laws">
+              <div>
+                <strong>De Morgan’s law for OR</strong>
+                <p class="math-expression">a + b = <span class="overline-group"><span class="overline">a</span> &middot; <span class="overline">b</span></span></p>
+              </div>
+              <div>
+                <strong>De Morgan’s law for AND</strong>
+                <p class="math-expression">a &middot; b = <span class="overline-group"><span class="overline">a</span> + <span class="overline">b</span></span></p>
+              </div>
+            </div>
+            <p>Complete the four output columns and compare each pair.</p>
+            <button class="reveal" type="button" data-check-table="equivalence-example-table" data-feedback="equivalence-example-feedback" data-success="Both pairs match on every row. You have verified both De Morgan laws." data-error="Check each pair again. Equivalent expressions must match on all four rows.">Check table</button>
+            <div id="equivalence-example-feedback" class="feedback" aria-live="polite"></div>
+          </div>
+          <div id="equivalence-example-table">
+            <table class="truth-table equivalence-table">
+              <thead>
+                <tr><th rowspan="2">a</th><th rowspan="2">b</th><th colspan="2">OR law</th><th colspan="2">AND law</th></tr>
+                <tr><th>a + b</th><th><span class="overline-group"><span class="overline">a</span> &middot; <span class="overline">b</span></span></th><th>a &middot; b</th><th><span class="overline-group"><span class="overline">a</span> + <span class="overline">b</span></span></th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td><input data-answer="0" inputmode="numeric" aria-label="a OR b for row 00"></td><td><input data-answer="0" inputmode="numeric" aria-label="OR law right expression for row 00"></td><td><input data-answer="0" inputmode="numeric" aria-label="a AND b for row 00"></td><td><input data-answer="0" inputmode="numeric" aria-label="AND law right expression for row 00"></td></tr>
+                <tr><td>0</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="a OR b for row 01"></td><td><input data-answer="1" inputmode="numeric" aria-label="OR law right expression for row 01"></td><td><input data-answer="0" inputmode="numeric" aria-label="a AND b for row 01"></td><td><input data-answer="0" inputmode="numeric" aria-label="AND law right expression for row 01"></td></tr>
+                <tr><td>1</td><td>0</td><td><input data-answer="1" inputmode="numeric" aria-label="a OR b for row 10"></td><td><input data-answer="1" inputmode="numeric" aria-label="OR law right expression for row 10"></td><td><input data-answer="0" inputmode="numeric" aria-label="a AND b for row 10"></td><td><input data-answer="0" inputmode="numeric" aria-label="AND law right expression for row 10"></td></tr>
+                <tr><td>1</td><td>1</td><td><input data-answer="1" inputmode="numeric" aria-label="a OR b for row 11"></td><td><input data-answer="1" inputmode="numeric" aria-label="OR law right expression for row 11"></td><td><input data-answer="1" inputmode="numeric" aria-label="a AND b for row 11"></td><td><input data-answer="1" inputmode="numeric" aria-label="AND law right expression for row 11"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Use truth tables to verify these laws and constructions based on NAND and NOR.</p>
+      </section>
+
+      <section class="slide equivalence-practice-slide" data-slide-order="23">
+        <div class="kicker">Exercise 8</div>
+        <h2>Are These Pairs Equivalent?</h2>
+        <p class="slide-subtitle">Verify each claim with a truth table. If a pair is not equivalent, find one input where the outputs differ.</p>
+        <div class="equivalence-exercise-grid">
+          <div><span>A</span><p><strong>De Morgan’s law for AND:</strong> <span class="math-expression">a &middot; b</span> and <span class="math-expression"><span class="overline-group"><span class="overline">a</span> + <span class="overline">b</span></span></span></p></div>
+          <div><span>B</span><p><strong>De Morgan’s law for OR:</strong> <span class="math-expression">a + b</span> and <span class="math-expression"><span class="overline-group"><span class="overline">a</span> &middot; <span class="overline">b</span></span></span></p></div>
+          <div><span>C</span><p><strong>NOT from NAND:</strong> <code>NOT(a)</code> and <code>NAND(a,a)</code></p></div>
+          <div><span>D</span><p><strong>AND from NAND:</strong> <code>AND(a,b)</code> and <code>NAND(NAND(a,b), NAND(a,b))</code></p></div>
+          <div><span>E</span><p><strong>OR from NAND:</strong> <code>OR(a,b)</code> and <code>NAND(NAND(a,a), NAND(b,b))</code></p></div>
+          <div><span>F</span><p><strong>NOT from NOR:</strong> <code>NOT(a)</code> and <code>NOR(a,a)</code></p></div>
+          <div><span>G</span><p><strong>OR from NOR:</strong> <code>OR(a,b)</code> and <code>NOR(NOR(a,b), NOR(a,b))</code></p></div>
+          <div><span>H</span><p><strong>AND from NOR:</strong> <code>AND(a,b)</code> and <code>NOR(NOR(a,a), NOR(b,b))</code></p></div>
+          <div><span>I</span><p><strong>Counterexample:</strong> <span class="math-expression">a + b</span> and <span class="math-expression">a &middot; b</span></p></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="equivalence-practice-answers">Show answers</button>
+        <div id="equivalence-practice-answers" class="answer equivalence-answers">
+          <p><strong>A–H:</strong> Equivalent.</p>
+          <p><strong>I:</strong> Not equivalent. For example, when <code>a = 0</code> and <code>b = 1</code>, OR gives <code>1</code> while AND gives <code>0</code>.</p>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Use these equivalences to identify universal sets of Boolean operations.</p>
+      </section>
+
+      <section class="slide" data-slide-order="26">
+        <div class="kicker">Counting Problems</div>
+        <h2>Here are two counting problems</h2>
+                <div class="truth-table-intro">
+          <div>
+            <p>How many rows are required for a truth table with <code>n</code> Boolean variables?</p>
+            <div class="quiz truth-row-quiz">
+              <input id="truth-row-answer" autocomplete="off" placeholder="Enter a formula" aria-label="Number of truth-table rows for n variables">
+              <button type="button" data-check="truth-row-answer" data-answers="2^n|2**n|2ⁿ" data-feedback="truth-row-feedback" data-success="Correct. Each of the n variables has two possible values, giving 2^n input combinations." data-error="Try again. Count the choices independently: two choices for each of n variables.">Check answer</button>
+            </div>
+            <div id="truth-row-feedback" class="feedback" aria-live="polite"></div>
+          </div>
+        <div>
+        <p>How many distinct Boolean functions can be defined using <code>n</code> input variables.</p>
+        <div class="quiz horizontal-quiz">
+          <input id="function-count-answer" autocomplete="off" placeholder="Enter a formula" aria-label="Number of Boolean functions with n variables">
+          <button type="button" data-check="function-count-answer" data-answers="2^(2^n)|2^(2**n)|2**(2**n)|2^2^n|2**2**n" data-feedback="function-count-feedback" data-success="Correct. The unambiguous form is 2^(2^n)." data-error="Try again. You may enter 2^2^n or the fully parenthesized 2^(2^n).">Check answer</button>
+          <div id="function-count-feedback" class="feedback" aria-live="polite"></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="function-count-explanation">Show Answer</button>
+        <div id="function-count-explanation" class="answer">
+          <div class="function-count">
+            <div><strong>2<sup>n</sup></strong><span>input combinations</span></div>
+            <i>&#8594;</i>
+            <div><strong>2 choices</strong><span>for each output</span></div>
+            <i>&#8594;</i>
+            <div class="count-result"><strong>2<sup>(2<sup>n</sup>)</sup></strong><span>Boolean functions</span></div>
+          </div>
+          <p>A truth table has <code>2<sup>n</sup></code> rows, and each row has two independent output choices. Therefore there are <code>2<sup>(2<sup>n</sup>)</sup></code> functions.</p>
+          <p class="example-note">For two variables: <code>2<sup>(2<sup>2</sup>)</sup> = 2<sup>4</sup> = 16</code> functions.</p>
+        </div>
+        </div>
+      </section>
+
+      <section class="slide standard-functions-slide" data-slide-order="21">
+        <div class="kicker">Reference</div>
+        <h2>Standard Two-Input Boolean Functions</h2>
+        <div class="reference-toolbar">
+          <p>Reveal one representation at a time, or reveal the complete reference.</p>
+          <button class="reveal" type="button" data-reveal-all=".function-reference .answer">Show all</button>
+        </div>
+        <table class="function-reference">
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Expression</th>
+              <th><span>x = 0</span><span>y = 0</span></th>
+              <th><span>x = 0</span><span>y = 1</span></th>
+              <th><span>x = 1</span><span>y = 0</span></th>
+              <th><span>x = 1</span><span>y = 1</span></th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td>0</td><td>0</td><td>1</td></tr>
-            <tr><td>0</td><td>1</td><td>0</td></tr>
-            <tr><td>1</td><td>0</td><td>0</td></tr>
-            <tr><td>1</td><td>1</td><td>1</td></tr>
+            <tr>
+              <th scope="row"><span>Constant 0</span><span class="row-reveals"><button type="button" data-reveal-group="constant-zero-expression">Show expression</button><button type="button" data-reveal-group="constant-zero-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer" data-answer-group="constant-zero-expression"><code>0</code></span></td>
+              <td><span class="answer inline-answer" data-answer-group="constant-zero-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="constant-zero-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="constant-zero-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="constant-zero-truth">0</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>AND</span><span class="row-reveals"><button type="button" data-reveal-group="and-expression">Show expression</button><button type="button" data-reveal-group="and-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="and-expression">x &middot; y</span></td>
+              <td><span class="answer inline-answer" data-answer-group="and-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="and-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="and-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="and-truth">1</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>OR</span><span class="row-reveals"><button type="button" data-reveal-group="or-expression">Show expression</button><button type="button" data-reveal-group="or-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="or-expression">x + y</span></td>
+              <td><span class="answer inline-answer" data-answer-group="or-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="or-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="or-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="or-truth">1</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>XOR</span><span class="row-reveals"><button type="button" data-reveal-group="xor-expression">Show expression</button><button type="button" data-reveal-group="xor-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="xor-expression"><span class="overline">x</span>y + x<span class="overline">y</span></span></td>
+              <td><span class="answer inline-answer" data-answer-group="xor-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="xor-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="xor-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="xor-truth">0</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>NOR</span><span class="row-reveals"><button type="button" data-reveal-group="nor-expression">Show expression</button><button type="button" data-reveal-group="nor-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="nor-expression"><span class="overline">x + y</span></span></td>
+              <td><span class="answer inline-answer" data-answer-group="nor-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="nor-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="nor-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="nor-truth">0</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>Equivalence</span><span class="row-reveals"><button type="button" data-reveal-group="equivalence-expression">Show expression</button><button type="button" data-reveal-group="equivalence-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="equivalence-expression"><span class="overline">x</span> &middot; <span class="overline">y</span> + x &middot; y</span></td>
+              <td><span class="answer inline-answer" data-answer-group="equivalence-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="equivalence-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="equivalence-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="equivalence-truth">1</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>If x, then y</span><span class="row-reveals"><button type="button" data-reveal-group="implication-expression">Show expression</button><button type="button" data-reveal-group="implication-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="implication-expression"><span class="overline">x</span> + y</span></td>
+              <td><span class="answer inline-answer" data-answer-group="implication-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="implication-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="implication-truth">0</span></td><td><span class="answer inline-answer" data-answer-group="implication-truth">1</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>NAND</span><span class="row-reveals"><button type="button" data-reveal-group="nand-expression">Show expression</button><button type="button" data-reveal-group="nand-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer math-expression" data-answer-group="nand-expression"><span class="overline">x &middot; y</span></span></td>
+              <td><span class="answer inline-answer" data-answer-group="nand-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="nand-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="nand-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="nand-truth">0</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span>Constant 1</span><span class="row-reveals"><button type="button" data-reveal-group="constant-one-expression">Show expression</button><button type="button" data-reveal-group="constant-one-truth">Show truth table</button></span></th>
+              <td><span class="answer inline-answer" data-answer-group="constant-one-expression"><code>1</code></span></td>
+              <td><span class="answer inline-answer" data-answer-group="constant-one-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="constant-one-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="constant-one-truth">1</span></td><td><span class="answer inline-answer" data-answer-group="constant-one-truth">1</span></td>
+            </tr>
           </tbody>
         </table>
-        <p>Write one minterm for each output-1 row, then OR the terms.</p>
-        <button class="reveal" type="button" data-reveal="canonical-answer">Reveal expression</button>
-        <div id="canonical-answer" class="answer">
-          <p><code>f = ((NOT a) AND (NOT b)) OR (a AND b)</code></p>
-          <p>This is the equality function: its output is <code>1</code> when the two inputs match.</p>
-        </div>
+        <p class="next-step"><strong>Next:</strong> Can two different expressions describe exactly the same function?</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">From algebra to hardware</div>
-        <h2>An operator can become a gate</h2>
-        <div class="logic-flow">
-          <div><span>Inputs</span><code>a, b</code></div>
-          <i>&#8594;</i>
-          <div class="logic-gate"><span>Rule</span><strong>AND</strong></div>
-          <i>&#8594;</i>
-          <div><span>Output</span><code>out</code></div>
-        </div>
-        <p>A <strong>logic gate</strong> is a physical component that implements a Boolean function.</p>
-        <p>The truth table is its public contract. Its internal circuit is its implementation.</p>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Gate logic</div>
-        <h2>Primitive and composite gates</h2>
-        <div class="comparison light-comparison">
+      <section class="slide universality-slide" data-slide-order="24">
+        <div class="kicker">The central result</div>
+        <h2>Universality</h2>
+        <p class="slide-subtitle">A set of operations is universal if it can represent every Boolean function.</p>
+        <div class="universality-path">
           <div>
-            <span class="comparison-label">Primitive</span>
-            <p>Treated as an available building block at the current level.</p>
-            <p>In our course, NAND is the primitive gate.</p>
-          </div>
-          <div>
-            <span class="comparison-label accent-label">Composite</span>
-            <p>Built by connecting simpler gates.</p>
-            <p>Once built, it can itself be used as a new building block.</p>
-          </div>
-        </div>
-        <p>Whether a gate is “primitive” depends on the abstraction level, not on nature.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Design discipline</div>
-        <h2>Separate specification from implementation</h2>
-        <div class="spec-implementation">
-          <div>
-            <span>Specification</span>
-            <strong>What must happen?</strong>
-            <p>Inputs, outputs, truth table, and required behavior.</p>
+            <span>Canonical representation</span>
+            <strong>AND + OR + NOT</strong>
+            <p>We proved that these three operations can express any Boolean function.</p>
           </div>
           <i>&#8594;</i>
           <div>
-            <span>Implementation</span>
-            <strong>How will it happen?</strong>
-            <p>Connections among available lower-level gates.</p>
+            <span>De Morgan’s laws</span>
+            <strong>AND + NOT<br>or OR + NOT</strong>
+            <p>With NOT available, AND can simulate OR, and OR can simulate AND.</p>
           </div>
           <i>&#8594;</i>
           <div>
-            <span>Test</span>
-            <strong>Do they match?</strong>
-            <p>Check every input case against the specification.</p>
+            <span>One operation</span>
+            <strong>NAND alone<br>or NOR alone</strong>
+            <p>NAND can build NOT and AND; NOR can build NOT and OR.</p>
           </div>
         </div>
-      </section>
-
-      <section class="slide light">
-        <div class="kicker">Exit ticket</div>
-        <h2>Three things to explain</h2>
-        <div class="exit-grid">
-          <div><span>1</span><p>Why does a two-input truth table have four rows?</p></div>
-          <div><span>2</span><p>How does a minterm select one truth-table row?</p></div>
-          <div><span>3</span><p>What is the difference between a gate's specification and implementation?</p></div>
+        <div class="practical-implication">
+          <strong>Why this matters in hardware</strong>
+          <p>Once a physical device implements NAND, many copies of that one device can be wired together to implement any Boolean function. The same is true of NOR.</p>
         </div>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Next lecture</div>
-        <h2>Can one gate build every other gate?</h2>
-        <p>We will begin with NAND, construct the basic gates, and express those connections in a Hardware Description Language.</p>
+      <section class="slide title-slide lecture-preview-slide" data-slide-order="25">
+        <div class="kicker">Lecture 3 | Chapter 1, Section 1.1.2</div>
+        <h2>Gate Logic</h2>
+        <p class="lead">From Boolean functions to physical devices.</p>
+        <div class="title-route" aria-label="Next lecture route">
+          <span>Boolean function</span><i>&#8594;</i><span>gate interface</span><i>&#8594;</i><span>implementation</span><i>&#8594;</i><span>composite gate</span>
+        </div>
+        <p class="prompt">If a gate promises a Boolean function, which internal details can its users safely ignore?</p>
+        <p class="next-step"><strong>Before we leave:</strong> One final counting question about the space of all Boolean functions.</p>
         <div class="next-actions">
-          <a class="button-link" href="lecture-1.html">Previous lecture</a>
           <a class="button-link" href="../index.html">Course home</a>
+          <a class="button-link" href="lecture-3.html">Go to Lecture 3</a>
         </div>
       </section>
     </main>
@@ -416,7 +666,7 @@
     <nav class="controls" aria-label="Slide controls">
       <a href="../index.html">Home</a>
       <button type="button" data-prev aria-label="Previous slide">&#8592;</button>
-      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>25</span></span>
+      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>26</span></span>
       <button type="button" data-next aria-label="Next slide">&#8594;</button>
     </nav>
     <script src="../assets/slides.js"></script>

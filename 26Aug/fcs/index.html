@@ -11,9 +11,10 @@
       <nav class="topbar" aria-label="Course navigation">
         <a class="brand" href="index.html">
           <span class="chip-mark">CS2011</span>
-          <span>Foundations of Computing Systems</span>
+          <span class="lab-code">CS2111 Laboratory</span>
         </a>
         <div class="nav-links">
+          <a href="#course-information">Course information</a>
           <a href="#lectures">Lectures</a>
           <a href="#journey">Course journey</a>
         </div>
@@ -21,18 +22,53 @@
 
       <section class="hero">
         <div>
-          <p class="eyebrow">CS2011 | Laboratory: CS2111</p>
+          <p class="eyebrow">Course overview</p>
           <h1>Foundations of Computing Systems</h1>
           <p>
             How humans made computation possible, from electrical signals and circuits
             to memory, machine language, and a working computer.
           </p>
+          <p class="hero-secondary">The lectures develop the underlying ideas; the laboratory turns those ideas into hardware components that students build and test.</p>
           <a class="primary-link" href="#lectures">View lectures <span aria-hidden="true">&#8595;</span></a>
         </div>
-        <figure class="hero-visual">
-          <img src="assets/images/silicon-wafer.jpg" alt="A patterned silicon wafer containing many repeated chips">
-          <figcaption>One wafer, many chips, billions of carefully organized switches.</figcaption>
-        </figure>
+      </section>
+
+      <section class="section" id="course-information">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">At a glance</p>
+            <h2>Course information</h2>
+          </div>
+          <p>Class schedule, assessment, and the principal textbook.</p>
+        </div>
+        <div class="course-info-grid">
+          <div class="course-info-block">
+            <h3>Timings and location</h3>
+            <dl class="course-facts">
+              <div><dt>Monday</dt><dd>11:00 am-noon, A01-102</dd></div>
+              <div><dt>Wednesday</dt><dd>9:00-10:00 am, A01-102</dd></div>
+              <div><dt>Thursday</dt><dd>2:00-3:00 pm, A01-102</dd></div>
+              <div><dt>Laboratory</dt><dd>Thursday, 3:00-6:00 pm, A01-109</dd></div>
+            </dl>
+          </div>
+          <div class="course-info-block">
+            <h3>Evaluation</h3>
+            <div class="evaluation-group">
+              <strong>CS2011 Theory</strong>
+              <p>Test 1: 25% &middot; Test 2: 25% &middot; End-semester examination: 50%</p>
+            </div>
+            <div class="evaluation-group">
+              <strong>CS2111 Laboratory</strong>
+              <p>Lab work: 10% &middot; Mid-semester examination: 40% &middot; End-semester examination: 50%</p>
+              <small>Each lab carries 1%; the best 10 of 11 labs are counted.</small>
+            </div>
+          </div>
+          <div class="course-info-block">
+            <h3>Textbook</h3>
+            <p>Noam Nisan and Shimon Schocken, <em>The Elements of Computing Systems: Building a Modern Computer from First Principles</em>, The MIT Press.</p>
+            <p><a class="text-link" href="https://www.nand2tetris.org/">Nand2Tetris course website</a></p>
+          </div>
+        </div>
       </section>
 
       <section class="section" id="lectures">
@@ -46,24 +82,28 @@
         <div class="lecture-grid">
           <article class="lecture-card">
             <span class="badge">Orientation</span>
+            <time class="lecture-date" datetime="2026-07-29">29 July</time>
             <h3>Lecture 0: Course Details</h3>
             <p>Expectations, timings, evaluation, and laboratory details.</p>
             <a class="button-link" href="lectures/lecture-0.html">Open slides</a>
           </article>
           <article class="lecture-card featured-card">
             <span class="badge">Week 1</span>
+            <time class="lecture-date" datetime="2026-07-29">29 July</time>
             <h3>Lecture 1: The Story of Chips</h3>
             <p>How humans learned to control electrical signals and made computation possible.</p>
             <a class="button-link" href="lectures/lecture-1.html">Open slides</a>
           </article>
-          <article class="lecture-card unavailable">
-            <span class="badge neutral-badge">Week 1</span>
-            <h3>Lecture 2: Boolean Algebra and Gate Logic</h3>
-            <p>Boolean expressions, truth tables, canonical forms, and the distinction between gate specifications and implementations.</p>
-            <span class="availability">Slides coming soon</span>
+          <article class="lecture-card">
+            <span class="badge">Week 1</span>
+            <time class="lecture-date" datetime="2026-07-30">30 July</time>
+            <h3>Lecture 2: Boolean Algebra</h3>
+            <p>Boolean variables and functions, truth tables, expressions, and canonical representation.</p>
+            <a class="button-link" href="lectures/lecture-2.html">Open slides</a>
           </article>
           <article class="lecture-card unavailable">
-            <span class="badge neutral-badge">Week 1</span>
+            <span class="badge neutral-badge">Week 2</span>
+            <time class="lecture-date" datetime="2026-08-03">3 August</time>
             <h3>Lecture 3: HDL and Simulation</h3>
             <p>Describing hardware, testing gate implementations, and learning the simulator workflow.</p>
             <span class="availability">Slides coming soon</span>
@@ -91,10 +131,6 @@
 
       <footer class="site-footer">
         <p>CS2011 Foundations of Computing Systems | CS2111 Laboratory</p>
-        <p class="image-credit">
-          Wafer photograph: Inductiveload, public domain,
-          <a href="https://commons.wikimedia.org/wiki/File:Silicon_wafer.jpg">Wikimedia Commons</a>.
-        </p>
       </footer>
     </main>
   </body>

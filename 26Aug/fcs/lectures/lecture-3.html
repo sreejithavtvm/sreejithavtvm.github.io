@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 3 Draft: Logic Gates</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two">
+    <main class="deck" aria-label="Lecture 3 draft slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 3 | Week 2</div>
+        <h1>Logic Gates</h1>
+        <p class="lead">From Boolean functions to physical building blocks.</p>
+        <div class="title-route" aria-label="Lecture route">
+          <span>functions</span><i>&#8594;</i><span>gates</span><i>&#8594;</i><span>implementation</span><i>&#8594;</i><span>testing</span>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">From mathematics to hardware</div>
+        <h2>Boolean Functions Become Logic Gates</h2>
+        <div class="logic-flow">
+          <div><span>Inputs</span><code>x, y</code></div>
+          <i>&#8594;</i>
+          <div class="logic-gate"><span>Boolean function</span><strong>AND</strong></div>
+          <i>&#8594;</i>
+          <div><span>Output</span><code>out</code></div>
+        </div>
+        <p>A <strong>logic gate</strong> is a physical component that implements a Boolean function.</p>
+        <p>The truth table is its public contract. The internal circuit is its implementation.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Gate logic</div>
+        <h2>Primitive and Composite Gates</h2>
+        <div class="comparison light-comparison">
+          <div>
+            <span class="comparison-label">Primitive</span>
+            <p>Treated as an available building block at the current level.</p>
+            <p>In our course, NAND is the primitive gate.</p>
+          </div>
+          <div>
+            <span class="comparison-label accent-label">Composite</span>
+            <p>Built by connecting simpler gates.</p>
+            <p>Once built, it can itself be used as a new building block.</p>
+          </div>
+        </div>
+        <p>Whether a gate is primitive depends on the abstraction level, not on nature.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Design discipline</div>
+        <h2>Specification and Implementation</h2>
+        <div class="spec-implementation">
+          <div>
+            <span>Specification</span>
+            <strong>What must happen?</strong>
+            <p>Inputs, outputs, truth table, and required behavior.</p>
+          </div>
+          <i>&#8594;</i>
+          <div>
+            <span>Implementation</span>
+            <strong>How will it happen?</strong>
+            <p>Connections among available lower-level gates.</p>
+          </div>
+          <i>&#8594;</i>
+          <div>
+            <span>Test</span>
+            <strong>Do they match?</strong>
+            <p>Check every input case against the specification.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Exit ticket</div>
+        <h2>Three Things to Explain</h2>
+        <div class="exit-grid">
+          <div><span>1</span><p>How does a truth table specify a logic gate?</p></div>
+          <div><span>2</span><p>Why can the same Boolean function have different implementations?</p></div>
+          <div><span>3</span><p>What is the difference between a primitive and a composite gate?</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">The next question</div>
+        <h2>Can One Gate Build Every Other Gate?</h2>
+        <p>We will begin with NAND, construct the basic gates, and express those connections in a Hardware Description Language.</p>
+        <div class="next-actions">
+          <a class="button-link" href="lecture-2.html">Previous lecture</a>
+          <a class="button-link" href="../index.html">Course home</a>
+        </div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls">
+      <a href="../index.html">Home</a>
+      <button type="button" data-prev aria-label="Previous slide">&#8592;</button>
+      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>6</span></span>
+      <button type="button" data-next aria-label="Next slide">&#8594;</button>
+    </nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
