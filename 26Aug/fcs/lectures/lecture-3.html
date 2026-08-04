@@ -3,102 +3,316 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lecture 3 Draft: Logic Gates</title>
+    <title>Lecture 3: Gate Logic</title>
     <link rel="stylesheet" href="../assets/site.css">
   </head>
-  <body class="deck-body lecture-two">
-    <main class="deck" aria-label="Lecture 3 draft slides">
+  <body class="deck-body lecture-two lecture-three">
+    <main class="deck" aria-label="Lecture 3 slides">
       <section class="slide current title-slide">
-        <div class="kicker">Lecture 3 | Week 2</div>
-        <h1>Logic Gates</h1>
-        <p class="lead">From Boolean functions to physical building blocks.</p>
-        <div class="title-route" aria-label="Lecture route">
-          <span>functions</span><i>&#8594;</i><span>gates</span><i>&#8594;</i><span>implementation</span><i>&#8594;</i><span>testing</span>
+        <div class="kicker">Lecture 3 | 5 August 2026 | Chapter 1</div>
+        <h1>Gate Logic</h1>
+        <p class="lead">From gate diagrams to Hardware Description Language (HDL).</p>
+        <div class="title-route" aria-label="Lecture route"><span>gate diagrams</span><i>&#8594;</i><span>composite gates</span><i>&#8594;</i><span>circuit descriptions</span><i>&#8594;</i><span>specifications</span></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Where are we in the course?</div>
+        <h2>Give Boolean Functions a Physical Form</h2>
+        <div class="lecture-stack-map">
+          <div><span>Last lecture</span><strong>Boolean functions</strong><small>truth tables and expressions</small></div><i>&#8594;</i>
+          <div class="active-layer"><span>Today</span><strong>Logic gates</strong><small>diagrams, descriptions, and specifications</small></div><i>&#8594;</i>
+          <div><span>Next lecture</span><strong>Boolean arithmetic</strong><small>numbers and addition</small></div>
+        </div>
+        <p class="prompt">A logic gate gives a physical form to a Boolean function.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Introducing logic gates</div>
+        <h2>A Gate Implements a Boolean Function</h2>
+        <div class="gate-definition-layout">
+          <div class="gate-contract-card">
+            <div><span>Inputs</span><code>a, b</code></div><i>&#8594;</i><strong>AND</strong><i>&#8594;</i><div><span>Output</span><code>out</code></div>
+          </div>
+          <div class="definition-copy">
+            <p>A <strong>gate</strong> is a physical device that implements a Boolean function.</p>
+            <p>Input pins receive binary values. The gate computes the function and places the result on its output pin.</p>
+            <p class="prompt">For every input combination, the output must agree with the function's truth table.</p>
+          </div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Learn the standard symbols used to draw gates.</p>
+      </section>
+
+      <section class="slide gate-symbols-slide">
+        <div class="kicker">Standard gate diagrams</div>
+        <h2>Six Familiar Functions, Six Gate Symbols</h2>
+        <div class="gate-symbol-grid">
+          <figure><svg class="gate-svg" viewBox="0 0 120 80" role="img" aria-label="AND gate"><path class="gate-shape" d="M30 12 H58 A28 28 0 0 1 58 68 H30 Z"/><path d="M6 27 H30 M6 53 H30 M86 40 H114"/></svg><figcaption>AND</figcaption></figure>
+          <figure><svg class="gate-svg" viewBox="0 0 120 80" role="img" aria-label="OR gate"><path class="gate-shape" d="M28 12 Q52 40 28 68 Q67 65 91 40 Q67 15 28 12 Z"/><path d="M6 27 H36 M6 53 H36 M91 40 H114"/></svg><figcaption>OR</figcaption></figure>
+          <figure><svg class="gate-svg" viewBox="0 0 120 80" role="img" aria-label="NOT gate"><path class="gate-shape" d="M30 14 L82 40 L30 66 Z"/><circle class="gate-bubble" cx="88" cy="40" r="6"/><path d="M6 40 H30 M94 40 H114"/></svg><figcaption>NOT</figcaption></figure>
+          <figure><svg class="gate-svg" viewBox="0 0 120 80" role="img" aria-label="XOR gate"><path class="gate-shape" d="M34 12 Q58 40 34 68 Q70 65 94 40 Q70 15 34 12 Z"/><path class="gate-extra" d="M25 12 Q49 40 25 68"/><path d="M6 27 H40 M6 53 H40 M94 40 H114"/></svg><figcaption>XOR</figcaption></figure>
+          <figure><svg class="gate-svg" viewBox="0 0 120 80" role="img" aria-label="NAND gate"><path class="gate-shape" d="M26 12 H58 A28 28 0 0 1 58 68 H26 Z"/><circle class="gate-bubble" cx="91" cy="40" r="5"/><path d="M6 27 H26 M6 53 H26 M96 40 H114"/></svg><figcaption>NAND</figcaption></figure>
+          <figure><svg class="gate-svg" viewBox="0 0 120 80" role="img" aria-label="NOR gate"><path class="gate-shape" d="M25 12 Q49 40 25 68 Q61 65 85 40 Q61 15 25 12 Z"/><circle class="gate-bubble" cx="91" cy="40" r="6"/><path d="M6 27 H33 M6 53 H33 M97 40 H114"/></svg><figcaption>NOR</figcaption></figure>
+        </div>
+        <p>A small circle on the output means <strong>negation</strong>. The extra curved line distinguishes XOR from OR.</p>
+      </section>
+
+      <section class="slide primitive-composite-slide">
+        <div class="kicker">Primitive and composite gates</div>
+        <h2>Primitive Gates Can Build Composite Gates</h2>
+        <div class="primitive-composite-copy">
+          <p><strong>Primitive gate:</strong> a gate available as a basic building block. For our computer, NAND is the primitive gate.</p>
+          <p><strong>Composite gate:</strong> a gate constructed by connecting gates already available to us.</p>
+        </div>
+        <div class="three-way-grid">
+          <div class="circuit-panel"><strong>Three-way AND: Implementation A</strong>
+            <svg class="circuit-svg" viewBox="0 0 500 220" role="img" aria-label="Three-way AND implemented as AND of a and b, followed by AND with c">
+              <text x="18" y="48">a</text><text x="18" y="108">b</text><text x="18" y="178">c</text>
+              <path d="M38 43 H112 M38 103 H112 M38 173 H300"/><path class="gate-shape" d="M112 25 H162 A50 50 0 0 1 162 125 H112 Z"/><text x="139" y="81">AND</text>
+              <path d="M212 75 H300"/><text class="wire-label" x="247" y="64">w</text><path class="gate-shape" d="M300 75 H350 A50 50 0 0 1 350 175 H300 Z"/><text x="327" y="131">AND</text><path d="M400 125 H482"/><text x="447" y="114">out</text>
+            </svg><p class="math-expression">out = (a &middot; b) &middot; c</p>
+          </div>
+          <div class="circuit-panel"><strong>Three-way AND: Implementation B</strong>
+            <svg class="circuit-svg" viewBox="0 0 500 220" role="img" aria-label="Three-way AND implemented as AND of b and c, followed by AND with a">
+              <text x="18" y="48">a</text><text x="18" y="108">b</text><text x="18" y="178">c</text>
+              <path d="M38 43 H300 M38 103 H112 M38 173 H112"/><path class="gate-shape" d="M112 75 H162 A50 50 0 0 1 162 175 H112 Z"/><text x="139" y="131">AND</text>
+              <path d="M212 125 H300"/><text class="wire-label" x="247" y="114">w</text><path class="gate-shape" d="M300 25 H350 A50 50 0 0 1 350 125 H300 Z"/><text x="327" y="81">AND</text><path d="M400 75 H482"/><text x="447" y="64">out</text>
+            </svg><p class="math-expression">out = a &middot; (b &middot; c)</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide gate-drawing-exercise">
+        <div class="kicker">Exercise 1 | Gate diagrams</div>
+        <h2>Draw the Gate Diagrams</h2>
+        <p class="slide-subtitle">Use only AND, OR, and NOT gates. Label every internal wire.</p>
+        <div class="drawing-question-grid">
+          <div><span>A</span><strong>XOR(a,b)</strong><p class="math-expression"><span class="overline">a</span> &middot; b + a &middot; <span class="overline">b</span></p><button class="reveal" type="button" data-reveal="xor-gate-answer">Reveal diagram</button></div>
+          <div><span>B</span><strong>NAND(a,b)</strong><p class="math-expression"><span class="overline">a &middot; b</span></p><button class="reveal" type="button" data-reveal="nand-gate-answer">Reveal diagram</button></div>
+        </div>
+        <div class="drawing-answer-grid">
+          <div id="xor-gate-answer" class="answer circuit-answer"><svg class="circuit-svg" viewBox="0 0 600 240" role="img" aria-label="XOR built from NOT, AND, and OR gates">
+            <text x="12" y="65">a</text><text x="12" y="190">b</text><path d="M32 60 H90 M32 185 H90 M50 60 V145 H190 M50 185 V100 H190"/>
+            <path class="not-shape" d="M90 38 L145 60 L90 82 Z"/><circle class="gate-bubble" cx="151" cy="60" r="6"/><path d="M157 60 H190 V80"/>
+            <path class="not-shape" d="M90 163 L145 185 L90 207 Z"/><circle class="gate-bubble" cx="151" cy="185" r="6"/><path d="M157 185 H190"/>
+            <path class="gate-shape" d="M190 55 H235 A35 35 0 0 1 235 125 H190 Z"/><text x="208" y="94">AND</text><path class="gate-shape" d="M190 120 H235 A35 35 0 0 1 235 190 H190 Z"/><text x="208" y="159">AND</text>
+            <path d="M270 90 H346 M270 155 H346"/><path class="or-shape" d="M346 80 Q371 120 346 160 Q396 155 445 120 Q396 85 346 80 Z"/><text x="382" y="125">OR</text><path d="M445 120 H575"/><text x="523" y="108">out</text>
+          </svg></div>
+          <div id="nand-gate-answer" class="answer circuit-answer"><svg class="circuit-svg" viewBox="0 0 600 240" role="img" aria-label="NAND built from AND followed by NOT">
+            <text x="25" y="85">a</text><text x="25" y="165">b</text><path d="M45 80 H170 M45 160 H170"/><path class="gate-shape" d="M170 45 H245 A75 75 0 0 1 245 195 H170 Z"/><text x="212" y="125">AND</text><path d="M320 120 H385"/><path class="not-shape" d="M385 82 L465 120 L385 158 Z"/><circle class="gate-bubble" cx="474" cy="120" r="9"/><path d="M483 120 H575"/><text x="525" y="108">out</text>
+          </svg></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Replace the drawing with a precise textual construction.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Gate-diagram practice</div>
+        <h2>Connect Expressions and Gate Diagrams</h2>
+        <div class="tutorial-grid gate-practice-grid">
+          <div><span>1</span><p>Write the truth table for <span class="math-expression"><span class="overline">a + b</span> &middot; c</span>.</p></div>
+          <div><span>2</span><p>Draw its gate diagram using AND, OR, and NOT gates. Label every internal wire.</p></div>
+          <div><span>3</span><p>Draw a gate diagram for the same function using only NAND gates.</p></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Describe a circuit precisely without relying on a drawing.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Introducing a circuit-description language</div>
+        <h2>Hardware Description Language</h2>
+        <p class="slide-subtitle">A <strong>Hardware Description Language (HDL)</strong> describes the parts of a circuit and how their pins are connected.</p>
+        <div class="hdl-motivation-grid"><div><strong>Draw</strong><p>Diagrams communicate structure, but large designs become difficult to reproduce and change.</p></div><i>&#8594;</i><div><strong>Describe</strong><p>HDL states which parts exist and exactly how their pins are connected.</p></div><i>&#8594;</i><div><strong>Simulate</strong><p>Test the described circuit before building a physical device.</p></div></div>
+        <p>We move from diagrams to HDL because a textual description is precise, easier to change, and can be tested by a hardware simulator.</p>
+      </section>
+
+      <section class="slide hdl-code-slide">
+        <div class="kicker">XOR hardware description</div>
+        <h2>Describe the XOR Construction in HDL</h2>
+        <div class="hdl-code-layout"><pre><code>CHIP Xor {
+  IN a, b;
+  OUT out;
+
+  PARTS:
+  Not(in=a, out=nota);
+  Not(in=b, out=notb);
+  And(a=a, b=notb, out=w1);
+  And(a=nota, b=b, out=w2);
+  Or(a=w1, b=w2, out=out);
+}</code></pre>
+          <div class="hdl-correspondence"><div><span>Interface</span><strong><code>CHIP</code>, <code>IN</code>, <code>OUT</code></strong><p>The chip's name and the pins visible to someone using it.</p></div><div><span>Implementation</span><strong><code>PARTS:</code></strong><p>The lower-level gates used to build XOR.</p></div><div><span>Connections</span><strong>Named pins and wires</strong><p>Values flow through <code>nota</code>, <code>notb</code>, <code>w1</code>, and <code>w2</code>.</p></div></div>
         </div>
       </section>
 
       <section class="slide">
-        <div class="kicker">From mathematics to hardware</div>
-        <h2>Boolean Functions Become Logic Gates</h2>
-        <div class="logic-flow">
-          <div><span>Inputs</span><code>x, y</code></div>
-          <i>&#8594;</i>
-          <div class="logic-gate"><span>Boolean function</span><strong>AND</strong></div>
-          <i>&#8594;</i>
-          <div><span>Output</span><code>out</code></div>
-        </div>
-        <p>A <strong>logic gate</strong> is a physical component that implements a Boolean function.</p>
-        <p>The truth table is its public contract. The internal circuit is its implementation.</p>
+        <div class="kicker">Reading the XOR description</div>
+        <h2>The Header Specifies the Interface</h2>
+        <div class="hdl-anatomy-layout"><pre><code><mark>CHIP Xor</mark> {
+  <mark>IN a, b;</mark>
+  <mark>OUT out;</mark>
+
+  PARTS:
+  Not(in=a, out=nota);
+  Not(in=b, out=notb);
+  And(a=a, b=notb, out=w1);
+  And(a=nota, b=b, out=w2);
+  Or(a=w1, b=w2, out=out);
+}</code></pre><div class="api-facts"><div><strong>Chip name</strong><code>Xor</code></div><div><strong>Input pins</strong><code>a</code>, <code>b</code></div><div><strong>Output pin</strong><code>out</code></div></div></div>
+        <p class="prompt">The interface tells us how to connect and use the chip.</p>
       </section>
 
       <section class="slide">
-        <div class="kicker">Gate logic</div>
-        <h2>Primitive and Composite Gates</h2>
-        <div class="comparison light-comparison">
-          <div>
-            <span class="comparison-label">Primitive</span>
-            <p>Treated as an available building block at the current level.</p>
-            <p>In our course, NAND is the primitive gate.</p>
-          </div>
-          <div>
-            <span class="comparison-label accent-label">Composite</span>
-            <p>Built by connecting simpler gates.</p>
-            <p>Once built, it can itself be used as a new building block.</p>
-          </div>
-        </div>
-        <p>Whether a gate is primitive depends on the abstraction level, not on nature.</p>
+        <div class="kicker">Reading the XOR description</div>
+        <h2>The PARTS Section Connects Lower-Level Gates</h2>
+        <div class="hdl-trace-layout"><pre><code>CHIP Xor {
+  IN a, b;
+  OUT out;
+
+  <mark>PARTS:
+  Not(in=a, out=nota);
+  Not(in=b, out=notb);
+  And(a=a, b=notb, out=w1);
+  And(a=nota, b=b, out=w2);
+  Or(a=w1, b=w2, out=out);</mark>
+}</code></pre><div class="signal-trace"><div><code>a</code><span>&#8594;</span><strong>Not</strong><span>&#8594;</span><code>nota</code></div><div><code>b</code><span>&#8594;</span><strong>Not</strong><span>&#8594;</span><code>notb</code></div><div><code>a, notb</code><span>&#8594;</span><strong>And</strong><span>&#8594;</span><code>w1</code></div><div><code>nota, b</code><span>&#8594;</span><strong>And</strong><span>&#8594;</span><code>w2</code></div><div><code>w1, w2</code><span>&#8594;</span><strong>Or</strong><span>&#8594;</span><code>out</code></div></div></div>
+        <p><code>nota</code>, <code>notb</code>, <code>w1</code>, and <code>w2</code> are internal wires, created by naming connections.</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Design discipline</div>
-        <h2>Specification and Implementation</h2>
-        <div class="spec-implementation">
-          <div>
-            <span>Specification</span>
-            <strong>What must happen?</strong>
-            <p>Inputs, outputs, truth table, and required behavior.</p>
-          </div>
-          <i>&#8594;</i>
-          <div>
-            <span>Implementation</span>
-            <strong>How will it happen?</strong>
-            <p>Connections among available lower-level gates.</p>
-          </div>
-          <i>&#8594;</i>
-          <div>
-            <span>Test</span>
-            <strong>Do they match?</strong>
-            <p>Check every input case against the specification.</p>
-          </div>
-        </div>
+      <section class="slide hdl-test-slide">
+        <div class="kicker">Testing the XOR description</div>
+        <h2>Test Every XOR Input Combination</h2>
+        <div class="hdl-test-layout"><div><span>Test script</span><pre><code>load Xor.hdl,
+output-list a, b, out;
+
+set a 0, set b 0, eval, output;
+set a 0, set b 1, eval, output;
+set a 1, set b 0, eval, output;
+set a 1, set b 1, eval, output;</code></pre></div><i>&#8594;</i><div><span>Produced output</span><table class="truth-table compact-table"><thead><tr><th>a</th><th>b</th><th>out</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody></table></div><i>&#8594;</i><div class="test-verdict"><span>Verify</span><strong>Does the produced output match XOR?</strong><p>All four possible inputs are tested.</p></div></div>
+        <p class="next-step"><strong>Next:</strong> State clearly what every chip is required to do.</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Exit ticket</div>
-        <h2>Three Things to Explain</h2>
-        <div class="exit-grid">
-          <div><span>1</span><p>How does a truth table specify a logic gate?</p></div>
-          <div><span>2</span><p>Why can the same Boolean function have different implementations?</p></div>
-          <div><span>3</span><p>What is the difference between a primitive and a composite gate?</p></div>
+      <section class="slide specification-slide">
+        <div class="kicker">Defining required behaviour</div>
+        <h2>What Is a Specification?</h2>
+        <p class="slide-subtitle">A <strong>specification</strong> states the chip's name, inputs, outputs, and required function. It says what the chip must do, independently of how it is built.</p>
+        <p class="example-label">Example specification</p>
+        <div class="contract-card featured-contract"><span><b>Chip name:</b> Not</span><span><b>Inputs:</b> in</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>in=0</code>, then <code>out=1</code>; else <code>out=0</code>.</span></div>
+        <div class="basic-contract-grid">
+          <div class="contract-card"><span><b>Chip name:</b> Nand</span><span><b>Inputs:</b> a, b</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>a=1</code> and <code>b=1</code>, then <code>out=0</code>; else <code>out=1</code>.</span></div>
+          <div class="contract-card"><span><b>Chip name:</b> And</span><span><b>Inputs:</b> a, b</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>a=1</code> and <code>b=1</code>, then <code>out=1</code>; else <code>out=0</code>.</span></div>
+          <div class="contract-card"><span><b>Chip name:</b> Or</span><span><b>Inputs:</b> a, b</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>a=1</code> or <code>b=1</code>, then <code>out=1</code>; else <code>out=0</code>.</span></div>
+          <div class="contract-card"><span><b>Chip name:</b> Xor</span><span><b>Inputs:</b> a, b</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>a</code> and <code>b</code> differ, then <code>out=1</code>; else <code>out=0</code>.</span></div>
         </div>
       </section>
 
-      <section class="slide">
-        <div class="kicker">The next question</div>
-        <h2>Can One Gate Build Every Other Gate?</h2>
-        <p>We will begin with NAND, construct the basic gates, and express those connections in a Hardware Description Language.</p>
-        <div class="next-actions">
-          <a class="button-link" href="lecture-2.html">Previous lecture</a>
-          <a class="button-link" href="../index.html">Course home</a>
+      <section class="slide mux-slide">
+        <div class="kicker">A gate for choosing an input</div>
+        <h2>Multiplexor: Choose One Input</h2>
+        <p class="slide-subtitle">A <strong>multiplexor (Mux)</strong> uses the selection bit <code>sel</code> to choose which input reaches <code>out</code>.</p>
+        <div class="mux-labelled-grid">
+          <div class="representation-panel symbol-panel"><p class="representation-label">Symbolic representation</p><svg class="selector-symbol" viewBox="0 0 320 230" role="img" aria-label="Triangular Mux symbol"><defs><marker id="mux-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" class="arrow-head"/></marker></defs><path class="selector-shape" d="M85 35 L245 115 L85 195 Z"/><path class="flow-line" marker-end="url(#mux-arrow)" d="M20 75 H85"/><path class="flow-line" marker-end="url(#mux-arrow)" d="M20 155 H85"/><path class="flow-line" marker-end="url(#mux-arrow)" d="M245 115 H305"/><path class="flow-line" marker-end="url(#mux-arrow)" d="M165 210 V155"/><text x="30" y="66">a</text><text x="30" y="146">b</text><text x="266" y="105">out</text><text x="174" y="208">sel</text><text class="symbol-name" x="135" y="121">Mux</text></svg></div>
+          <div class="representation-panel"><p class="representation-label">Truth table</p><table class="truth-table mux-truth-table"><thead><tr><th>a</th><th>b</th><th>sel</th><th>out</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td></tr></tbody></table></div>
+          <div class="representation-panel"><p class="representation-label">Abbreviated truth table</p><table class="truth-table compact-table"><thead><tr><th>sel</th><th>out</th></tr></thead><tbody><tr><td>0</td><td>a</td></tr><tr><td>1</td><td>b</td></tr></tbody></table></div>
+          <div class="representation-panel"><p class="representation-label">Specification</p><div class="contract-card"><span><b>Chip name:</b> Mux</span><span><b>Inputs:</b> a, b, sel</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>sel=0</code>, then <code>out=a</code>; else <code>out=b</code>.</span></div></div>
         </div>
+        <div class="mux-prediction-row"><p>Let <code>a=1</code> and <code>b=0</code>. Predict <code>out</code> for both values of <code>sel</code>.</p><button class="reveal" type="button" data-reveal="mux-prediction-answer">Reveal answer</button><div id="mux-prediction-answer" class="answer"><p><code>sel=0: out=1</code> &nbsp; | &nbsp; <code>sel=1: out=0</code></p></div></div>
+      </section>
+
+      <section class="slide exercise-slide mux-exercise-slide">
+        <div class="kicker">Exercise 2 | Multiplexor construction</div>
+        <h2>Build a Mux in Two Ways</h2>
+        <div class="mux-exercise-grid">
+          <div><span>A</span><strong>Using AND, OR, and NOT</strong><p>Draw a gate diagram for Mux and then write its HDL description.</p></div>
+          <div><span>B</span><strong>Using NAND only</strong><p>Draw a NAND-only gate diagram for Mux and then write its HDL description.</p></div>
+        </div>
+        <div class="contract-card mux-contract"><span><b>Chip name:</b> Mux</span><span><b>Inputs:</b> a, b, sel</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If <code>sel=0</code>, then <code>out=a</code>; else <code>out=b</code>.</span></div>
+        <p class="prompt">Use the specification to check both implementations for all eight input combinations.</p>
+      </section>
+
+      <section class="slide dmux-slide">
+        <div class="kicker">A gate for choosing a destination</div>
+        <h2>Demultiplexor: Choose One Destination</h2>
+        <p class="slide-subtitle">A <strong>demultiplexor (DMux)</strong> sends <code>in</code> to output <code>a</code> or output <code>b</code>. The unselected output is <code>0</code>.</p>
+        <div class="dmux-labelled-grid">
+          <div class="representation-panel symbol-panel"><p class="representation-label">Symbolic representation</p><svg class="selector-symbol" viewBox="0 0 320 230" role="img" aria-label="Triangular DMux symbol"><defs><marker id="dmux-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" class="arrow-head"/></marker></defs><path class="selector-shape" d="M75 115 L235 35 L235 195 Z"/><path class="flow-line" marker-end="url(#dmux-arrow)" d="M15 115 H75"/><path class="flow-line" marker-end="url(#dmux-arrow)" d="M235 75 H300"/><path class="flow-line" marker-end="url(#dmux-arrow)" d="M235 155 H300"/><path class="flow-line" marker-end="url(#dmux-arrow)" d="M155 210 V155"/><text x="25" y="105">in</text><text x="275" y="66">a</text><text x="275" y="146">b</text><text x="164" y="208">sel</text><text class="symbol-name" x="125" y="121">DMux</text></svg></div>
+          <div class="representation-panel"><p class="representation-label">Truth table</p><table class="truth-table"><thead><tr><th>in</th><th>sel</th><th>a</th><th>b</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody></table></div>
+          <div class="representation-panel"><p class="representation-label">Abbreviated truth table</p><table class="truth-table compact-table"><thead><tr><th>sel</th><th>a</th><th>b</th></tr></thead><tbody><tr><td>0</td><td>in</td><td>0</td></tr><tr><td>1</td><td>0</td><td>in</td></tr></tbody></table></div>
+          <div class="representation-panel"><p class="representation-label">Specification</p><div class="contract-card"><span><b>Chip name:</b> DMux</span><span><b>Inputs:</b> in, sel</span><span><b>Outputs:</b> a, b</span><span><b>Function:</b> If <code>sel=0</code>, then <code>a=in</code> and <code>b=0</code>; else <code>a=0</code> and <code>b=in</code>.</span></div></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Apply one gate operation to a group of bits.</p>
+      </section>
+
+      <section class="slide multibit-overview-slide">
+        <div class="kicker">Introducing multi-bit gates</div>
+        <h2>A Multi-Bit Gate Operates on a Bus</h2>
+        <p>A <strong class="new-term">bus</strong> is a group of parallel wires. A 16-bit bus carries sixteen binary values at the same time.</p>
+        <div class="multibit-overview-grid">
+          <div class="not16-example"><p class="example-label">Example: multi-bit NOT</p><div class="contract-card"><span><b>Chip name:</b> Not16</span><span><b>Inputs:</b> in[16]</span><span><b>Outputs:</b> out[16]</span><span><b>Function:</b> For every position <code>i</code>, <code>out[i]=Not(in[i])</code>.</span></div><div class="bit-example"><span><strong>Example input:</strong></span><code>0000000000000011</code><span><strong>Required output:</strong></span><code>1111111111111100</code></div></div>
+          <div class="other-multibit-contracts"><p class="example-label">Other examples</p>
+            <div class="contract-card"><span><b>Chip name:</b> And16</span><span><b>Inputs:</b> a[16], b[16]</span><span><b>Outputs:</b> out[16]</span><span><b>Function:</b> For every <code>i</code>, <code>out[i]=And(a[i],b[i])</code>.</span></div>
+            <div class="contract-card"><span><b>Chip name:</b> Or16</span><span><b>Inputs:</b> a[16], b[16]</span><span><b>Outputs:</b> out[16]</span><span><b>Function:</b> For every <code>i</code>, <code>out[i]=Or(a[i],b[i])</code>.</span></div>
+            <div class="contract-card"><span><b>Chip name:</b> Mux16</span><span><b>Inputs:</b> a[16], b[16], sel</span><span><b>Outputs:</b> out[16]</span><span><b>Function:</b> If <code>sel=0</code>, then <code>out=a</code>; else <code>out=b</code>.</span></div>
+          </div>
+        </div>
+        <p class="prompt">Each bit position is processed independently; neighboring positions do not interact.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Introducing a multi-way gate</div>
+        <h2>Or8Way Reduces Eight Inputs to One Bit</h2>
+        <div class="reduction-layout"><div class="input-stack"><code>in[0]</code><code>in[1]</code><code>...</code><code>in[7]</code></div><i>&#8594;</i><div class="bus-chip"><strong>Or8Way</strong><span>OR all inputs</span></div><i>&#8594;</i><div class="bus-card"><code>out</code></div></div>
+        <div class="contract-card"><span><b>Chip name:</b> Or8Way</span><span><b>Inputs:</b> in[8]</span><span><b>Outputs:</b> out</span><span><b>Function:</b> If at least one input bit is <code>1</code>, then <code>out=1</code>; else <code>out=0</code>.</span></div>
+        <p class="prompt">Or16 operates pairwise on two buses. Or8Way combines eight input bits into one output bit.</p>
+      </section>
+
+      <section class="slide multiway-mux-slide">
+        <div class="kicker">Multi-way, multi-bit selection</div>
+        <h2>Mux4Way16 and Mux8Way16</h2>
+        <div class="multiway-grid">
+          <div><div class="contract-card"><span><b>Chip name:</b> Mux4Way16</span><span><b>Inputs:</b> a[16], b[16], c[16], d[16], sel[2]</span><span><b>Outputs:</b> out[16]</span><span><b>Function:</b> The two-bit selector chooses one of four input buses.</span></div><table class="truth-table compact-table"><tbody><tr><th>sel</th><th>out</th></tr><tr><td>00</td><td>a</td></tr><tr><td>01</td><td>b</td></tr><tr><td>10</td><td>c</td></tr><tr><td>11</td><td>d</td></tr></tbody></table></div>
+          <div><div class="contract-card"><span><b>Chip name:</b> Mux8Way16</span><span><b>Inputs:</b> a[16] through h[16], sel[3]</span><span><b>Outputs:</b> out[16]</span><span><b>Function:</b> The three-bit selector chooses one of eight input buses.</span></div><div class="selector-explanation"><strong>Why these selector widths?</strong><p>Two bits encode four choices: <code>00</code> to <code>11</code>.</p><p>Three bits encode eight choices: <code>000</code> to <code>111</code>.</p></div></div>
+        </div>
+      </section>
+
+      <section class="slide multiway-dmux-slide">
+        <div class="kicker">Multi-way routing</div>
+        <h2>DMux4Way and DMux8Way</h2>
+        <div class="multiway-grid">
+          <div><div class="contract-card"><span><b>Chip name:</b> DMux4Way</span><span><b>Inputs:</b> in, sel[2]</span><span><b>Outputs:</b> a, b, c, d</span><span><b>Function:</b> Route <code>in</code> to the selected output; set the other outputs to <code>0</code>.</span></div><table class="truth-table compact-table"><tbody><tr><th>sel</th><th>a</th><th>b</th><th>c</th><th>d</th></tr><tr><td>00</td><td>in</td><td>0</td><td>0</td><td>0</td></tr><tr><td>01</td><td>0</td><td>in</td><td>0</td><td>0</td></tr><tr><td>10</td><td>0</td><td>0</td><td>in</td><td>0</td></tr><tr><td>11</td><td>0</td><td>0</td><td>0</td><td>in</td></tr></tbody></table></div>
+          <div><div class="contract-card"><span><b>Chip name:</b> DMux8Way</span><span><b>Inputs:</b> in, sel[3]</span><span><b>Outputs:</b> a, b, c, d, e, f, g, h</span><span><b>Function:</b> Route <code>in</code> to the selected output; set the other seven outputs to <code>0</code>.</span></div><p>Three selector bits choose one of eight destinations.</p></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Implement the specified gates in HDL.</p>
+      </section>
+
+      <section class="slide homework-slide">
+        <div class="kicker">Exercise 3 | Complete at home</div>
+        <h2>Implement the Following Gates in HDL</h2>
+        <p class="slide-subtitle">For every named chip below, write an HDL implementation using only NAND or chips that you have already implemented from NAND.</p>
+        <div class="homework-layout"><div><strong>Two-input and selector gates</strong><span>Not, And, Or, Xor, Mux, DMux</span></div><div><strong>Gates operating on buses</strong><span>Not16, And16, Or16, Mux16</span></div><div><strong>Gates with several inputs or outputs</strong><span>Or8Way, Mux4Way16, Mux8Way16, DMux4Way, DMux8Way</span></div></div>
+        <div class="homework-requirements"><strong>For each chip:</strong><ol><li>Read its specification.</li><li>Plan the internal gate connections.</li><li>Write the HDL.</li><li>Run the supplied test script and correct every failing case.</li></ol></div>
+      </section>
+
+      <section class="slide review-exercise-slide">
+        <div class="kicker">Review questions</div>
+        <h2>Check Your Understanding</h2>
+        <div class="review-question-grid">
+          <div><span>1</span><p>For a Mux with <code>a=0</code> and <code>b=1</code>, find <code>out</code> for both values of <code>sel</code>.</p></div>
+          <div><span>2</span><p>For a DMux with <code>in=1</code>, find <code>(a,b)</code> for both values of <code>sel</code>.</p></div>
+          <div><span>3</span><p>If <code>in[16]=0000000000000101</code>, what is the output of Not16?</p></div>
+          <div><span>4</span><p>Why does Mux8Way16 need three selector bits?</p></div>
+          <div><span>5</span><p>How is Or8Way different from Or16?</p></div>
+          <div><span>6</span><p>For DMux4Way with <code>in=1</code> and <code>sel=10</code>, write <code>a,b,c,d</code>.</p></div>
+        </div>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next lecture | Boolean Arithmetic</div>
+        <h2>Represent Numbers and Perform Arithmetic</h2>
+        <p class="lead">How can gates represent numbers and perform operations such as addition and multiplication?</p>
+        <div class="title-route" aria-label="Next lecture route"><span>binary numbers</span><i>&#8594;</i><span>addition</span><i>&#8594;</i><span>carry</span><i>&#8594;</i><span>multiplication</span></div>
+        <div class="next-actions"><a class="button-link" href="lecture-2.html">Previous lecture</a><a class="button-link" href="../index.html">Course home</a></div>
       </section>
     </main>
 
     <nav class="controls" aria-label="Slide controls">
-      <a href="../index.html">Home</a>
-      <button type="button" data-prev aria-label="Previous slide">&#8592;</button>
-      <span class="progress"><span data-current-slide>1</span> / <span data-total-slides>6</span></span>
-      <button type="button" data-next aria-label="Next slide">&#8594;</button>
+      <a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>23</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button>
     </nav>
     <script src="../assets/slides.js"></script>
   </body>

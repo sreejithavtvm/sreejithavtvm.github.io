@@ -3538,6 +3538,1890 @@ a {
   margin-top: 24px;
 }
 
+/* Lecture 3 extends the Lecture 2 theme with gate, HDL, and specification diagrams. */
+.lecture-three .slide h2 {
+  font-size: clamp(2.05rem, 3.15vw, 3.45rem);
+}
+
+.lecture-three .spec-implementation {
+  width: 100%;
+  max-width: none;
+}
+
+.lecture-stack-map,
+.hdl-motivation-grid,
+.bus-concept-layout,
+.bus-mux-layout,
+.reduction-layout {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  margin: 24px 0;
+}
+
+.lecture-stack-map > div,
+.hdl-motivation-grid > div,
+.bus-card,
+.bus-chip {
+  display: grid;
+  min-height: 125px;
+  place-content: center;
+  gap: 7px;
+  padding: 17px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+}
+
+.lecture-stack-map .active-layer {
+  border: 2px solid var(--accent);
+  background: #e0f2fe;
+}
+
+.lecture-stack-map span,
+.hdl-motivation-grid strong,
+.bus-card span,
+.bus-chip span {
+  color: var(--accent-dark);
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lecture-stack-map strong,
+.hdl-motivation-grid strong,
+.bus-chip strong {
+  font-size: 1.25rem;
+}
+
+.lecture-stack-map small,
+.hdl-motivation-grid p {
+  color: var(--muted);
+}
+
+.lecture-stack-map > i,
+.hdl-motivation-grid > i,
+.bus-concept-layout > i,
+.bus-mux-layout > i,
+.reduction-layout > i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.6rem;
+}
+
+.gate-definition-layout {
+  display: grid;
+  grid-template-columns: minmax(480px, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 5vw, 76px);
+  align-items: center;
+  width: 100%;
+}
+
+.gate-contract-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+}
+
+.gate-contract-card strong {
+  padding: 25px 20px;
+  border: 2px solid var(--accent);
+  border-radius: 8px 36px 36px 8px;
+  background: #e0f2fe;
+}
+
+.gate-contract-card i {
+  color: var(--accent-dark);
+  font-style: normal;
+}
+
+.gate-contract-card span,
+.definition-copy strong {
+  color: var(--accent-dark);
+  font-weight: 850;
+}
+
+.gate-contract-card code {
+  display: block;
+  margin-top: 5px;
+}
+
+.definition-copy p {
+  margin: 0 0 16px;
+}
+
+.gate-symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.gate-symbol-grid figure {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) auto;
+  align-items: center;
+  min-height: 140px;
+  margin: 0;
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.gate-symbol-grid figcaption {
+  color: var(--accent-dark);
+  font-size: 1.2rem;
+  font-weight: 850;
+}
+
+.gate-svg,
+.circuit-svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.gate-svg path,
+.gate-svg circle,
+.circuit-svg path,
+.circuit-svg circle {
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.gate-svg .gate-shape,
+.circuit-svg .gate-shape,
+.circuit-svg .not-shape,
+.circuit-svg .or-shape {
+  fill: #e0f2fe;
+  stroke: var(--accent-dark);
+}
+
+.gate-svg .gate-bubble,
+.circuit-svg .gate-bubble {
+  fill: #fff;
+}
+
+.gate-svg .gate-extra {
+  stroke: var(--accent-dark);
+}
+
+.three-way-grid,
+.drawing-question-grid,
+.drawing-answer-grid,
+.multiway-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  width: 100%;
+}
+
+.circuit-panel,
+.drawing-question-grid > div,
+.multiway-grid > div {
+  padding: 17px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.circuit-panel > strong,
+.multiway-grid > div > strong {
+  color: var(--accent-dark);
+  font-size: 1.12rem;
+}
+
+.circuit-panel .circuit-svg {
+  height: 265px;
+}
+
+.circuit-svg text {
+  fill: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.circuit-svg .wire-label {
+  fill: var(--accent-dark);
+  font-size: 14px;
+}
+
+.circuit-panel p {
+  margin: 0;
+  text-align: center;
+}
+
+.drawing-question-grid > div {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 7px 14px;
+  align-items: center;
+}
+
+.drawing-question-grid > div > span {
+  grid-row: 1 / 3;
+  color: var(--accent-dark);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.drawing-question-grid p,
+.drawing-question-grid button {
+  margin: 0;
+}
+
+.drawing-answer-grid {
+  margin-top: 12px;
+}
+
+.circuit-answer {
+  margin: 0;
+  padding: 8px 14px;
+}
+
+.circuit-answer .circuit-svg {
+  height: 225px;
+}
+
+.gate-drawing-exercise .circuit-answer .circuit-svg {
+  height: 180px;
+}
+
+.hdl-code-layout,
+.hdl-anatomy-layout,
+.hdl-trace-layout,
+.mux-layout,
+.mux-short-layout,
+.dmux-layout {
+  display: grid;
+  grid-template-columns: minmax(470px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(30px, 5vw, 72px);
+  align-items: center;
+  width: 100%;
+}
+
+.hdl-code-layout pre,
+.hdl-anatomy-layout pre,
+.hdl-trace-layout pre,
+.hdl-test-layout pre {
+  margin: 0;
+  padding: 18px;
+  overflow: auto;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #111827;
+  color: #f8fafc;
+  font-size: clamp(0.76rem, 1.35vw, 1rem);
+  line-height: 1.45;
+}
+
+.lecture-three pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.lecture-three pre mark {
+  padding: 1px 3px;
+  background: #fde68a;
+  color: #111827;
+}
+
+.hdl-correspondence,
+.api-facts,
+.signal-trace {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+}
+
+.hdl-correspondence > div,
+.api-facts > div,
+.signal-trace > div {
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.hdl-correspondence span,
+.api-facts strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hdl-correspondence p {
+  margin: 5px 0 0;
+  font-size: 0.95rem;
+}
+
+.api-facts > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.signal-trace > div {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 9px;
+  align-items: center;
+  text-align: center;
+}
+
+.signal-trace span {
+  color: var(--accent-dark);
+}
+
+.hdl-test-layout {
+  display: grid;
+  grid-template-columns: minmax(380px, 1fr) auto minmax(260px, 0.65fr) auto minmax(260px, 0.7fr);
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+}
+
+.hdl-test-layout > div {
+  min-width: 0;
+}
+
+.hdl-test-layout > div > span,
+.test-verdict > span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--accent-dark);
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hdl-test-layout > i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.5rem;
+}
+
+.test-verdict {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  background: #fff;
+}
+
+.test-verdict p {
+  font-size: 0.94rem;
+}
+
+.spec-contract-grid {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 0.7fr 2fr;
+  gap: 1px;
+  width: 100%;
+  margin: 20px 0;
+  background: var(--line);
+}
+
+.spec-contract-grid > div {
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  min-height: 120px;
+  padding: 16px;
+  background: #fff;
+}
+
+.spec-contract-grid span {
+  color: var(--accent-dark);
+  font-size: 0.76rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.compact-comparison {
+  width: 100%;
+  max-width: none;
+}
+
+.compact-comparison > div {
+  min-height: 115px;
+}
+
+.gate-api-grid,
+.wide-api-grid,
+.homework-layout,
+.tutorial-grid,
+.two-rule-cards {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+}
+
+.gate-api-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.gate-api-grid > div,
+.wide-api-grid > div,
+.homework-layout > div,
+.tutorial-grid > div,
+.two-rule-cards > div {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.gate-api-grid strong,
+.wide-api-grid strong,
+.homework-layout strong,
+.two-rule-cards strong {
+  color: var(--accent-dark);
+  font-size: 1.15rem;
+}
+
+.gate-api-grid span,
+.homework-layout span,
+.two-rule-cards span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.mux-layout,
+.dmux-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 0.8fr);
+}
+
+.mux-layout > table,
+.dmux-layout > table,
+.mux-short-layout > table {
+  justify-self: end;
+}
+
+.chip-symbol {
+  position: relative;
+  display: grid;
+  width: 250px;
+  min-height: 150px;
+  place-content: center;
+  margin: 26px auto;
+  border: 3px solid var(--accent-dark);
+  border-radius: 9px;
+  background: #e0f2fe;
+}
+
+.chip-symbol strong {
+  font-size: 1.35rem;
+}
+
+.chip-symbol .pin {
+  position: absolute;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 800;
+}
+
+.chip-symbol .pin::after {
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background: var(--ink);
+  content: "";
+}
+
+.mux-symbol .pin-a,
+.mux-symbol .pin-b,
+.dmux-symbol .pin-in { left: -55px; }
+.mux-symbol .pin-a { top: 32px; }
+.mux-symbol .pin-b { bottom: 32px; }
+.mux-symbol .pin-a::after,
+.mux-symbol .pin-b::after,
+.dmux-symbol .pin-in::after { left: 18px; top: 10px; }
+.mux-symbol .pin-out { right: -60px; top: 64px; }
+.mux-symbol .pin-out::after { right: 25px; top: 10px; }
+.chip-symbol .pin-sel { bottom: -36px; left: 108px; }
+.chip-symbol .pin-sel::after { width: 2px; height: 27px; left: 11px; bottom: 20px; }
+
+.dmux-symbol .pin-in { top: 64px; }
+.dmux-symbol .pin-aout,
+.dmux-symbol .pin-bout { right: -48px; }
+.dmux-symbol .pin-aout { top: 32px; }
+.dmux-symbol .pin-bout { bottom: 32px; }
+.dmux-symbol .pin-aout::after,
+.dmux-symbol .pin-bout::after { right: 14px; top: 10px; }
+
+.mux-rule {
+  text-align: center;
+}
+
+.mux-truth-table th,
+.mux-truth-table td {
+  padding: 5px 10px;
+  font-size: 0.94rem;
+}
+
+.mux-short-layout {
+  grid-template-columns: minmax(320px, 0.7fr) minmax(0, 1.3fr);
+}
+
+.selection-question {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--warm);
+  background: #fff;
+}
+
+.selection-question p {
+  margin-top: 0;
+}
+
+.bus-concept-layout,
+.bus-mux-layout,
+.reduction-layout {
+  grid-template-columns: 1fr auto 0.9fr auto 1fr;
+}
+
+.bus-lines {
+  display: grid;
+  gap: 10px;
+}
+
+.bus-lines code {
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-align: center;
+}
+
+.wide-api-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.wide-api-grid p {
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.two-rule-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.two-rule-cards > div {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+.two-rule-cards span {
+  grid-column: 1 / -1;
+}
+
+.input-stack {
+  display: grid;
+  gap: 7px;
+}
+
+.input-stack code {
+  min-width: 150px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-align: center;
+}
+
+.multiway-grid > div > code {
+  display: block;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.multiway-grid table {
+  width: 100%;
+}
+
+.selector-math {
+  display: grid;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 14px;
+  border-left: 5px solid var(--accent);
+  background: #e7f5f1;
+}
+
+.selector-math span {
+  color: var(--muted);
+}
+
+.homework-layout {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.build-workflow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  margin: 20px 0;
+  padding: 0 !important;
+  background: var(--line);
+  counter-reset: build-step;
+  list-style: none;
+}
+
+.build-workflow li {
+  min-height: 110px;
+  padding: 15px;
+  background: #fff;
+  counter-increment: build-step;
+}
+
+.build-workflow li::before {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent-dark);
+  font-weight: 900;
+  content: counter(build-step);
+}
+
+.tutorial-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tutorial-grid > div {
+  grid-template-columns: 38px 1fr;
+  min-height: 150px;
+}
+
+.tutorial-grid > div > span {
+  color: var(--accent-dark);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.tutorial-grid p {
+  margin: 0;
+}
+
+.tutorial-answers {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.tutorial-answers.visible {
+  display: grid;
+}
+
+.tutorial-answers p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+/* Lecture 3 revision: explicit definitions, contracts, and standalone labels. */
+.lecture-three .next-step {
+  position: absolute;
+  right: clamp(24px, 4vw, 72px);
+  bottom: 82px;
+  width: auto;
+  max-width: min(100%, 760px);
+  justify-self: end;
+  align-self: end;
+  margin: 0;
+  text-align: right;
+}
+
+.primitive-composite-copy {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.primitive-composite-copy p {
+  margin: 0;
+  padding: 12px 15px;
+  border-left: 5px solid var(--accent);
+  background: #fff;
+  font-size: 0.95rem !important;
+}
+
+.primitive-composite-slide .circuit-panel {
+  padding: 12px 15px;
+}
+
+.primitive-composite-slide .circuit-panel .circuit-svg {
+  height: 205px;
+}
+
+.primitive-composite-slide .circuit-panel p {
+  font-size: 0.95rem;
+}
+
+.gate-practice-grid > div {
+  min-height: 190px;
+}
+
+.example-label {
+  margin: 8px 0 7px !important;
+  color: var(--warm);
+  font-size: 0.78rem !important;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.contract-card {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  border-radius: 7px;
+  background: #fff;
+}
+
+.contract-card span {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.contract-card b {
+  color: var(--accent-dark);
+}
+
+.featured-contract {
+  grid-template-columns: 1fr;
+  gap: 4px;
+  width: 100%;
+  padding: 13px 16px;
+}
+
+.basic-contract-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.specification-slide .slide-subtitle {
+  margin-bottom: 5px;
+}
+
+.mux-complete-layout {
+  display: grid;
+  grid-template-columns: minmax(270px, 0.62fr) minmax(420px, 0.9fr) minmax(280px, 0.7fr);
+  gap: clamp(22px, 3vw, 46px);
+  align-items: center;
+  width: 100%;
+}
+
+.selector-symbol {
+  width: 100%;
+  max-height: 280px;
+  overflow: visible;
+}
+
+.selector-symbol path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.selector-symbol .selector-shape {
+  fill: #e0f2fe;
+  stroke: var(--accent-dark);
+}
+
+.selector-symbol .arrow-head {
+  fill: var(--ink);
+  stroke: none;
+}
+
+.selector-symbol text {
+  fill: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.selector-symbol .symbol-name {
+  font-size: 19px;
+}
+
+.mux-side-content {
+  display: grid;
+  gap: 16px;
+}
+
+.mux-side-content .truth-table {
+  width: 100%;
+}
+
+.mux-side-content .selection-question {
+  padding: 13px;
+}
+
+.mux-side-content .selection-question p,
+.mux-side-content .answer p {
+  margin: 0 0 7px;
+  font-size: 0.9rem;
+}
+
+.mux-exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin: 18px 0;
+}
+
+.mux-exercise-grid > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  min-height: 145px;
+  align-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.mux-exercise-grid > div > span {
+  grid-row: 1 / 3;
+  color: var(--accent-dark);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.mux-exercise-grid p {
+  margin: 0;
+}
+
+.mux-contract {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.dmux-layout {
+  align-items: start;
+}
+
+.dmux-layout > div {
+  min-width: 0;
+}
+
+.dmux-layout .selector-symbol {
+  display: block;
+  width: min(100%, 360px);
+  height: 150px;
+  margin: 0 auto 14px;
+}
+
+.abbreviated-dmux {
+  margin-top: 12px;
+}
+
+.dmux-slide .truth-table th,
+.dmux-slide .truth-table td {
+  padding: 5px 8px;
+}
+
+.dmux-slide .dmux-layout p {
+  margin: 0 0 6px;
+  font-size: 0.94rem;
+}
+
+.dmux-layout > div:last-child {
+  display: grid;
+  gap: 20px;
+}
+
+.new-term {
+  padding: 1px 5px;
+  background: #ccfbf1;
+  color: var(--accent-dark);
+}
+
+.multibit-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(380px, 0.82fr) minmax(0, 1.18fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.not16-example,
+.other-multibit-contracts {
+  min-width: 0;
+}
+
+.not16-example > p:last-child {
+  padding: 12px;
+  background: #fff;
+  overflow-wrap: anywhere;
+  font-size: 0.88rem;
+}
+
+.bit-example {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 5px 12px;
+  padding: 12px;
+  background: #fff;
+  font-size: 0.88rem;
+}
+
+.bit-example code {
+  justify-self: start;
+  font-variant-numeric: tabular-nums;
+}
+
+.other-multibit-contracts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.other-multibit-contracts .example-label {
+  grid-column: 1 / -1;
+}
+
+.multibit-overview-slide .prompt {
+  margin-top: 12px;
+}
+
+.reduction-layout + .contract-card {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.mux-labelled-grid,
+.dmux-labelled-grid {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.82fr) minmax(330px, 1fr) minmax(225px, 0.65fr) minmax(300px, 0.95fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+}
+
+.representation-panel {
+  min-width: 0;
+}
+
+.representation-label {
+  margin: 0 0 8px !important;
+  color: var(--accent-dark);
+  font-size: 0.75rem !important;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.representation-panel .truth-table {
+  width: 100%;
+}
+
+.representation-panel .selector-symbol {
+  display: block;
+  width: 100%;
+  height: 220px;
+}
+
+.mux-labelled-grid .mux-truth-table th,
+.mux-labelled-grid .mux-truth-table td,
+.dmux-labelled-grid .truth-table th,
+.dmux-labelled-grid .truth-table td {
+  padding: 5px 7px;
+  font-size: 0.88rem;
+}
+
+.mux-prediction-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-left: 5px solid var(--warm);
+  background: #fff;
+}
+
+.mux-prediction-row p {
+  margin: 0;
+  font-size: 0.94rem !important;
+}
+
+.mux-prediction-row .answer {
+  margin: 0;
+  padding: 7px 10px;
+}
+
+.mux-prediction-row .answer.visible {
+  display: block;
+}
+
+.dmux-labelled-grid .symbol-panel .selector-symbol {
+  height: 230px;
+}
+
+.multiway-grid .contract-card {
+  min-height: 155px;
+}
+
+.selector-explanation {
+  margin-top: 16px;
+  padding: 15px;
+  border-left: 5px solid var(--accent);
+  background: #e7f5f1;
+}
+
+.selector-explanation p {
+  margin: 7px 0 0;
+  font-size: 0.92rem;
+}
+
+.homework-requirements {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: start;
+  margin-top: 18px;
+  padding: 16px;
+  border-left: 5px solid var(--warm);
+  background: #fff;
+}
+
+.homework-requirements ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.homework-requirements li {
+  font-size: 0.9rem !important;
+}
+
+.review-question-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.review-question-grid > div {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  min-height: 150px;
+  align-content: start;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.review-question-grid span {
+  color: var(--accent-dark);
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.review-question-grid p {
+  margin: 0;
+  font-size: 0.96rem !important;
+}
+
+/* Lecture 4: binary representation, addition, and two's complement. */
+.lecture-four .next-step {
+  position: absolute;
+  right: clamp(24px, 4vw, 72px);
+  bottom: 82px;
+  width: auto;
+  max-width: min(100%, 820px);
+  margin: 0;
+  text-align: right;
+}
+
+.place-value-layout,
+.pattern-count-layout,
+.word-size-layout,
+.general-count-grid,
+.worked-addition-layout,
+.overflow-layout,
+.signed-map-layout {
+  display: grid;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  width: 100%;
+}
+
+.place-value-layout {
+  grid-template-columns: minmax(420px, 0.9fr) auto minmax(0, 1.1fr);
+}
+
+.place-value-layout > i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.8rem;
+}
+
+.place-number,
+.expansion-card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.place-number > span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--accent-dark);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.digit-row,
+.weight-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  text-align: center;
+}
+
+.binary-number .digit-row,
+.binary-number .weight-row {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.digit-row b {
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: #e0f2fe;
+  font-size: 1.6rem;
+}
+
+.weight-row small {
+  padding: 8px;
+  color: var(--muted);
+}
+
+.expansion-card p {
+  margin: 0 0 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem !important;
+}
+
+.expansion-card strong {
+  color: var(--accent-dark);
+  font-size: 1.5rem;
+}
+
+.bit-pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.bit-pattern-grid > div {
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  min-height: 190px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+}
+
+.bit-pattern-grid strong {
+  color: var(--accent-dark);
+}
+
+.bit-pattern-grid code {
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+
+.bit-pattern-grid span {
+  color: var(--muted);
+}
+
+.word-size-layout {
+  grid-template-columns: minmax(0, 0.85fr) minmax(520px, 1.15fr);
+}
+
+.word-examples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.word-examples div {
+  display: grid;
+  gap: 8px;
+  min-height: 120px;
+  align-content: center;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  text-align: center;
+}
+
+.word-examples strong {
+  color: var(--accent-dark);
+}
+
+.word-examples code {
+  overflow-wrap: anywhere;
+  letter-spacing: 0.04em;
+}
+
+.pattern-count-layout {
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.6fr);
+}
+
+.choice-chain {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 0.7fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.choice-chain div,
+.count-result {
+  display: grid;
+  gap: 7px;
+  place-content: center;
+  min-height: 145px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-align: center;
+}
+
+.choice-chain i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.5rem;
+}
+
+.choice-chain span,
+.count-result span {
+  color: var(--muted);
+}
+
+.count-result {
+  border-top: 5px solid var(--accent);
+}
+
+.count-result strong {
+  color: var(--accent-dark);
+  font-size: 1.7rem;
+}
+
+.count-result p {
+  margin: 0;
+  font-size: 0.95rem !important;
+}
+
+.general-count-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 0.8fr);
+}
+
+.question-card {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--warm);
+  background: #fff;
+}
+
+.question-card p {
+  margin: 0;
+}
+
+.question-card input {
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+}
+
+.question-card button {
+  justify-self: start;
+}
+
+.significance-diagram {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.annotated-bits {
+  display: grid;
+  grid-template-columns: repeat(5, 70px);
+}
+
+.annotated-bits b {
+  display: grid;
+  min-height: 76px;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 2rem;
+}
+
+.annotated-bits b:first-child,
+.annotated-bits b:last-child {
+  background: #ccfbf1;
+  color: var(--accent-dark);
+}
+
+.bit-callout {
+  display: grid;
+  gap: 4px;
+  text-align: center;
+}
+
+.bit-callout strong {
+  color: var(--accent-dark);
+}
+
+.bit-callout span {
+  color: var(--muted);
+}
+
+.bit-callout i {
+  color: var(--warm);
+  font-style: normal;
+  font-size: 1.7rem;
+}
+
+.two-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.two-facts div {
+  padding: 14px;
+  border-left: 5px solid var(--accent);
+  background: #fff;
+}
+
+.two-facts p {
+  margin: 5px 0 0;
+  font-size: 0.95rem !important;
+}
+
+.addition-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.addition-rule-grid div {
+  display: grid;
+  gap: 10px;
+  min-height: 175px;
+  place-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+}
+
+.addition-rule-grid code {
+  font-size: 1.45rem;
+}
+
+.addition-rule-grid span {
+  color: var(--muted);
+}
+
+.addition-rule-grid .carry-case {
+  border-top-color: var(--warm);
+  background: #fff7ed;
+}
+
+.worked-addition-layout,
+.overflow-layout {
+  grid-template-columns: minmax(360px, 0.75fr) minmax(0, 1.25fr);
+}
+
+.column-addition {
+  display: grid;
+  justify-content: center;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font: 800 1.8rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre;
+}
+
+.column-addition span,
+.column-addition strong {
+  display: block;
+}
+
+.column-addition .carry-line {
+  color: var(--warm);
+  font-size: 1.05rem;
+  text-align: right;
+}
+
+.column-addition i {
+  display: block;
+  height: 2px;
+  margin: 4px 0;
+  background: var(--ink);
+}
+
+.addition-steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.addition-steps li {
+  padding: 8px 12px;
+  background: #fff;
+}
+
+.check-line,
+.verification-line {
+  padding: 13px 15px;
+  border-left: 5px solid var(--accent);
+  background: #fff;
+}
+
+.overflow-copy {
+  padding: 18px;
+  border-left: 6px solid var(--warm);
+  background: #fff7ed;
+}
+
+.addition-exercise-grid,
+.signed-exercise-grid {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  margin: 18px 0;
+}
+
+.addition-exercise-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.addition-exercise-grid > div,
+.signed-exercise-grid > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 7px 14px;
+  align-content: center;
+  min-height: 135px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.addition-exercise-grid span,
+.signed-exercise-grid span {
+  grid-row: 1 / 3;
+  color: var(--accent-dark);
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.addition-exercise-grid p {
+  margin: 0;
+  font-size: 1.3rem !important;
+}
+
+.addition-exercise-grid small {
+  color: var(--muted);
+}
+
+.horizontal-answer {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.horizontal-answer.visible {
+  display: grid;
+}
+
+.horizontal-answer p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.signed-motivation-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.signed-motivation-grid div {
+  min-height: 155px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  background: #fff;
+}
+
+.signed-motivation-grid i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.6rem;
+}
+
+.signed-map-layout {
+  grid-template-columns: minmax(320px, 1fr) 0.65fr minmax(320px, 1fr);
+}
+
+.signed-table {
+  width: 100%;
+}
+
+.sign-divider {
+  display: grid;
+  gap: 7px;
+  text-align: center;
+}
+
+.sign-divider span {
+  color: var(--muted);
+}
+
+.sign-divider strong {
+  color: var(--accent-dark);
+}
+
+.sign-divider i {
+  color: var(--warm);
+  font-style: normal;
+  font-size: 1.7rem;
+}
+
+.negative-table tbody {
+  background: #fff7ed;
+}
+
+.signed-conversion-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.conversion-case {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 7px 16px;
+  align-items: center;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.conversion-case > span {
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.conversion-case > strong {
+  justify-self: end;
+}
+
+.conversion-case > code {
+  grid-row: 2 / 4;
+  padding: 12px;
+  font-size: 1.65rem;
+  letter-spacing: 0.08em;
+}
+
+.conversion-case p {
+  margin: 0;
+  font-size: 0.92rem !important;
+}
+
+.negative-case {
+  border-top-color: var(--warm);
+  background: #fff7ed;
+}
+
+.alternative-conversion {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: center;
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px 16px;
+  background: #fff;
+}
+
+.alternative-conversion > strong {
+  color: var(--accent-dark);
+}
+
+.alternative-conversion > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+}
+
+.alternative-conversion i {
+  color: var(--accent-dark);
+  font-style: normal;
+}
+
+.rule-line {
+  margin: 12px 0 0 !important;
+  padding: 11px 14px;
+  border-left: 5px solid var(--accent);
+  background: #e7f5f1;
+  font-size: 0.94rem !important;
+}
+
+.signed-count-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.55fr 1fr;
+  gap: 16px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.signed-count-grid div {
+  display: grid;
+  gap: 8px;
+  min-height: 150px;
+  place-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  background: #fff;
+  text-align: center;
+}
+
+.signed-count-grid span,
+.signed-count-grid small {
+  color: var(--muted);
+}
+
+.signed-count-grid strong {
+  color: var(--accent-dark);
+  font-size: 1.65rem;
+}
+
+.range-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 18px;
+  border-left: 6px solid var(--warm);
+  background: #fff7ed;
+}
+
+.range-result strong {
+  font-size: 1.35rem;
+}
+
+.negation-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  margin: 22px 0;
+}
+
+.negation-flow div {
+  display: grid;
+  gap: 10px;
+  min-height: 145px;
+  place-content: center;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-align: center;
+}
+
+.negation-flow i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.5rem;
+}
+
+.negation-flow span {
+  color: var(--muted);
+}
+
+.negation-flow code {
+  font-size: 1.45rem;
+  letter-spacing: 0.08em;
+}
+
+.negation-flow .negative-result {
+  border-top: 5px solid var(--warm);
+  background: #fff7ed;
+}
+
+.signed-addition-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto 1.2fr;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  margin: 22px 0;
+}
+
+.signed-addition-layout div {
+  display: grid;
+  gap: 8px;
+  min-height: 145px;
+  place-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-align: center;
+}
+
+.signed-addition-layout > i {
+  color: var(--accent-dark);
+  font-style: normal;
+  font-size: 1.8rem;
+}
+
+.signed-addition-layout code {
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+}
+
+.signed-addition-layout .signed-sum {
+  border-top: 5px solid var(--accent);
+}
+
+.signed-exercise-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.signed-exercise-grid > div {
+  min-height: 110px;
+}
+
+.two-problem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.two-problem-grid > div {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  min-height: 170px;
+  align-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  background: #fff;
+}
+
+.two-problem-grid span {
+  color: var(--accent-dark);
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.two-problem-grid p {
+  margin: 0;
+}
+
+.remember-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.remember-grid div {
+  min-height: 170px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  background: #fff;
+}
+
+.remember-grid strong {
+  color: var(--accent-dark);
+}
+
+.remember-grid p {
+  font-size: 0.95rem !important;
+}
+
 @media (min-width: 900px) {
   .lecture-two .slide h2 {
     white-space: nowrap;
@@ -3589,6 +5473,195 @@ a {
 }
 
 @media (max-width: 760px) {
+  .lecture-three .next-step,
+  .lecture-four .next-step {
+    position: static;
+    justify-self: end;
+    margin-top: 18px;
+  }
+
+  .lecture-three .slide h2 {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .lecture-four .slide h2 {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .lecture-stack-map,
+  .hdl-motivation-grid,
+  .gate-definition-layout,
+  .three-way-grid,
+  .drawing-question-grid,
+  .drawing-answer-grid,
+  .hdl-code-layout,
+  .hdl-anatomy-layout,
+  .hdl-trace-layout,
+  .hdl-test-layout,
+  .spec-contract-grid,
+  .gate-api-grid,
+  .mux-layout,
+  .mux-short-layout,
+  .dmux-layout,
+  .bus-concept-layout,
+  .wide-api-grid,
+  .bus-mux-layout,
+  .two-rule-cards,
+  .reduction-layout,
+  .multiway-grid,
+  .homework-layout,
+  .build-workflow,
+  .tutorial-grid,
+  .tutorial-answers {
+    grid-template-columns: 1fr;
+  }
+
+  .primitive-composite-copy,
+  .featured-contract,
+  .basic-contract-grid,
+  .mux-complete-layout,
+  .mux-exercise-grid,
+  .mux-contract,
+  .multibit-overview-grid,
+  .other-multibit-contracts,
+  .reduction-layout + .contract-card,
+  .homework-requirements,
+  .homework-requirements ol,
+  .review-question-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mux-labelled-grid,
+  .dmux-labelled-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mux-prediction-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .place-value-layout,
+  .bit-pattern-grid,
+  .word-size-layout,
+  .word-examples,
+  .pattern-count-layout,
+  .choice-chain,
+  .general-count-grid,
+  .significance-diagram,
+  .two-facts,
+  .addition-rule-grid,
+  .worked-addition-layout,
+  .overflow-layout,
+  .addition-exercise-grid,
+  .signed-motivation-grid,
+  .signed-map-layout,
+  .signed-conversion-grid,
+  .signed-count-grid,
+  .negation-flow,
+  .signed-addition-layout,
+  .signed-exercise-grid,
+  .two-problem-grid,
+  .remember-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .alternative-conversion {
+    grid-template-columns: 1fr;
+  }
+
+  .place-value-layout > i,
+  .choice-chain > i,
+  .signed-motivation-grid > i,
+  .negation-flow > i,
+  .signed-addition-layout > i {
+    transform: rotate(90deg);
+    text-align: center;
+  }
+
+  .annotated-bits {
+    grid-template-columns: repeat(5, minmax(42px, 1fr));
+  }
+
+  .range-result {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .other-multibit-contracts .example-label {
+    grid-column: auto;
+  }
+
+  .selector-symbol {
+    width: min(100%, 340px);
+  }
+
+  .gate-symbol-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lecture-stack-map > *,
+  .gate-definition-layout > *,
+  .gate-symbol-grid > *,
+  .three-way-grid > *,
+  .drawing-question-grid > *,
+  .drawing-answer-grid > *,
+  .hdl-code-layout > *,
+  .hdl-anatomy-layout > *,
+  .hdl-trace-layout > *,
+  .hdl-test-layout > *,
+  .gate-api-grid > *,
+  .mux-layout > *,
+  .mux-short-layout > *,
+  .dmux-layout > *,
+  .wide-api-grid > *,
+  .multiway-grid > *,
+  .homework-layout > *,
+  .tutorial-grid > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .gate-symbol-grid figure {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .lecture-three pre,
+  .lecture-three table {
+    max-width: 100%;
+  }
+
+  .lecture-stack-map > i,
+  .hdl-motivation-grid > i,
+  .hdl-test-layout > i,
+  .bus-concept-layout > i,
+  .bus-mux-layout > i,
+  .reduction-layout > i {
+    transform: rotate(90deg);
+    text-align: center;
+  }
+
+  .gate-contract-card {
+    grid-template-columns: 1fr;
+  }
+
+  .gate-contract-card i {
+    transform: rotate(90deg);
+  }
+
+  .mux-layout > table,
+  .dmux-layout > table,
+  .mux-short-layout > table {
+    justify-self: stretch;
+  }
+
+  .circuit-panel .circuit-svg,
+  .circuit-answer .circuit-svg {
+    height: auto;
+  }
+
   .topbar,
   .hero,
   .two-col,
