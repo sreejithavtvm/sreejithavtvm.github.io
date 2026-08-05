@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 5: Boolean Arithmetic</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two arithmetic-lecture">
+    <main class="deck" aria-label="Lecture 5 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 5 | Boolean Arithmetic</div>
+        <h1>Representing and Adding Binary Numbers</h1>
+        <p class="lead">How can a fixed collection of bits represent positive and negative integers?</p>
+        <div class="title-route" aria-label="Lecture route"><span>binary numbers</span><i>&#8594;</i><span>word size</span><i>&#8594;</i><span>addition</span><i>&#8594;</i><span>two's complement</span></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Where are we in the course?</div>
+        <h2>Use Gates to Work with Numbers</h2>
+        <div class="lecture-stack-map">
+          <div><span>Last lecture</span><strong>Gate logic</strong><small>components and specifications</small></div><i>&#8594;</i>
+          <div class="active-layer"><span>Today</span><strong>Binary arithmetic</strong><small>representation and addition</small></div><i>&#8594;</i>
+          <div><span>Next lecture</span><strong>Adders and ALU</strong><small>hardware that performs operations</small></div>
+        </div>
+        <p class="prompt">Before building arithmetic hardware, we must agree on what each bit pattern means.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Recall decimal place value</div>
+        <h2>Read Each Digit Using Its Position</h2>
+        <div class="place-value-layout">
+          <div class="place-number"><span>(5109)<sub>10</sub></span><div class="digit-row"><b>5</b><b>1</b><b>0</b><b>9</b></div><div class="weight-row"><small>10<sup>3</sup></small><small>10<sup>2</sup></small><small>10<sup>1</sup></small><small>10<sup>0</sup></small></div></div>
+          <i>&#8594;</i>
+          <div class="expansion-card"><p>5 &times; 10<sup>3</sup> + 1 &times; 10<sup>2</sup> + 0 &times; 10<sup>1</sup> + 9 &times; 10<sup>0</sup></p><strong>= 5109</strong></div>
+        </div>
+        <p>Decimal uses ten possible digits and powers of ten.</p>
+        <p class="next-step"><strong>Next:</strong> Apply the same positional idea using only 0 and 1.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Binary place value</div>
+        <h2>Binary Uses Powers of Two</h2>
+        <div class="place-value-layout">
+          <div class="place-number binary-number"><span>(10101)<sub>2</sub></span><div class="digit-row"><b>1</b><b>0</b><b>1</b><b>0</b><b>1</b></div><div class="weight-row"><small>2<sup>4</sup></small><small>2<sup>3</sup></small><small>2<sup>2</sup></small><small>2<sup>1</sup></small><small>2<sup>0</sup></small></div></div>
+          <i>&#8594;</i>
+          <div class="expansion-card"><p>1 &times; 2<sup>4</sup> + 0 &times; 2<sup>3</sup> + 1 &times; 2<sup>2</sup> + 0 &times; 2<sup>1</sup> + 1 &times; 2<sup>0</sup></p><strong>= 16 + 4 + 1 = 21</strong></div>
+        </div>
+        <p class="prompt">The subscript tells us the base: <code>10</code> for decimal and <code>2</code> for binary.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Why binary matters</div>
+        <h2>Inside a Computer, Information Is Stored as Bits</h2>
+        <div class="bit-pattern-grid">
+          <div><strong>Integer</strong><code>00010101</code><span>21</span></div>
+          <div><strong>Character</strong><code>01000001</code><span>the code for A</span></div>
+          <div><strong>Instruction</strong><code>11101100...</code><span>an operation and its operands</span></div>
+          <div><strong>Image sample</strong><code>11001010</code><span>one encoded intensity</span></div>
+        </div>
+        <p>The same bits can mean different things. Their <strong>interpretation</strong> depends on how the computer uses them.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">A fixed-size representation</div>
+        <h2>Word Size Tells Us How Many Bits Travel Together</h2>
+        <div class="word-size-layout">
+          <div class="definition-copy"><p><strong class="new-term">Word size</strong> is a common hardware term for the number of bits used to represent a basic chunk of information.</p><p>For integer values, processors commonly work with 8-, 16-, 32-, or 64-bit registers.</p></div>
+          <div class="word-examples"><div><strong>8-bit</strong><code>xxxxxxxx</code></div><div><strong>16-bit</strong><code>xxxxxxxxxxxxxxxx</code></div><div><strong>32-bit</strong><span>32 bit positions</span></div><div><strong>64-bit</strong><span>64 bit positions</span></div></div>
+        </div>
+        <p class="prompt">A fixed word size limits the number of distinct patterns—and therefore values—that a register can hold.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Counting 8-bit patterns</div>
+        <h2>How Many Values Fit in an 8-Bit Register?</h2>
+        <div class="pattern-count-layout">
+          <div class="choice-chain"><div><span>bit 7</span><strong>2 choices</strong></div><i>&times;</i><div><span>bit 6</span><strong>2 choices</strong></div><i>&times;</i><div><span>...</span><strong>...</strong></div><i>&times;</i><div><span>bit 0</span><strong>2 choices</strong></div></div>
+          <div class="count-result"><span>Number of patterns</span><strong>2<sup>8</sup> = 256</strong><p>As unsigned integers: <code>0</code> through <code>255</code>.</p></div>
+        </div>
+        <p>Zero uses one pattern, so the largest unsigned value is one less than the number of patterns.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1 | Generalize the pattern</div>
+        <h2>How Many Patterns Can n Bits Represent?</h2>
+        <div class="general-count-grid"><div><p>Each bit has two possible values.</p><p>There are <code>n</code> independently chosen bit positions.</p></div><div class="question-card"><p>Number of distinct patterns:</p><input id="n-bit-count" type="text" autocomplete="off" placeholder="Enter an expression"><button type="button" data-check="n-bit-count" data-feedback="n-bit-feedback" data-answers="2^n|2ⁿ" data-success="Correct: n independent binary choices give 2^n patterns." data-error="Multiply 2 by itself once for each bit.">Check answer</button><p id="n-bit-feedback" class="feedback" aria-live="polite"></p></div></div>
+        <p class="prompt">For unsigned values, these patterns represent <code>0</code> through <code>2<sup>n</sup>-1</code>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Positions inside a binary number</div>
+        <h2>Least Significant Bit and Most Significant Bit</h2>
+        <div class="significance-diagram"><div class="bit-callout msb-callout"><strong>Most Significant Bit (MSB)</strong><span>largest place value</span><i>&#8595;</i></div><div class="annotated-bits"><b>1</b><b>0</b><b>1</b><b>0</b><b>1</b></div><div class="bit-callout lsb-callout"><i>&#8593;</i><strong>Least Significant Bit (LSB)</strong><span>smallest place value: 2<sup>0</sup></span></div></div>
+        <div class="two-facts"><div><strong>MSB</strong><p>The leftmost bit in the written representation.</p></div><div><strong>LSB</strong><p>The rightmost bit; it determines whether an unsigned number is even or odd.</p></div></div>
+        <p class="next-step"><strong>Next:</strong> Add binary numbers one column at a time.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Binary addition rules</div>
+        <h2>Four Cases Are Enough</h2>
+        <div class="addition-rule-grid"><div><code>0 + 0</code><strong>sum 0, carry 0</strong></div><div><code>0 + 1</code><strong>sum 1, carry 0</strong></div><div><code>1 + 0</code><strong>sum 1, carry 0</strong></div><div class="carry-case"><code>1 + 1</code><strong>sum 0, carry 1</strong><span>because (10)<sub>2</sub> = 2</span></div></div>
+        <p>Begin at the LSB, write the sum bit, and carry any extra 1 into the next column.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Example: binary addition</div>
+        <h2>Add from Right to Left</h2>
+        <div class="worked-addition-layout">
+          <div class="column-addition" aria-label="Binary addition 0110 plus 0011 equals 1001"><span class="carry-line">1 1&nbsp;&nbsp;</span><span>&nbsp;0 1 1 0</span><span>+ 0 0 1 1</span><i></i><strong>&nbsp;1 0 0 1</strong></div>
+          <ol class="addition-steps"><li><code>0+1=1</code>.</li><li><code>1+1=(10)<sub>2</sub></code>: write 0, carry 1.</li><li><code>1+0+carry 1=(10)<sub>2</sub></code>: write 0, carry 1.</li><li><code>0+0+carry 1=1</code>.</li></ol>
+        </div>
+        <p class="check-line"><code>(0110)<sub>2</sub>=6</code> and <code>(0011)<sub>2</sub>=3</code>; therefore <code>(1001)<sub>2</sub>=9</code>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">When the result needs another bit</div>
+        <h2>A Fixed Word Size Can Overflow</h2>
+        <div class="overflow-layout"><div class="column-addition"><span class="carry-line">1 1 1 1</span><span>&nbsp;1 0 1 1</span><span>+ 0 1 1 1</span><i></i><strong>1 0 0 1 0</strong></div><div class="overflow-copy"><p>The mathematical result is <code>(10010)<sub>2</sub>=18</code>.</p><p>A 4-bit register has room only for <code>0010</code>. The leftmost carry lies outside the register.</p><strong>For now: call this unsigned overflow.</strong></div></div>
+        <p class="prompt">Hardware always has a fixed width; it cannot keep adding new bit positions forever.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2 | Binary addition</div>
+        <h2>Add and Check the Word Size</h2>
+        <div class="addition-exercise-grid"><div><span>A</span><p><code>0101 + 0011</code></p><small>Give the 4-bit result.</small></div><div><span>B</span><p><code>1010 + 0101</code></p><small>Give the 4-bit result.</small></div><div><span>C</span><p><code>1110 + 0111</code></p><small>Give the 4-bit stored result and the carry out.</small></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="binary-addition-answers">Reveal answers</button>
+        <div id="binary-addition-answers" class="answer horizontal-answer"><p><strong>A:</strong> <code>1000</code></p><p><strong>B:</strong> <code>1111</code></p><p><strong>C:</strong> <code>0101</code>, carry out <code>1</code></p></div>
+        <p class="next-step"><strong>Next:</strong> Use the same bit patterns to represent negative numbers.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Why signed representation is needed</div>
+        <h2>How Should a Bit Pattern Represent a Negative Number?</h2>
+        <div class="signed-motivation-grid"><div><strong>Available</strong><p>An n-bit register has exactly <code>2<sup>n</sup></code> patterns.</p></div><i>&#8594;</i><div><strong>Decision</strong><p>Use exactly half for non-negative values and half for negative values.</p></div><i>&#8594;</i><div><strong>Design goal</strong><p>Keep addition hardware the same for positive and negative operands.</p></div></div>
+        <p>The representation used by almost all modern computers is called <strong class="new-term">two's complement</strong>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Example: four-bit two's complement</div>
+        <h2>The Same 16 Patterns Cover −8 Through 7</h2>
+        <div class="signed-map-layout"><table class="truth-table signed-table"><thead><tr><th>Pattern</th><th>Value</th></tr></thead><tbody><tr><td>0000</td><td>0</td></tr><tr><td>0001</td><td>1</td></tr><tr><td>0010</td><td>2</td></tr><tr><td>...</td><td>...</td></tr><tr><td>0111</td><td>7</td></tr></tbody></table><div class="sign-divider"><span>MSB = 0</span><strong>non-negative</strong><i>&#8596;</i><span>MSB = 1</span><strong>negative</strong></div><table class="truth-table signed-table negative-table"><thead><tr><th>Pattern</th><th>Value</th></tr></thead><tbody><tr><td>1000</td><td>−8</td></tr><tr><td>1001</td><td>−7</td></tr><tr><td>...</td><td>...</td></tr><tr><td>1110</td><td>−2</td></tr><tr><td>1111</td><td>−1</td></tr></tbody></table></div>
+        <p class="prompt">The MSB acts as a sign indicator, but two's complement is not merely “attach a sign bit.”</p>
+      </section>
+
+      <section class="slide signed-conversion-slide">
+        <div class="kicker">Converting two's complement to decimal</div>
+        <h2>First Inspect the Most Significant Bit</h2>
+        <div class="signed-conversion-grid">
+          <div class="conversion-case positive-case"><span>MSB = 0</span><strong>Convert normally</strong><code>0101</code><p>0 &times; 2<sup>3</sup> + 1 &times; 2<sup>2</sup> + 0 &times; 2<sup>1</sup> + 1 &times; 2<sup>0</sup> = <b>5</b></p></div>
+          <div class="conversion-case negative-case"><span>MSB = 1</span><strong>Interpret as negative</strong><code>1011</code><p>As unsigned, <code>1011</code> is 11. For four bits, subtract 2<sup>4</sup>:</p><p><b>11 − 16 = −5</b></p></div>
+        </div>
+        <div class="alternative-conversion"><strong>Equivalent method for a negative pattern</strong><div><code>1011</code><i>&#8594;</i><span>flip bits</span><i>&#8594;</i><code>0100</code><i>&#8594;</i><span>add 1</span><i>&#8594;</i><code>0101 = 5</code><i>&#8594;</i><strong>value = −5</strong></div></div>
+        <p class="rule-line"><strong>General rule:</strong> if an n-bit pattern has MSB 1 and unsigned value U, its two's-complement value is <code>U − 2<sup>n</sup></code>.</p>
+        <p class="next-step"><strong>Next:</strong> Count the negative and positive values available with n bits.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Range of signed n-bit integers</div>
+        <h2>Count Negative, Positive, and Zero Separately</h2>
+        <div class="signed-count-grid"><div><span>Negative integers</span><strong>2<sup>n−1</sup></strong><small>−2<sup>n−1</sup> through −1</small></div><div><span>Zero</span><strong>1</strong><small>the all-zero pattern</small></div><div><span>Positive integers</span><strong>2<sup>n−1</sup> − 1</strong><small>1 through 2<sup>n−1</sup>−1</small></div></div>
+        <div class="range-result"><span>Complete signed range</span><strong>−2<sup>n−1</sup> to 2<sup>n−1</sup>−1</strong></div>
+        <p>For 4 bits: 8 negative values, 7 positive values, and zero.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Negating a two's-complement number</div>
+        <h2>Flip Every Bit, Then Add One</h2>
+        <div class="negation-flow"><div><span>Start with +3</span><code>0011</code></div><i>&#8594;</i><div><span>Flip all bits</span><code>1100</code></div><i>&#8594;</i><div><span>Add 1</span><code>1101</code></div><i>&#8594;</i><div class="negative-result"><span>Result</span><code>−3</code></div></div>
+        <p class="verification-line"><code>0011 + 1101 = 1 0000</code>. Discard the carry outside four bits, leaving <code>0000</code>.</p>
+        <p class="prompt">The same procedure converts a negative number back to its positive counterpart.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Why two's complement is useful</div>
+        <h2>Signed Addition Uses the Same Binary Addition</h2>
+        <div class="signed-addition-layout"><div><span>−2</span><code>1110</code></div><div><span>−3</span><code>1101</code></div><i>+</i><div class="signed-sum"><span>stored result</span><code>1011</code><strong>−5</strong></div></div>
+        <p>The full sum is <code>1 1011</code>. Discard the carry outside the 4-bit word; <code>1011</code> represents −5.</p>
+        <p class="prompt">No separate “negative-number adder” is required.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3 | Four-bit representation</div>
+        <h2>Write Each Number in Four-Bit Two's Complement</h2>
+        <div class="signed-exercise-grid"><div><span>A</span><strong>+6</strong></div><div><span>B</span><strong>−1</strong></div><div><span>C</span><strong>−5</strong></div><div><span>D</span><strong>−8</strong></div><div><span>E</span><strong>+8</strong></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="signed-representation-answers">Reveal answers</button>
+        <div id="signed-representation-answers" class="answer horizontal-answer"><p><strong>A:</strong> 0110</p><p><strong>B:</strong> 1111</p><p><strong>C:</strong> 1011</p><p><strong>D:</strong> 1000</p><p><strong>E:</strong> impossible with 4-bit signed two's complement</p></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4 | Negation and addition</div>
+        <h2>Compute Using Four Bits</h2>
+        <div class="two-problem-grid"><div><span>1</span><p>Negate <code>0101</code> using “flip and add 1.” What decimal number does the result represent?</p></div><div><span>2</span><p>Add <code>0011</code> and <code>1101</code>. Interpret both inputs and the stored result as signed values.</p></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="signed-computation-answers">Reveal answers</button>
+        <div id="signed-computation-answers" class="answer"><p><strong>1:</strong> <code>0101 → 1010 → 1011</code>, which represents −5.</p><p><strong>2:</strong> <code>0011 (+3) + 1101 (−3) = 1 0000</code>; the stored result is <code>0000</code>, or 0.</p></div>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">What to remember</div>
+        <h2>One Adder Works for Signed and Unsigned Values</h2>
+        <div class="remember-grid"><div><strong>Representation</strong><p>n bits provide 2<sup>n</sup> distinct patterns.</p></div><div><strong>Addition</strong><p>Add from the LSB and propagate carry toward the MSB.</p></div><div><strong>Signed values</strong><p>Two's complement gives the range −2<sup>n−1</sup> through 2<sup>n−1</sup>−1.</p></div><div><strong>Negation</strong><p>Flip every bit and add 1.</p></div></div>
+        <p class="next-step"><strong>Next lecture:</strong> Build HalfAdder, FullAdder, Add16, and Inc16, then introduce the Hack Arithmetic Logic Unit.</p>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>22</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

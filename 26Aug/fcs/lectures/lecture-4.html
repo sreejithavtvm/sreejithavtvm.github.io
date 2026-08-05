@@ -3,207 +3,143 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lecture 4: Boolean Arithmetic</title>
+    <title>Lecture 4: Boolean Laws and Logic Design Tutorial</title>
     <link rel="stylesheet" href="../assets/site.css">
   </head>
-  <body class="deck-body lecture-two lecture-four">
+  <body class="deck-body lecture-two tutorial-lecture">
     <main class="deck" aria-label="Lecture 4 slides">
       <section class="slide current title-slide">
-        <div class="kicker">Lecture 4 | 6 August 2026 | Boolean Arithmetic</div>
-        <h1>Representing and Adding Binary Numbers</h1>
-        <p class="lead">How can a fixed collection of bits represent positive and negative integers?</p>
-        <div class="title-route" aria-label="Lecture route"><span>binary numbers</span><i>&#8594;</i><span>word size</span><i>&#8594;</i><span>addition</span><i>&#8594;</i><span>two's complement</span></div>
+        <div class="kicker">Lecture 4 | 6 August 2026 | Tutorial</div>
+        <h1>Boolean Laws and Logic Design</h1>
+        <p class="lead">Simplify expressions, reason with truth tables, draw circuits, and describe them in HDL.</p>
+        <div class="title-route" aria-label="Lecture route"><span>laws</span><i>&#8594;</i><span>simplification</span><i>&#8594;</i><span>gate diagrams</span><i>&#8594;</i><span>HDL</span></div>
+      </section>
+
+      <section class="slide laws-table-slide laws-overview-slide">
+        <div class="kicker">Boolean laws</div>
+        <h2>Boolean Laws</h2>
+        <table class="truth-table laws-table"><thead><tr><th>Law</th><th>OR</th><th>AND</th></tr></thead><tbody>
+          <tr><th>Commutative</th><td><span class="math-expression">x + y = y + x</span></td><td><span class="math-expression">x &middot; y = y &middot; x</span></td></tr>
+          <tr><th>Associative</th><td><span class="math-expression">x + (y + z) = (x + y) + z</span></td><td><span class="math-expression">x &middot; (y &middot; z) = (x &middot; y) &middot; z</span></td></tr>
+          <tr><th>Distributive</th><td><span class="math-expression">x + y &middot; z = (x + y)(x + z)</span></td><td><span class="math-expression">x(y + z) = x &middot; y + x &middot; z</span></td></tr>
+          <tr><th>Identity</th><td><span class="math-expression">x + 0 = x</span></td><td><span class="math-expression">x &middot; 1 = x</span></td></tr>
+          <tr><th>Annihilator</th><td><span class="math-expression">x + 1 = 1</span></td><td><span class="math-expression">x &middot; 0 = 0</span></td></tr>
+          <tr><th>Idempotence</th><td><span class="math-expression">x + x = x</span></td><td><span class="math-expression">x &middot; x = x</span></td></tr>
+          <tr><th>Absorption</th><td><span class="math-expression">x + x &middot; y = x</span></td><td><span class="math-expression">x(x + y) = x</span></td></tr>
+        </tbody></table>
+        <div class="supplemental-law-grid">
+          <div><span>Complement with AND</span><p class="math-expression">x &middot; <span class="overline">x</span> = 0</p></div>
+          <div><span>Complement with OR</span><p class="math-expression">x + <span class="overline">x</span> = 1</p></div>
+          <div><span>Double negation</span><p class="math-expression"><span class="overline-group"><span class="overline">x</span></span> = x</p></div>
+        </div>
+        <p class="take-home"><strong>Take-home exercise:</strong> Verify all the laws using truth tables.</p>
       </section>
 
       <section class="slide">
-        <div class="kicker">Where are we in the course?</div>
-        <h2>Use Gates to Work with Numbers</h2>
-        <div class="lecture-stack-map">
-          <div><span>Last lecture</span><strong>Gate logic</strong><small>components and specifications</small></div><i>&#8594;</i>
-          <div class="active-layer"><span>Today</span><strong>Binary arithmetic</strong><small>representation and addition</small></div><i>&#8594;</i>
-          <div><span>Next lecture</span><strong>Adders and ALU</strong><small>hardware that performs operations</small></div>
+        <div class="kicker">Boolean laws</div>
+        <h2>De Morgan's Laws Move Negation Across an Operation</h2>
+        <div class="de-morgan-tutorial-grid">
+          <div><span>Negation of OR</span><p class="math-expression"><span class="overline-group">x + y</span> = <span class="overline">x</span> &middot; <span class="overline">y</span></p><small>NOT OR becomes AND of the negated inputs.</small></div>
+          <div><span>Negation of AND</span><p class="math-expression"><span class="overline-group">x &middot; y</span> = <span class="overline">x</span> + <span class="overline">y</span></p><small>NOT AND becomes OR of the negated inputs.</small></div>
         </div>
-        <p class="prompt">Before building arithmetic hardware, we must agree on what each bit pattern means.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Recall decimal place value</div>
-        <h2>Read Each Digit Using Its Position</h2>
-        <div class="place-value-layout">
-          <div class="place-number"><span>(5109)<sub>10</sub></span><div class="digit-row"><b>5</b><b>1</b><b>0</b><b>9</b></div><div class="weight-row"><small>10<sup>3</sup></small><small>10<sup>2</sup></small><small>10<sup>1</sup></small><small>10<sup>0</sup></small></div></div>
-          <i>&#8594;</i>
-          <div class="expansion-card"><p>5 &times; 10<sup>3</sup> + 1 &times; 10<sup>2</sup> + 0 &times; 10<sup>1</sup> + 9 &times; 10<sup>0</sup></p><strong>= 5109</strong></div>
-        </div>
-        <p>Decimal uses ten possible digits and powers of ten.</p>
-        <p class="next-step"><strong>Next:</strong> Apply the same positional idea using only 0 and 1.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Binary place value</div>
-        <h2>Binary Uses Powers of Two</h2>
-        <div class="place-value-layout">
-          <div class="place-number binary-number"><span>(10101)<sub>2</sub></span><div class="digit-row"><b>1</b><b>0</b><b>1</b><b>0</b><b>1</b></div><div class="weight-row"><small>2<sup>4</sup></small><small>2<sup>3</sup></small><small>2<sup>2</sup></small><small>2<sup>1</sup></small><small>2<sup>0</sup></small></div></div>
-          <i>&#8594;</i>
-          <div class="expansion-card"><p>1 &times; 2<sup>4</sup> + 0 &times; 2<sup>3</sup> + 1 &times; 2<sup>2</sup> + 0 &times; 2<sup>1</sup> + 1 &times; 2<sup>0</sup></p><strong>= 16 + 4 + 1 = 21</strong></div>
-        </div>
-        <p class="prompt">The subscript tells us the base: <code>10</code> for decimal and <code>2</code> for binary.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Why binary matters</div>
-        <h2>Inside a Computer, Information Is Stored as Bits</h2>
-        <div class="bit-pattern-grid">
-          <div><strong>Integer</strong><code>00010101</code><span>21</span></div>
-          <div><strong>Character</strong><code>01000001</code><span>the code for A</span></div>
-          <div><strong>Instruction</strong><code>11101100...</code><span>an operation and its operands</span></div>
-          <div><strong>Image sample</strong><code>11001010</code><span>one encoded intensity</span></div>
-        </div>
-        <p>The same bits can mean different things. Their <strong>interpretation</strong> depends on how the computer uses them.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">A fixed-size representation</div>
-        <h2>Word Size Tells Us How Many Bits Travel Together</h2>
-        <div class="word-size-layout">
-          <div class="definition-copy"><p><strong class="new-term">Word size</strong> is a common hardware term for the number of bits used to represent a basic chunk of information.</p><p>For integer values, processors commonly work with 8-, 16-, 32-, or 64-bit registers.</p></div>
-          <div class="word-examples"><div><strong>8-bit</strong><code>xxxxxxxx</code></div><div><strong>16-bit</strong><code>xxxxxxxxxxxxxxxx</code></div><div><strong>32-bit</strong><span>32 bit positions</span></div><div><strong>64-bit</strong><span>64 bit positions</span></div></div>
-        </div>
-        <p class="prompt">A fixed word size limits the number of distinct patterns—and therefore values—that a register can hold.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Counting 8-bit patterns</div>
-        <h2>How Many Values Fit in an 8-Bit Register?</h2>
-        <div class="pattern-count-layout">
-          <div class="choice-chain"><div><span>bit 7</span><strong>2 choices</strong></div><i>&times;</i><div><span>bit 6</span><strong>2 choices</strong></div><i>&times;</i><div><span>...</span><strong>...</strong></div><i>&times;</i><div><span>bit 0</span><strong>2 choices</strong></div></div>
-          <div class="count-result"><span>Number of patterns</span><strong>2<sup>8</sup> = 256</strong><p>As unsigned integers: <code>0</code> through <code>255</code>.</p></div>
-        </div>
-        <p>Zero uses one pattern, so the largest unsigned value is one less than the number of patterns.</p>
+        <p class="prompt">De Morgan's laws are consequences of the Boolean laws on the previous page.</p>
       </section>
 
       <section class="slide exercise-slide">
-        <div class="kicker">Exercise 1 | Generalize the pattern</div>
-        <h2>How Many Patterns Can n Bits Represent?</h2>
-        <div class="general-count-grid"><div><p>Each bit has two possible values.</p><p>There are <code>n</code> independently chosen bit positions.</p></div><div class="question-card"><p>Number of distinct patterns:</p><input id="n-bit-count" type="text" autocomplete="off" placeholder="Enter an expression"><button type="button" data-check="n-bit-count" data-feedback="n-bit-feedback" data-answers="2^n|2ⁿ" data-success="Correct: n independent binary choices give 2^n patterns." data-error="Multiply 2 by itself once for each bit.">Check answer</button><p id="n-bit-feedback" class="feedback" aria-live="polite"></p></div></div>
-        <p class="prompt">For unsigned values, these patterns represent <code>0</code> through <code>2<sup>n</sup>-1</code>.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Positions inside a binary number</div>
-        <h2>Least Significant Bit and Most Significant Bit</h2>
-        <div class="significance-diagram"><div class="bit-callout msb-callout"><strong>Most Significant Bit (MSB)</strong><span>largest place value</span><i>&#8595;</i></div><div class="annotated-bits"><b>1</b><b>0</b><b>1</b><b>0</b><b>1</b></div><div class="bit-callout lsb-callout"><i>&#8593;</i><strong>Least Significant Bit (LSB)</strong><span>smallest place value: 2<sup>0</sup></span></div></div>
-        <div class="two-facts"><div><strong>MSB</strong><p>The leftmost bit in the written representation.</p></div><div><strong>LSB</strong><p>The rightmost bit; it determines whether an unsigned number is even or odd.</p></div></div>
-        <p class="next-step"><strong>Next:</strong> Add binary numbers one column at a time.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Binary addition rules</div>
-        <h2>Four Cases Are Enough</h2>
-        <div class="addition-rule-grid"><div><code>0 + 0</code><strong>sum 0, carry 0</strong></div><div><code>0 + 1</code><strong>sum 1, carry 0</strong></div><div><code>1 + 0</code><strong>sum 1, carry 0</strong></div><div class="carry-case"><code>1 + 1</code><strong>sum 0, carry 1</strong><span>because (10)<sub>2</sub> = 2</span></div></div>
-        <p>Begin at the LSB, write the sum bit, and carry any extra 1 into the next column.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Example: binary addition</div>
-        <h2>Add from Right to Left</h2>
-        <div class="worked-addition-layout">
-          <div class="column-addition" aria-label="Binary addition 0110 plus 0011 equals 1001"><span class="carry-line">1 1&nbsp;&nbsp;</span><span>&nbsp;0 1 1 0</span><span>+ 0 0 1 1</span><i></i><strong>&nbsp;1 0 0 1</strong></div>
-          <ol class="addition-steps"><li><code>0+1=1</code>.</li><li><code>1+1=(10)<sub>2</sub></code>: write 0, carry 1.</li><li><code>1+0+carry 1=(10)<sub>2</sub></code>: write 0, carry 1.</li><li><code>0+0+carry 1=1</code>.</li></ol>
+        <div class="kicker">Exercise 1 | Verify equivalence</div>
+        <h2>Check the Laws Using Truth Tables</h2>
+        <div class="truth-table-task-grid">
+          <div><span>A</span><p>Verify <span class="math-expression">x + x &middot; y = x</span>.</p></div>
+          <div><span>B</span><p>Verify <span class="math-expression"><span class="overline-group">x + y</span> = <span class="overline">x</span> &middot; <span class="overline">y</span></span>.</p></div>
+          <div><span>C</span><p>Verify <span class="math-expression">x + y &middot; z = (x+y)(x+z)</span>.</p></div>
         </div>
-        <p class="check-line"><code>(0110)<sub>2</sub>=6</code> and <code>(0011)<sub>2</sub>=3</code>; therefore <code>(1001)<sub>2</sub>=9</code>.</p>
+        <p class="next-step"><strong>Next:</strong> Use these laws to make expressions simpler.</p>
       </section>
 
       <section class="slide">
-        <div class="kicker">When the result needs another bit</div>
-        <h2>A Fixed Word Size Can Overflow</h2>
-        <div class="overflow-layout"><div class="column-addition"><span class="carry-line">1 1 1 1</span><span>&nbsp;1 0 1 1</span><span>+ 0 1 1 1</span><i></i><strong>1 0 0 1 0</strong></div><div class="overflow-copy"><p>The mathematical result is <code>(10010)<sub>2</sub>=18</code>.</p><p>A 4-bit register has room only for <code>0010</code>. The leftmost carry lies outside the register.</p><strong>For now: call this unsigned overflow.</strong></div></div>
-        <p class="prompt">Hardware always has a fixed width; it cannot keep adding new bit positions forever.</p>
+        <div class="kicker">Simplification</div>
+        <h2>Replace Part of an Expression with an Equivalent Form</h2>
+        <div class="simplification-principle"><div><strong>Find</strong><p>a subexpression that matches a Boolean law</p></div><i>&#8594;</i><div><strong>Replace</strong><p>only that subexpression with its equivalent</p></div><i>&#8594;</i><div><strong>Repeat</strong><p>until no further useful simplification is visible</p></div></div>
+        <p>Every step must preserve the function for every possible input.</p>
       </section>
 
-      <section class="slide exercise-slide">
-        <div class="kicker">Exercise 2 | Binary addition</div>
-        <h2>Add and Check the Word Size</h2>
-        <div class="addition-exercise-grid"><div><span>A</span><p><code>0101 + 0011</code></p><small>Give the 4-bit result.</small></div><div><span>B</span><p><code>1010 + 0101</code></p><small>Give the 4-bit result.</small></div><div><span>C</span><p><code>1110 + 0111</code></p><small>Give the 4-bit stored result and the carry out.</small></div></div>
-        <button class="reveal secondary-reveal" type="button" data-reveal="binary-addition-answers">Reveal answers</button>
-        <div id="binary-addition-answers" class="answer horizontal-answer"><p><strong>A:</strong> <code>1000</code></p><p><strong>B:</strong> <code>1111</code></p><p><strong>C:</strong> <code>0101</code>, carry out <code>1</code></p></div>
-        <p class="next-step"><strong>Next:</strong> Use the same bit patterns to represent negative numbers.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Why signed representation is needed</div>
-        <h2>How Should a Bit Pattern Represent a Negative Number?</h2>
-        <div class="signed-motivation-grid"><div><strong>Available</strong><p>An n-bit register has exactly <code>2<sup>n</sup></code> patterns.</p></div><i>&#8594;</i><div><strong>Decision</strong><p>Use exactly half for non-negative values and half for negative values.</p></div><i>&#8594;</i><div><strong>Design goal</strong><p>Keep addition hardware the same for positive and negative operands.</p></div></div>
-        <p>The representation used by almost all modern computers is called <strong class="new-term">two's complement</strong>.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Example: four-bit two's complement</div>
-        <h2>The Same 16 Patterns Cover −8 Through 7</h2>
-        <div class="signed-map-layout"><table class="truth-table signed-table"><thead><tr><th>Pattern</th><th>Value</th></tr></thead><tbody><tr><td>0000</td><td>0</td></tr><tr><td>0001</td><td>1</td></tr><tr><td>0010</td><td>2</td></tr><tr><td>...</td><td>...</td></tr><tr><td>0111</td><td>7</td></tr></tbody></table><div class="sign-divider"><span>MSB = 0</span><strong>non-negative</strong><i>&#8596;</i><span>MSB = 1</span><strong>negative</strong></div><table class="truth-table signed-table negative-table"><thead><tr><th>Pattern</th><th>Value</th></tr></thead><tbody><tr><td>1000</td><td>−8</td></tr><tr><td>1001</td><td>−7</td></tr><tr><td>...</td><td>...</td></tr><tr><td>1110</td><td>−2</td></tr><tr><td>1111</td><td>−1</td></tr></tbody></table></div>
-        <p class="prompt">The MSB acts as a sign indicator, but two's complement is not merely “attach a sign bit.”</p>
-      </section>
-
-      <section class="slide signed-conversion-slide">
-        <div class="kicker">Converting two's complement to decimal</div>
-        <h2>First Inspect the Most Significant Bit</h2>
-        <div class="signed-conversion-grid">
-          <div class="conversion-case positive-case"><span>MSB = 0</span><strong>Convert normally</strong><code>0101</code><p>0 &times; 2<sup>3</sup> + 1 &times; 2<sup>2</sup> + 0 &times; 2<sup>1</sup> + 1 &times; 2<sup>0</sup> = <b>5</b></p></div>
-          <div class="conversion-case negative-case"><span>MSB = 1</span><strong>Interpret as negative</strong><code>1011</code><p>As unsigned, <code>1011</code> is 11. For four bits, subtract 2<sup>4</sup>:</p><p><b>11 − 16 = −5</b></p></div>
+      <section class="slide exercise-slide worked-simplification-slide combined-guided-slide">
+        <div class="kicker">Exercise 2 | Guided simplification</div>
+        <h2>Simplify: <span class="math-expression">y + x &middot; <span class="overline">x</span></span></h2>
+        <button class="reveal" type="button" data-reveal="worked-simplification">Show answer</button>
+        <div id="worked-simplification" class="answer simplification-chain">
+          <div><span>Start</span><p class="math-expression">y + x &middot; <span class="overline">x</span></p></div><i>&#8594;</i>
+          <div><span>Complementation with AND</span><p class="math-expression">y + 0</p><small>because <span class="math-expression">x &middot; <span class="overline">x</span> = 0</span></small></div><i>&#8594;</i>
+          <div><span>OR identity</span><p class="math-expression">y</p><small>because <span class="math-expression">y + 0 = y</span></small></div>
         </div>
-        <div class="alternative-conversion"><strong>Equivalent method for a negative pattern</strong><div><code>1011</code><i>&#8594;</i><span>flip bits</span><i>&#8594;</i><code>0100</code><i>&#8594;</i><span>add 1</span><i>&#8594;</i><code>0101 = 5</code><i>&#8594;</i><strong>value = −5</strong></div></div>
-        <p class="rule-line"><strong>General rule:</strong> if an n-bit pattern has MSB 1 and unsigned value U, its two's-complement value is <code>U − 2<sup>n</sup></code>.</p>
-        <p class="next-step"><strong>Next:</strong> Count the negative and positive values available with n bits.</p>
+        <h3 class="follow-up-heading">Now simplify and name each law used</h3>
+        <div class="guided-problem-grid">
+          <div><span>A</span><p class="math-expression">x + x &middot; y</p><button class="reveal" type="button" data-reveal="simplify-a">Show answer</button><div id="simplify-a" class="answer"><p><span class="math-expression">= x</span> by absorption.</p></div></div>
+          <div><span>B</span><p class="math-expression">x + <span class="overline">x</span> &middot; y</p><button class="reveal" type="button" data-reveal="simplify-b">Show answer</button><div id="simplify-b" class="answer"><p><span class="math-expression">=(x+<span class="overline">x</span>)(x+y)=1(x+y)=x+y</span>.</p></div></div>
+          <div><span>C</span><p class="math-expression">(x+y)(x+z)</p><button class="reveal" type="button" data-reveal="simplify-c">Show answer</button><div id="simplify-c" class="answer"><p><span class="math-expression">= x + y &middot; z</span> by distributivity.</p></div></div>
+        </div>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Range of signed n-bit integers</div>
-        <h2>Count Negative, Positive, and Zero Separately</h2>
-        <div class="signed-count-grid"><div><span>Negative integers</span><strong>2<sup>n−1</sup></strong><small>−2<sup>n−1</sup> through −1</small></div><div><span>Zero</span><strong>1</strong><small>the all-zero pattern</small></div><div><span>Positive integers</span><strong>2<sup>n−1</sup> − 1</strong><small>1 through 2<sup>n−1</sup>−1</small></div></div>
-        <div class="range-result"><span>Complete signed range</span><strong>−2<sup>n−1</sup> to 2<sup>n−1</sup>−1</strong></div>
-        <p>For 4 bits: 8 negative values, 7 positive values, and zero.</p>
+      <section class="slide exercise-slide combined-simplification-slide">
+        <div class="kicker">Exercise 3 | Simplification</div>
+        <h2>Simplify These Without Revealed Answers</h2>
+        <div class="challenge-problem-list combined-problem-grid">
+          <div><span>D</span><p class="math-expression">x &middot; y + <span class="overline">x</span> &middot; y</p></div>
+          <div><span>E</span><p class="math-expression">x &middot; y + x(y+z)</p></div>
+          <div><span>F</span><p class="math-expression">x + <span class="overline">x</span>y + <span class="overline">x</span> &middot; <span class="overline">y</span></p></div>
+          <div><span>G</span><p class="math-expression">(x+y)(x+<span class="overline">y</span>)</p></div>
+          <div><span>H</span><p class="math-expression">x<span class="overline">y</span> + x(y+z) + y(y+c)</p></div>
+          <div><span>I</span><p class="math-expression">(x<span class="overline">y</span>(z+ya) + <span class="overline">x</span> &middot; <span class="overline">y</span>)z</p></div>
+          <div><span>J</span><p class="math-expression">(x+y+z)(x+y+<span class="overline">z</span>)</p></div>
+          <div><span>K</span><p class="math-expression">x(y+<span class="overline">y</span>z) + <span class="overline">x</span>z</p></div>
+        </div>
+        <p class="prompt">Do not expand everything automatically. Look first for complement, absorption, or a common factor.</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Negating a two's-complement number</div>
-        <h2>Flip Every Bit, Then Add One</h2>
-        <div class="negation-flow"><div><span>Start with +3</span><code>0011</code></div><i>&#8594;</i><div><span>Flip all bits</span><code>1100</code></div><i>&#8594;</i><div><span>Add 1</span><code>1101</code></div><i>&#8594;</i><div class="negative-result"><span>Result</span><code>−3</code></div></div>
-        <p class="verification-line"><code>0011 + 1101 = 1 0000</code>. Discard the carry outside four bits, leaving <code>0000</code>.</p>
-        <p class="prompt">The same procedure converts a negative number back to its positive counterpart.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Why two's complement is useful</div>
-        <h2>Signed Addition Uses the Same Binary Addition</h2>
-        <div class="signed-addition-layout"><div><span>−2</span><code>1110</code></div><div><span>−3</span><code>1101</code></div><i>+</i><div class="signed-sum"><span>stored result</span><code>1011</code><strong>−5</strong></div></div>
-        <p>The full sum is <code>1 1011</code>. Discard the carry outside the 4-bit word; <code>1011</code> represents −5.</p>
-        <p class="prompt">No separate “negative-number adder” is required.</p>
-      </section>
-
-      <section class="slide exercise-slide">
-        <div class="kicker">Exercise 3 | Four-bit representation</div>
-        <h2>Write Each Number in Four-Bit Two's Complement</h2>
-        <div class="signed-exercise-grid"><div><span>A</span><strong>+6</strong></div><div><span>B</span><strong>−1</strong></div><div><span>C</span><strong>−5</strong></div><div><span>D</span><strong>−8</strong></div><div><span>E</span><strong>+8</strong></div></div>
-        <button class="reveal secondary-reveal" type="button" data-reveal="signed-representation-answers">Reveal answers</button>
-        <div id="signed-representation-answers" class="answer horizontal-answer"><p><strong>A:</strong> 0110</p><p><strong>B:</strong> 1111</p><p><strong>C:</strong> 1011</p><p><strong>D:</strong> 1000</p><p><strong>E:</strong> impossible with 4-bit signed two's complement</p></div>
+      <section class="slide exercise-slide circuit-reading-slide">
+        <div class="kicker">Exercise 4 | From a circuit to an expression</div>
+        <h2>Write the Boolean Expression</h2>
+        <p class="concept-introduction">A <strong>logic circuit</strong> is the same as a <strong>gate diagram</strong>: it shows how gates are connected to implement a Boolean function.</p>
+        <div class="circuit-reading-layout"><svg class="circuit-svg" viewBox="0 0 650 280" role="img" aria-label="Circuit with a and b entering OR, c entering NOT, and both results entering AND"><text x="20" y="58">a</text><text x="20" y="128">b</text><text x="20" y="225">c</text><path d="M42 53 H135 M42 123 H135"/><path class="or-shape" d="M125 32 Q155 88 125 144 Q190 137 245 88 Q190 39 125 32 Z"/><text x="166" y="94">OR</text><path d="M245 88 H380"/><text class="wire-label" x="300" y="76">w1</text><path d="M42 220 H135"/><path class="not-shape" d="M135 188 L220 220 L135 252 Z"/><circle class="gate-bubble" cx="229" cy="220" r="9"/><path d="M238 220 H380"/><text class="wire-label" x="300" y="208">w2</text><path class="gate-shape" d="M380 70 H455 A75 75 0 0 1 455 220 H380 Z"/><text x="422" y="151">AND</text><path d="M530 145 H625"/><text x="574" y="133">out</text></svg><div><p>Write <code>w1</code>, <code>w2</code>, and <code>out</code>.</p><p>Then write HDL for a chip named <code>CircuitB</code>.</p><button class="reveal" type="button" data-reveal="circuit-expression-answer">Show expression</button><div id="circuit-expression-answer" class="answer"><p class="math-expression">w1 = a+b</p><p class="math-expression">w2 = <span class="overline">c</span></p><p class="math-expression">out = (a+b) &middot; <span class="overline">c</span></p></div></div></div>
       </section>
 
       <section class="slide exercise-slide">
-        <div class="kicker">Exercise 4 | Negation and addition</div>
-        <h2>Compute Using Four Bits</h2>
-        <div class="two-problem-grid"><div><span>1</span><p>Negate <code>0101</code> using “flip and add 1.” What decimal number does the result represent?</p></div><div><span>2</span><p>Add <code>0011</code> and <code>1101</code>. Interpret both inputs and the stored result as signed values.</p></div></div>
-        <button class="reveal secondary-reveal" type="button" data-reveal="signed-computation-answers">Reveal answers</button>
-        <div id="signed-computation-answers" class="answer"><p><strong>1:</strong> <code>0101 → 1010 → 1011</code>, which represents −5.</p><p><strong>2:</strong> <code>0011 (+3) + 1101 (−3) = 1 0000</code>; the stored result is <code>0000</code>, or 0.</p></div>
+        <div class="kicker">Exercise 5 | Demultiplexor</div>
+        <h2>Draw and Describe DMux</h2>
+        <div class="design-contract-layout"><div class="contract-card"><span><b>Chip name:</b> DMux</span><span><b>Inputs:</b> in, sel</span><span><b>Outputs:</b> a, b</span><span><b>Function:</b> If <code>sel=0</code>, then <code>a=in</code> and <code>b=0</code>; else <code>a=0</code> and <code>b=in</code>.</span></div><div class="design-tasks"><ol><li>Write Boolean expressions for <code>a</code> and <code>b</code>.</li><li>Draw the gate diagram using AND and NOT.</li><li>Write <code>DMux.hdl</code>.</li></ol><button class="reveal" type="button" data-reveal="dmux-expression-answer">Show expressions</button><div id="dmux-expression-answer" class="answer"><p class="math-expression">a = in &middot; <span class="overline">sel</span></p><p class="math-expression">b = in &middot; sel</p></div></div></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 6 | Four-way routing</div>
+        <h2>Build DMux4Way from DMux Gates</h2>
+        <div class="dmux4-task-layout"><table class="truth-table compact-table"><thead><tr><th>sel</th><th>a</th><th>b</th><th>c</th><th>d</th></tr></thead><tbody><tr><td>00</td><td>in</td><td>0</td><td>0</td><td>0</td></tr><tr><td>01</td><td>0</td><td>in</td><td>0</td><td>0</td></tr><tr><td>10</td><td>0</td><td>0</td><td>in</td><td>0</td></tr><tr><td>11</td><td>0</td><td>0</td><td>0</td><td>in</td></tr></tbody></table><div><ol><li>Use one DMux controlled by <code>sel[1]</code> to choose the upper or lower pair.</li><li>Use two more DMux gates controlled by <code>sel[0]</code>.</li><li>Draw the full diagram and label intermediate wires.</li><li>Write <code>DMux4Way.hdl</code>.</li></ol><button class="reveal" type="button" data-reveal="dmux4-hint">Show structural hint</button><div id="dmux4-hint" class="answer"><p><strong>Stage 1:</strong> split <code>in</code> into two intermediate wires.</p><p><strong>Stage 2:</strong> split each intermediate wire into two outputs.</p></div></div></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 7 | Additional designs</div>
+        <h2>Specify and Design Each Chip</h2>
+        <div class="compact-artifact-strip"><span><b>1. Specification</b> name, inputs, outputs, function</span><span><b>2. Expression</b> required Boolean function</span><span><b>3. Gate diagram</b> labelled gates and wires</span><span><b>4. HDL</b> interface and part connections</span></div>
+        <div class="additional-design-grid expanded-design-grid">
+          <div><span>A | Core</span><strong>Majority3</strong><p>Output 1 when at least two of <code>a,b,c</code> are 1.</p></div>
+          <div><span>B | Core</span><strong>Equal2</strong><p>Output 1 when inputs <code>a</code> and <code>b</code> are equal.</p></div>
+          <div><span>C | Core</span><strong>Mux</strong><p>Use only AND, OR, and NOT gates.</p></div>
+          <div><span>D | Core</span><strong>Or4Way</strong><p>Output 1 when at least one bit in <code>in[4]</code> is 1.</p></div>
+          <div><span>E | Challenge</span><strong>ExactlyOne3</strong><p>Output 1 when exactly one of <code>a,b,c</code> is 1.</p></div>
+          <div><span>F | Challenge</span><strong>TwoOfFour</strong><p>Output 1 when exactly two of <code>a,b,c,d</code> are 1.</p></div>
+          <div><span>G | Challenge</span><strong>Mux4Way16</strong><p>Select one of four 16-bit inputs using <code>sel[2]</code>.</p></div>
+          <div><span>H | Challenge</span><strong>DMux8Way</strong><p>Route <code>in</code> to one of eight outputs using <code>sel[3]</code>.</p></div>
+        </div>
       </section>
 
       <section class="slide summary-slide">
         <div class="kicker">What to remember</div>
-        <h2>One Adder Works for Signed and Unsigned Values</h2>
-        <div class="remember-grid"><div><strong>Representation</strong><p>n bits provide 2<sup>n</sup> distinct patterns.</p></div><div><strong>Addition</strong><p>Add from the LSB and propagate carry toward the MSB.</p></div><div><strong>Signed values</strong><p>Two's complement gives the range −2<sup>n−1</sup> through 2<sup>n−1</sup>−1.</p></div><div><strong>Negation</strong><p>Flip every bit and add 1.</p></div></div>
-        <p class="next-step"><strong>Next lecture:</strong> Build HalfAdder, FullAdder, Add16, and Inc16, then introduce the Hack Arithmetic Logic Unit.</p>
+        <h2>Equivalent Forms Let Us Choose a Better Design</h2>
+        <div class="remember-grid"><div><strong>Laws</strong><p>justify algebraic transformations</p></div><div><strong>Truth tables</strong><p>verify that two forms agree on every input</p></div><div><strong>Gate diagrams</strong><p>show the structure of a circuit</p></div><div><strong>HDL</strong><p>records the same structure precisely</p></div></div>
+        <p class="next-step"><strong>Next lecture:</strong> Begin Boolean Arithmetic with binary representation, addition, and two's complement.</p>
       </section>
     </main>
 
-    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>22</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>12</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
     <script src="../assets/slides.js"></script>
   </body>
 </html>

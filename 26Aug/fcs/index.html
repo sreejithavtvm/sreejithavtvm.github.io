@@ -79,49 +79,89 @@
           </div>
           <p>Use the arrow keys or the on-screen controls to move through a lecture.</p>
         </div>
-        <div class="lecture-grid">
-          <article class="lecture-card">
-            <span class="badge">Orientation</span>
-            <time class="lecture-date" datetime="2026-07-29">29 July</time>
-            <h3>Lecture 0: Course Details</h3>
-            <p>Expectations, timings, evaluation, and laboratory details.</p>
-            <a class="button-link" href="lectures/lecture-0.html">Open slides</a>
-          </article>
-          <article class="lecture-card featured-card">
-            <span class="badge">Week 1</span>
-            <time class="lecture-date" datetime="2026-07-29">29 July</time>
-            <h3>Lecture 1: The Story of Chips</h3>
-            <p>How humans learned to control electrical signals and made computation possible.</p>
-            <a class="button-link" href="lectures/lecture-1.html">Open slides</a>
-          </article>
-          <article class="lecture-card">
-            <span class="badge">Week 1</span>
-            <time class="lecture-date" datetime="2026-07-30">30 July</time>
-            <h3>Lecture 2: Boolean Algebra</h3>
-            <p>Boolean variables and functions, truth tables, expressions, and canonical representation.</p>
-            <a class="button-link" href="lectures/lecture-2.html">Open slides</a>
-          </article>
-          <article class="lecture-card">
-            <span class="badge">Week 2</span>
-            <time class="lecture-date" datetime="2026-08-05">5 August</time>
-            <h3>Lecture 3: Gate Logic and Hardware Description Language</h3>
-            <p>Gate diagrams, composite gates, HDL, testing, and the Chapter 1 gate specifications.</p>
-            <a class="button-link" href="lectures/lecture-3.html">Open slides</a>
-          </article>
-          <article class="lecture-card unavailable">
-            <span class="badge">Week 2</span>
-            <time class="lecture-date" datetime="2026-08-06">6 August</time>
-            <h3>Lecture 4: Boolean Arithmetic</h3>
-            <p>Binary numbers, word size, addition, and signed integers using two's complement.</p>
-            <span class="button-link">Slides forthcoming</span>
-          </article>
-          <article class="lecture-card unavailable">
-            <span class="badge">Planned</span>
-            <span class="lecture-date">Date to be announced</span>
-            <h3>Lecture 5: Adders and the Hack ALU</h3>
-            <p>HalfAdder, FullAdder, Add16, Inc16, and the Arithmetic Logic Unit.</p>
-            <span class="button-link">Slides forthcoming</span>
-          </article>
+        <div class="lecture-weeks">
+          <section class="lecture-week" aria-labelledby="week-1-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 1</span><h3 id="week-1-title">The Story</h3></div>
+              <p>Course orientation and the human story behind chips and computation.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card">
+                <span class="badge">Course orientation</span>
+                <time class="lecture-date" datetime="2026-07-29">29 July</time>
+                <h3>Lecture 0: Course Details</h3>
+                <p>Expectations, timings, evaluation, and laboratory details.</p>
+                <a class="button-link" href="lectures/lecture-0.html">Open slides</a>
+              </article>
+              <article class="lecture-card featured-card">
+                <span class="badge">Story</span>
+                <time class="lecture-date" datetime="2026-07-29">29 July</time>
+                <h3>Lecture 1: The Story of Chips</h3>
+                <p>How humans learned to control electrical signals and made computation possible.</p>
+                <a class="button-link" href="lectures/lecture-1.html">Open slides</a>
+              </article>
+            </div>
+          </section>
+
+          <section class="lecture-week" aria-labelledby="week-2-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 2</span><h3 id="week-2-title">Boolean Logic</h3></div>
+              <p>From Boolean functions to gates, Hardware Description Language, and design practice.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card">
+                <span class="badge">Introduction</span>
+                <time class="lecture-date" datetime="2026-07-30">30 July</time>
+                <h3>Lecture 2: Boolean Algebra</h3>
+                <p>Boolean variables and functions, truth tables, expressions, and canonical representation.</p>
+                <a class="button-link" href="lectures/lecture-2.html">Open slides</a>
+              </article>
+              <article class="lecture-card">
+                <span class="badge">Gates and HDL</span>
+                <time class="lecture-date" datetime="2026-08-05">5 August</time>
+                <h3>Lecture 3: Gate Logic and Hardware Description Language</h3>
+                <p>Logic gates, composite gates, gate specifications, and HDL.</p>
+                <a class="button-link" href="lectures/lecture-3.html">Open slides</a>
+              </article>
+              <article class="lecture-card">
+                <span class="badge">Laws and tutorial</span>
+                <time class="lecture-date" datetime="2026-08-06">6 August</time>
+                <h3>Lecture 4: Boolean Laws and Logic Design Tutorial</h3>
+                <p>Boolean laws, expression simplification, truth-table verification, gate diagrams, and HDL practice.</p>
+                <a class="button-link" href="lectures/lecture-4.html">Open slides</a>
+              </article>
+            </div>
+          </section>
+
+          <section class="lecture-week" aria-labelledby="week-3-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 3</span><h3 id="week-3-title">Boolean Arithmetic</h3></div>
+              <p>Binary representation, arithmetic circuits, and the Arithmetic Logic Unit.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card unavailable">
+                <span class="badge">Introduction</span>
+                <span class="lecture-date">Date to be announced</span>
+                <h3>Lecture 5: Boolean Arithmetic</h3>
+                <p>Binary numbers, word size, addition, and signed integers using two's complement.</p>
+                <span class="button-link">Slides forthcoming</span>
+              </article>
+              <article class="lecture-card unavailable">
+                <span class="badge">Adders and ALU</span>
+                <span class="lecture-date">Date to be announced</span>
+                <h3>Lecture 6: Adders and the Hack ALU</h3>
+                <p>HalfAdder, FullAdder, Add16, Inc16, and the Arithmetic Logic Unit.</p>
+                <span class="button-link">Slides forthcoming</span>
+              </article>
+              <article class="lecture-card unavailable">
+                <span class="badge">Planned</span>
+                <span class="lecture-date">Date to be announced</span>
+                <h3>Lecture 7: Boolean Arithmetic, Continued</h3>
+                <p>The remaining Boolean Arithmetic material will be planned after Lectures 5 and 6.</p>
+                <span class="button-link">Slides forthcoming</span>
+              </article>
+            </div>
+          </section>
         </div>
       </section>
 
@@ -134,8 +174,8 @@
           <p>Each layer will be built from parts created in the layer below it.</p>
         </div>
         <ol class="course-path">
-          <li><strong>Boolean logic</strong><span>Gates, HDL, simulation</span></li>
-          <li><strong>Arithmetic</strong><span>Adders, ALU, binary numbers</span></li>
+          <li><strong>Boolean logic</strong><span>Gates, HDL</span></li>
+          <li><strong>Arithmetic</strong><span>Binary numbers, Adders, ALU</span></li>
           <li><strong>Memory</strong><span>Registers, RAM, sequential logic</span></li>
           <li><strong>Machine language</strong><span>Instructions, assembly, I/O</span></li>
           <li><strong>Computer architecture</strong><span>CPU, memory, stored programs</span></li>
