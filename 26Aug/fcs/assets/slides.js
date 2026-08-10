@@ -25,6 +25,25 @@
     history.replaceState(null, "", `#${index + 1}`);
   }
 
+  function advance() {
+    const hiddenStep = Array.from(slides[index].querySelectorAll("[data-step]"))
+      .find((step) => !step.classList.contains("visible"));
+    if (hiddenStep) {
+      hiddenStep.classList.add("visible");
+      return;
+    }
+    show(index + 1);
+  }
+
+  function retreat() {
+    const visibleSteps = Array.from(slides[index].querySelectorAll("[data-step].visible"));
+    if (visibleSteps.length) {
+      visibleSteps[visibleSteps.length - 1].classList.remove("visible");
+      return;
+    }
+    show(index - 1);
+  }
+
   function fromHash() {
     const raw = Number(location.hash.replace("#", ""));
     if (Number.isFinite(raw) && raw > 0) show(raw - 1);
@@ -34,22 +53,22 @@
     if (event.target.matches("input, textarea")) return;
     if (["ArrowRight", "PageDown", " "].includes(event.key)) {
       event.preventDefault();
-      show(index + 1);
+      advance();
     }
     if (["ArrowLeft", "PageUp"].includes(event.key)) {
       event.preventDefault();
-      show(index - 1);
+      retreat();
     }
     if (event.key === "Home") show(0);
     if (event.key === "End") show(slides.length - 1);
   });
 
   document.querySelectorAll("[data-next]").forEach((button) => {
-    button.addEventListener("click", () => show(index + 1));
+    button.addEventListener("click", advance);
   });
 
   document.querySelectorAll("[data-prev]").forEach((button) => {
-    button.addEventListener("click", () => show(index - 1));
+    button.addEventListener("click", retreat);
   });
 
   const revealButtons = Array.from(document.querySelectorAll("[data-reveal]"));
@@ -103,6 +122,9 @@
   });
 
   function resetAnswers(scope = document) {
+    scope.querySelectorAll("[data-step].visible").forEach((step) => {
+      step.classList.remove("visible");
+    });
     scope.querySelectorAll(".answer.visible").forEach((answer) => {
       answer.classList.remove("visible");
     });
