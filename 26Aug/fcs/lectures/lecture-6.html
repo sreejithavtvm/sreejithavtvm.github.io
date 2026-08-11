@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 6: Adders</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two arithmetic-lecture adder-lecture">
+    <main class="deck" aria-label="Lecture 6 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 6 | Boolean Arithmetic</div>
+        <h1>Building Adders from Logic Gates</h1>
+        <p class="lead">How can hardware carry out the binary addition procedure?</p>
+      </section>
+
+      <section class="slide signed-view-slide">
+        <div class="kicker">Recap | Signed Binary Numbers</div>
+        <h2>Signed and Unsigned Value</h2>
+        <div class="signed-view-grid">
+          <div>
+            <strong>For a 4-bit number <code>x = 0110</code></strong>
+            <p>Unsigned value of <code>x</code> = <code>6</code>.</p>
+            <p>Signed value of <code>x</code> = unsigned value of <code>x</code> = <code>6</code>.</p>
+          </div>
+          <div>
+            <strong>For a 4-bit number <code>y = 1110</code></strong>
+            <p>Unsigned value of <code>y</code> = <code>14</code>.</p>
+            <p>Signed value of <code>y</code> = unsigned value of <code>y</code> - <code>2^4</code> = <code>-2</code>.</p>
+          </div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> connect this view with the flip-and-add-one view.</p>
+      </section>
+
+      <section class="slide theorem-slide">
+        <div class="kicker">Recap | Two's Complement</div>
+        <h2>Equivalence of the Two Views</h2>
+        <div class="theorem-box">
+          <strong>Theorem</strong>
+          <p>Consider an <code>n</code>-bit negative number <code>x</code>; that is, the MSB of <code>x</code> is 1. Let <code>y</code> be obtained by flipping all bits of <code>x</code> and adding 1. Then:</p>
+          <p class="center-equation"><code>signed value of x = unsigned value of x - 2^n = -(unsigned value of y)</code></p>
+        </div>
+        <div class="paired-proof-grid compact-proof-grid">
+          <strong class="panel-label">Proof</strong>
+          <strong class="panel-label">Example</strong>
+          <div class="proof-pair-row">
+            <p><span>1</span> Let <code>x</code> be an <code>n</code>-bit negative number; that is, the MSB of <code>x</code> is 1.</p>
+            <p><span>1</span> For example, the 4-bit number <code>x = 1110</code>.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>2</span> unsigned value of <code>x</code> + unsigned value of <code>bitflip(x)</code> = <code>2^n - 1</code>.</p>
+            <p><span>2</span> <code>1110 + 0001 = 1111</code>. That is, <code>14 + 1 = 16 - 1 = 15</code>.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>3</span> unsigned value of <code>bitflip(x)</code> + <code>1</code> = <code>2^n</code> - unsigned value of <code>x</code>.</p>
+            <p><span>3</span> <code>1 + 1 = 2^4 - 14</code>.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>4</span> - (unsigned value of <code>bitflip(x)</code> + <code>1</code>) = unsigned value of <code>x</code> - <code>2^n</code> = signed value of <code>x</code>.</p>
+            <p><span>4</span> <code>-2 = 14 - 2^4</code>.</p>
+          </div>
+          <p class="proof-complete pause-step" data-step>The proof is complete.</p>
+        </div>
+        <p class="next-step"><strong>Next:</strong> use this to explain signed addition.</p>
+      </section>
+
+      <section class="slide paired-proof-slide unsigned-addition-proof-slide">
+        <div class="kicker">Recap | Signed Addition</div>
+        <h2>Why Unsigned Addition Works for Negative Numbers Too</h2>
+        <div class="paired-proof-grid">
+          <strong class="panel-label">Proof</strong>
+          <strong class="panel-label">Example</strong>
+          <div class="proof-pair-row">
+            <p><span>1</span> Consider two <code>n</code>-bit negative numbers <code>x</code> and <code>y</code>. That is, the MSB of both numbers is 1.</p>
+            <p><span>1</span> <code>x = 1110</code>, <code>y = 1011</code>.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>2</span> signed value(<code>x</code>) = unsigned value(<code>x</code>) - <code>2^n</code>.<br>signed value(<code>y</code>) = unsigned value(<code>y</code>) - <code>2^n</code>.</p>
+            <p><span>2</span> signed value(<code>x</code>) = <code>-2 = 14 - 16</code>.<br>signed value(<code>y</code>) = <code>-5 = 11 - 16</code>.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>3</span> signed value(<code>x</code>) + signed value(<code>y</code>) = unsigned value(<code>x</code>) + unsigned value(<code>y</code>) - <code>2^n</code> - <code>2^n</code>.</p>
+            <p><span>3</span> signed value(<code>x</code>) + signed value(<code>y</code>) = <code>-2 + -5 = -7</code>.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>4</span> <code>n</code>-bit unsigned value(<code>x+y</code>) + <code>2^n</code> = unsigned value(<code>x</code>) + unsigned value(<code>y</code>).<br>So, <code>n</code>-bit unsigned value(<code>x+y</code>) = unsigned value(<code>x</code>) + unsigned value(<code>y</code>) - <code>2^n</code>.</p>
+            <p><span>4</span> The 4-bit result of <code>x+y</code> is <code>1001</code>.<br><code>1001 + 2^4 = 1110 + 1011</code>, after discarding the carry outside 4 bits.</p>
+          </div>
+          <div class="proof-pair-row pause-step" data-step>
+            <p><span>5</span> From the previous two lines, signed value(<code>x</code>) + signed value(<code>y</code>) = <code>n</code>-bit unsigned value(<code>x+y</code>) - <code>2^n</code>.</p>
+            <p><span>5</span> signed value(<code>x</code>) + signed value(<code>y</code>) = unsigned value(<code>1001</code>) - <code>2^4 = 9 - 16 = -7</code>.</p>
+          </div>
+        </div>
+        <p class="pause-step conclusion-step" data-step>Hence, the <code>n</code>-bit number <code>x+y</code> represents the correct signed result, provided the result is within range.</p>
+        <div class="pause-step proof-followup-exercise" data-step>
+          <strong>Exercise</strong>
+          <p>Prove the same result when <code>x</code> is negative and <code>y</code> is positive.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">From Arithmetic to Hardware</div>
+        <h2>What Must an Adder Remember?</h2>
+        <div class="addition-bridge-layout">
+          <div class="column-addition aligned-addition" aria-label="Binary addition example">
+            <span class="carry-line">0 1 1 0</span>
+            <span>  0 1 1 0</span>
+            <span>+ 0 0 1 1</span>
+            <i></i>
+            <strong>  1 0 0 1</strong>
+          </div>
+          <div class="bridge-questions"><p>At each position, hardware receives two operand bits.</p><p>From the second position onward, it may also receive a <strong>carry from the previous position</strong>.</p><strong>We therefore need chips that can add two bits and three bits.</strong></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> Build a hierarchy of increasingly capable adders.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Adder Hierarchy</div>
+        <h2>Four Chips, Built One upon Another</h2>
+        <div class="adder-hierarchy">
+          <div><span>2 input bits</span><strong>HalfAdder</strong><small>sum and carry</small></div><i>&#8594;</i>
+          <div><span>3 input bits</span><strong>FullAdder</strong><small>sum and carry</small></div><i>&#8594;</i>
+          <div><span>two 16-bit inputs</span><strong>Add16</strong><small>16-bit sum</small></div><i>&#8594;</i>
+          <div><span>one 16-bit input</span><strong>Inc16</strong><small>input plus one</small></div>
+        </div>
+        <p class="prompt">For every chip, separate its <strong>specification</strong>—what it must do—from its <strong>implementation</strong>—how it is built.</p>
+      </section>
+
+      <section class="slide chip-study-slide">
+        <div class="kicker">HalfAdder</div>
+        <h2>Adding Two Bits</h2>
+        <p>A <strong class="new-term">HalfAdder</strong> adds two one-bit inputs. The two-bit result is separated into its least significant bit, <code>sum</code>, and most significant bit, <code>carry</code>.</p>
+        <div class="chip-study-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>HalfAdder</dd></div><div><dt>Inputs:</dt><dd><code>a, b</code></dd></div><div><dt>Outputs:</dt><dd><code>sum, carry</code></dd></div><div><dt>Function:</dt><dd><code>sum</code> is the LSB and <code>carry</code> is the MSB of <code>a+b</code>.</dd></div></dl></div>
+          <div><strong class="panel-label">Truth table</strong><table class="truth-table compact-truth-table"><thead><tr><th>a</th><th>b</th><th>carry</th><th>sum</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>0</td></tr></tbody></table></div>
+          <figure class="chip-figure"><figcaption>Symbol</figcaption><svg viewBox="0 0 330 190" role="img" aria-label="HalfAdder symbol with inputs a and b and outputs sum and carry"><line x1="18" y1="65" x2="92" y2="65"/><line x1="18" y1="130" x2="92" y2="130"/><rect x="92" y="30" width="142" height="130" rx="8"/><line x1="234" y1="65" x2="312" y2="65"/><line x1="234" y1="130" x2="312" y2="130"/><text x="24" y="55">a</text><text x="24" y="120">b</text><text x="247" y="55">sum</text><text x="247" y="120">carry</text><text class="chip-name" x="163" y="103">HalfAdder</text></svg></figure>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide compact-adder-exercise">
+        <div class="kicker">Exercise 1</div>
+        <h2>Implement the HalfAdder</h2>
+        <p>Use only And, Or, and Not gates. Compare the output columns with Boolean functions you already know, but expand any Xor you recognize.</p>
+        <div class="adder-design-questions"><div><span>A</span><p>Write Boolean expressions for <code>sum(a,b)</code> and <code>carry(a,b)</code>.</p></div><div><span>B</span><p>Draw the gate diagram using only And, Or, and Not.</p></div><div><span>C</span><p>Write the <code>PARTS</code> section of <code>HalfAdder.hdl</code>.</p></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="half-adder-answer">Reveal answer</button>
+        <div id="half-adder-answer" class="answer adder-answer-grid"><p><strong>Expressions</strong><br><code>sum = (a OR b) AND NOT(a AND b)</code><br><code>carry = a AND b</code></p><pre><code>PARTS:
+  Or(a=a, b=b, out=either);
+  And(a=a, b=b, out=both);
+  Not(in=both, out=notBoth);
+  And(a=either, b=notBoth, out=sum);
+  And(a=a, b=b, out=carry);</code></pre></div>
+      </section>
+
+      <section class="slide chip-study-slide full-adder-study">
+        <div class="kicker">FullAdder</div>
+        <h2>Adding Three Bits</h2>
+        <p>A <strong class="new-term">FullAdder</strong> adds two operand bits and a third bit <code>c</code>, normally the carry from the previous position.</p>
+        <div class="chip-study-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>FullAdder</dd></div><div><dt>Inputs:</dt><dd><code>a, b, c</code></dd></div><div><dt>Outputs:</dt><dd><code>sum, carry</code></dd></div><div><dt>Function:</dt><dd><code>sum</code> is the LSB and <code>carry</code> is the MSB of <code>a+b+c</code>.</dd></div></dl></div>
+          <div><strong class="panel-label">Truth table</strong><table class="truth-table compact-truth-table"><thead><tr><th>a</th><th>b</th><th>c</th><th>carry</th><th>sum</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr></tbody></table></div>
+          <figure class="chip-figure"><figcaption>Symbol</figcaption><svg viewBox="0 0 330 210" role="img" aria-label="FullAdder symbol"><line x1="18" y1="52" x2="92" y2="52"/><line x1="18" y1="104" x2="92" y2="104"/><line x1="18" y1="156" x2="92" y2="156"/><rect x="92" y="25" width="142" height="160" rx="8"/><line x1="234" y1="70" x2="312" y2="70"/><line x1="234" y1="142" x2="312" y2="142"/><text x="24" y="43">a</text><text x="24" y="95">b</text><text x="24" y="147">c</text><text x="247" y="61">sum</text><text x="247" y="133">carry</text><text class="chip-name" x="163" y="111">FullAdder</text></svg></figure>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide compact-adder-exercise">
+        <div class="kicker">Exercise 2</div>
+        <h2>Build a FullAdder from HalfAdders</h2>
+        <p>First use two HalfAdders and one additional basic gate. Draw the circuit and name every internal wire. Then expand the HalfAdders to obtain a circuit containing only And, Or, and Not gates.</p>
+        <div class="full-adder-hints"><div><strong>First HalfAdder</strong><p>Add <code>a</code> and <code>b</code>.</p></div><div><strong>Second HalfAdder</strong><p>Add the first sum to <code>c</code>.</p></div><div><strong>Final question</strong><p>When should the final <code>carry</code> be 1?</p></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="full-adder-answer">Reveal HDL</button>
+        <div id="full-adder-answer" class="answer adder-answer-grid"><pre><code>PARTS:
+  HalfAdder(a=a, b=b, sum=s1, carry=c1);
+  HalfAdder(a=s1, b=c, sum=sum, carry=c2);
+  Or(a=c1, b=c2, out=carry);</code></pre><p><strong>And/Or/Not form:</strong><br><code>sum = (!a&amp;!b&amp;c) | (!a&amp;b&amp;!c) | (a&amp;!b&amp;!c) | (a&amp;b&amp;c)</code><br><code>carry = (a&amp;b) | (a&amp;c) | (b&amp;c)</code><br>Implement each three-input AND by cascading two And gates.</p></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Add16</div>
+        <h2>From One Position to a Sixteen-Bit Adder</h2>
+        <div class="ripple-adder-diagram" aria-label="Carry ripples through a chain of adders">
+          <div><span>bit 0 · LSB</span><strong>HalfAdder</strong><small>a[0], b[0]</small></div><i>carry</i>
+          <div><span>bit 1</span><strong>FullAdder</strong><small>a[1], b[1]</small></div><i>carry</i>
+          <div class="ellipsis-chip">...</div><i>carry</i>
+          <div><span>bit 15 · MSB</span><strong>FullAdder</strong><small>a[15], b[15]</small></div>
+        </div>
+        <p>Each carry output becomes the next position's carry input. This design is called a <strong class="new-term">ripple-carry adder</strong>.</p>
+        <p class="prompt">The carry out of the MSB is discarded. Add16 neither detects nor handles overflow.</p>
+      </section>
+
+      <section class="slide chip-study-slide wide-chip-study">
+        <div class="kicker">Add16</div>
+        <h2>Sixteen-Bit Adder Specification</h2>
+        <div class="wide-chip-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>Add16</dd></div><div><dt>Inputs:</dt><dd><code>a[16], b[16]</code></dd></div><div><dt>Outputs:</dt><dd><code>out[16]</code></dd></div><div><dt>Function:</dt><dd><code>out = a+b</code> using 16-bit two's-complement addition.</dd></div><div><dt>Overflow:</dt><dd>Neither detected nor handled.</dd></div></dl></div>
+          <div><strong class="panel-label">Representative input-output rows</strong><table class="truth-table behavior-table"><thead><tr><th>a</th><th>b</th><th>out</th><th>Meaning</th></tr></thead><tbody><tr><td>0000...0011</td><td>0000...0101</td><td>0000...1000</td><td>3+5=8</td></tr><tr><td>1111...1110</td><td>0000...0011</td><td>0000...0001</td><td>−2+3=1</td></tr><tr><td>1111...1111</td><td>0000...0001</td><td>0000...0000</td><td>−1+1=0</td></tr></tbody></table><p class="table-note">A complete table would require 2<sup>32</sup> input rows; the specification defines all of them compactly.</p></div>
+          <figure class="chip-figure compact-chip-figure"><figcaption>Symbol</figcaption><svg viewBox="0 0 330 180" role="img" aria-label="Add16 symbol"><line x1="18" y1="58" x2="92" y2="58"/><line x1="18" y1="122" x2="92" y2="122"/><rect x="92" y="28" width="142" height="124" rx="8"/><line x1="234" y1="90" x2="312" y2="90"/><text x="24" y="48">a[16]</text><text x="24" y="112">b[16]</text><text x="247" y="80">out[16]</text><text class="chip-name" x="163" y="96">Add16</text></svg></figure>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Plan the Add16 Implementation</h2>
+        <div class="implementation-prompts"><div><span>1</span><p>Which chip should process bit 0? Why does it not need a carry input?</p></div><div><span>2</span><p>How many FullAdders are required for bits 1 through 15?</p></div><div><span>3</span><p>Name a consistent sequence of internal carry wires.</p></div><div><span>4</span><p>Sketch the first three and final two HDL part declarations.</p></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="add16-plan-answer">Reveal plan</button>
+        <div id="add16-plan-answer" class="answer"><p>Use one HalfAdder for bit 0 and fifteen FullAdders for bits 1–15. Connect <code>carry0</code> to the next chip's <code>c</code> input, then <code>carry1</code>, and so on. The final carry has no output pin and may be left unconnected.</p></div>
+      </section>
+
+      <section class="slide chip-study-slide wide-chip-study">
+        <div class="kicker">Inc16</div>
+        <h2>Incrementing a Sixteen-Bit Value</h2>
+        <p>An <strong class="new-term">incrementer</strong> is a special-purpose adder that adds the constant 1.</p>
+        <div class="wide-chip-grid inc16-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>Inc16</dd></div><div><dt>Inputs:</dt><dd><code>in[16]</code></dd></div><div><dt>Outputs:</dt><dd><code>out[16]</code></dd></div><div><dt>Function:</dt><dd><code>out = in+1</code> using 16-bit two's-complement addition.</dd></div><div><dt>Overflow:</dt><dd>Neither detected nor handled.</dd></div></dl></div>
+          <div><strong class="panel-label">Representative input-output rows</strong><table class="truth-table behavior-table"><thead><tr><th>in</th><th>out</th><th>Meaning</th></tr></thead><tbody><tr><td>0000...0000</td><td>0000...0001</td><td>0 becomes 1</td></tr><tr><td>0000...0111</td><td>0000...1000</td><td>7 becomes 8</td></tr><tr><td>1111...1111</td><td>0000...0000</td><td>−1 becomes 0</td></tr></tbody></table><p class="table-note">A complete table has 2<sup>16</sup> rows. These rows illustrate the single rule <code>out=in+1</code>.</p></div>
+          <figure class="chip-figure compact-chip-figure"><figcaption>Symbol</figcaption><svg viewBox="0 0 330 180" role="img" aria-label="Inc16 symbol"><line x1="18" y1="90" x2="92" y2="90"/><rect x="92" y="28" width="142" height="124" rx="8"/><line x1="234" y1="90" x2="312" y2="90"/><text x="24" y="80">in[16]</text><text x="247" y="80">out[16]</text><text class="chip-name" x="163" y="96">Inc16</text></svg></figure>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Two Ways to Build Inc16</h2>
+        <div class="inc16-options"><div><strong>Design A: reuse Add16</strong><p>What constant should be connected to Add16's second input?</p></div><div><strong>Design B: propagate an increment</strong><p>Starting at the LSB, when must a carry continue to the next bit?</p></div></div>
+        <p class="prompt">Write HDL for Design A. Then compare the number and type of subchips used by the two designs.</p>
+        <button class="reveal secondary-reveal" type="button" data-reveal="inc16-answer">Reveal Design A</button>
+        <div id="inc16-answer" class="answer"><pre><code>PARTS:
+  Add16(a=in, b[0]=true, b[1..15]=false, out=out);</code></pre><p>In the Nand2Tetris HDL, constants may be connected directly to bus subranges.</p></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Arithmetic Logic Unit</div>
+        <h2>One Chip, Many Operations</h2>
+        <p>An <strong class="new-term">Arithmetic Logic Unit (ALU)</strong> is the processor component that performs arithmetic and logical operations on data.</p>
+        <div class="alu-purpose-grid"><div><span>Arithmetic</span><strong>add, subtract, increment</strong></div><div><span>Logic</span><strong>AND, OR, NOT</strong></div><div><span>Selection</span><strong>control bits choose the operation</strong></div><div><span>Result</span><strong>one output bus carries the answer</strong></div></div>
+        <p class="prompt">Instead of constructing a separate external chip for every operation, an ALU contains shared hardware and uses control bits to decide what that hardware does.</p>
+      </section>
+
+      <section class="slide hack-alu-preview-slide">
+        <div class="kicker">Arithmetic Logic Unit</div>
+        <h2>The Hack ALU Interface</h2>
+        <div class="hack-alu-interface">
+          <div class="alu-inputs"><span><code>x[16]</code><i>&#8594;</i></span><span><code>y[16]</code><i>&#8594;</i></span></div>
+          <div class="alu-chip"><div class="control-pins"><code>zx</code><code>nx</code><code>zy</code><code>ny</code><code>f</code><code>no</code></div><strong>ALU</strong><small>six control bits select the function</small></div>
+          <div class="alu-output"><i>&#8594;</i><code>out[16]</code></div>
+        </div>
+        <p>For now, focus on the two 16-bit inputs, the six control bits, and the 16-bit output. We will add the two status outputs <code>zr</code> and <code>ng</code> in Lecture 7.</p>
+        <p class="next-step"><strong>Next:</strong> Follow the six transformations that make one ALU compute many functions.</p>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>From Bit Addition to an Arithmetic Unit</h2>
+        <div class="remember-grid"><div><strong>HalfAdder</strong><p>Adds two bits.</p></div><div><strong>FullAdder</strong><p>Adds two bits and a carry.</p></div><div><strong>Add16</strong><p>Propagates carry across sixteen positions.</p></div><div><strong>Inc16</strong><p>Adds the constant one.</p></div></div>
+        <div class="titled-method-box"><strong>Construction principle</strong><p>Small chips with precise contracts become building blocks for larger chips. The ALU will combine these arithmetic chips with the logic gates built earlier.</p></div>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Lecture | Arithmetic Logic Unit</div>
+        <h2>Lecture 7: Arithmetic Logic Unit (ALU)</h2>
+        <p class="lead">One chip for every operation.</p>
+        <div class="next-actions"><a class="button-link" href="lecture-7.html">Go to Lecture 7</a></div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>19</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
