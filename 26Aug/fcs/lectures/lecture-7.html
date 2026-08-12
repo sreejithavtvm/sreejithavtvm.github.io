@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 7: Arithmetic Logic Unit (ALU)</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two arithmetic-lecture alu-lecture">
+    <main class="deck" aria-label="Lecture 7 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 7 | Boolean Arithmetic</div>
+        <h1>Arithmetic Logic Unit (ALU)</h1>
+        <p class="lead">One circuit, six control bits, and eighteen useful functions.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Arithmetic Logic Unit</div>
+        <h2>One Chip, Many Operations</h2>
+        <div class="alu-motivation-flow"><div><strong>Programs request operations</strong><span>add, subtract, AND, OR, negate...</span></div><i>&#8594;</i><div><strong>Control signals encode the request</strong><span>a small bit pattern</span></div><i>&#8594;</i><div><strong>The ALU computes the result</strong><span>on fixed-width data</span></div></div>
+        <p>The <strong class="new-term">Arithmetic Logic Unit (ALU)</strong> is the processor component that performs basic arithmetic and logical operations.</p>
+        <p class="prompt">Instead of building a separate chip for every operation, the processor sends control bits to one shared chip. The same hardware is reused in different ways.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hack ALU</div>
+        <h2>Data Inputs and Control Inputs</h2>
+        <div class="hack-alu-interface large-interface">
+          <div class="alu-inputs"><span><code>x[16]</code><i>&#8594;</i></span><span><code>y[16]</code><i>&#8594;</i></span></div>
+          <div class="alu-chip"><div class="control-pins"><code>zx</code><code>nx</code><code>zy</code><code>ny</code><code>f</code><code>no</code></div><strong>Hack ALU</strong><small>control bits determine f(x,y)</small></div>
+          <div class="alu-output"><i>&#8594;</i><code>out[16]</code></div>
+        </div>
+        <div class="interface-facts"><div><strong>Data</strong><p><code>x</code>, <code>y</code>, and <code>out</code> are sixteen-bit buses.</p></div><div><strong>Control</strong><p>Each of the six control inputs is one bit.</p></div><div><strong>Capacity</strong><p>Six control bits permit 2<sup>6</sup> = 64 control patterns.</p></div></div>
+      </section>
+
+      <section class="slide control-pause-slide">
+        <div class="kicker">Hack ALU</div>
+        <h2>What Do the Six Control Bits Do?</h2>
+        <div class="control-explanation-layout">
+          <div class="hack-alu-interface mini-alu-interface">
+            <div class="alu-inputs"><span><code>x[16]</code><i>&#8594;</i></span><span><code>y[16]</code><i>&#8594;</i></span></div>
+            <div class="alu-chip"><div class="control-pins"><code>zx</code><code>nx</code><code>zy</code><code>ny</code><code>f</code><code>no</code></div><strong>Hack ALU</strong><small>control bits determine f(x,y)</small></div>
+            <div class="alu-output"><i>&#8594;</i><code>out[16]</code></div>
+          </div>
+          <ul class="control-pause-list">
+            <li><strong><code>zx</code>:</strong> zero the <code>x</code> input.<br><span>If <code>zx</code> then <code>x = 0</code>.</span></li>
+            <li class="pause-step" data-step><strong><code>nx</code>:</strong> bitwise negate <code>x</code> input.<br><span>If <code>nx</code> then <code>x = !x</code>.</span></li>
+            <li class="pause-step" data-step><strong><code>zy</code>:</strong> zero the <code>y</code> input.</li>
+            <li class="pause-step" data-step><strong><code>ny</code>:</strong> bitwise negate <code>y</code> input.</li>
+            <li class="pause-step" data-step><strong><code>f</code>:</strong> function code.<br><span>If <code>f</code> then <code>out = x + y</code>, the two's-complement addition.<br>Else <code>out = x &amp; y</code>, bitwise AND of the inputs.</span></li>
+            <li class="pause-step" data-step><strong><code>no</code>:</strong> bitwise negate output.<br><span>If <code>no</code> then <code>out = !out</code>.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="slide alu-spec-slide">
+        <div class="kicker">Hack ALU</div>
+        <h2>Output Specification</h2>
+        <div class="vertical-spec full-width-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>ALU</dd></div><div><dt>Data inputs:</dt><dd><code>x[16]</code>, <code>y[16]</code></dd></div><div><dt>Control inputs:</dt><dd><code>zx, nx, zy, ny, f, no</code></dd></div><div><dt>Data output:</dt><dd><code>out[16]</code></dd></div><div><dt>Function:</dt><dd><pre class="alu-pseudocode"><code>if zx then x = 0
+if nx then x = !x
+if zy then y = 0
+if ny then y = !y
+if f then out = x + y
+     else out = x &amp; y
+if no then out = !out</code></pre></dd></div></dl></div>
+      </section>
+
+      <section class="slide zx-nx-example-slide">
+        <div class="kicker">Hack ALU</div>
+        <h2>When Both <code>zx</code> and <code>nx</code> Are True</h2>
+        <div class="control-explanation-layout">
+          <div class="hack-alu-interface mini-alu-interface">
+            <div class="alu-inputs"><span><code>x[16]</code><i>&#8594;</i></span><span><code>y[16]</code><i>&#8594;</i></span></div>
+            <div class="alu-chip"><div class="control-pins"><code>zx</code><code>nx</code><code>zy</code><code>ny</code><code>f</code><code>no</code></div><strong>Hack ALU</strong><small>control bits determine f(x,y)</small></div>
+            <div class="alu-output"><i>&#8594;</i><code>out[16]</code></div>
+          </div>
+          <div class="ordered-control-text">
+            <p>If both <code>zx</code> and <code>nx</code> are set to true, the operations happen in order.</p>
+            <ol>
+              <li>First, <code>zx</code> is implemented: <code>x = 0</code>.</li>
+              <li>Then, <code>nx</code> is implemented: <code>x = !x</code>.</li>
+              <li>Therefore, <code>x</code> becomes all 1s.</li>
+              <li>In two's complement, all 1s represents <code>-1</code> in decimal.</li>
+            </ol>
+            <p>Similarly, the same sequence is applied to <code>y</code> when both <code>zy</code> and <code>ny</code> are true.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide trace-slide">
+        <div class="kicker">Hack ALU</div>
+        <h2>Example: Computing x − 1</h2>
+        <p>Use the control pattern <code>0 0 1 1 1 0</code>, corresponding to <code>zx nx zy ny f no</code>.</p>
+        <div class="alu-trace-flow"><div><span>x preparation</span><strong><code>zx=0, nx=0</code></strong><p>Keep <code>x</code>.</p></div><i>&#8594;</i><div><span>y preparation</span><strong><code>zy=1, ny=1</code></strong><p>Zero y, then negate it: <code>!0 = −1</code>.</p></div><i>&#8594;</i><div><span>function</span><strong><code>f=1</code></strong><p>Add: <code>x+(−1)</code>.</p></div><i>&#8594;</i><div><span>output</span><strong><code>no=0</code></strong><p>Keep <code>x−1</code>.</p></div></div>
+        <p class="prompt">Every row in the ALU function table can be justified by tracing the same control steps.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Trace the Control Bits</h2>
+        <p>For each control pattern, read the bits as <code>zx nx zy ny f no</code>, trace the transformations, and state the resulting function.</p>
+        <div class="control-exercise-grid"><div><span>A</span><code>0 0 1 1 0 0</code></div><div><span>B</span><code>0 0 1 1 0 1</code></div><div><span>C</span><code>0 0 1 1 1 1</code></div><div><span>D</span><code>1 1 1 1 1 1</code></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="trace-control-answer">Reveal answers</button>
+        <div id="trace-control-answer" class="answer four-answer-grid"><p><strong>A:</strong> <code>x</code></p><p><strong>B:</strong> <code>!x</code></p><p><strong>C:</strong> <code>−x</code></p><p><strong>D:</strong> <code>1</code></p></div>
+      </section>
+
+      <section class="slide exercise-slide" data-slide-order="12">
+        <div class="kicker">Exercise 3</div>
+        <h2>Find the Control Bits</h2>
+        <p>Write the six-bit control pattern <code>zx nx zy ny f no</code> for each function.</p>
+        <div class="alu-program-problems expanded-alu-problems five-alu-problems"><div><span>A</span><strong><code>x+1</code></strong></div><div><span>B</span><strong><code>x-y</code></strong></div><div><span>C</span><strong><code>x &amp; y</code></strong></div><div><span>D</span><strong><code>x | y</code></strong></div><div><span>E</span><strong><code>Nand(x,y)</code></strong></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="control-bits-answer">Reveal answers</button>
+        <div id="control-bits-answer" class="answer six-answer-grid"><p><strong>A</strong> <code>011111</code></p><p><strong>B</strong> <code>010011</code></p><p><strong>C</strong> <code>000000</code></p><p><strong>D</strong> <code>010101</code></p><p><strong>E</strong> <code>000001</code></p></div>
+      </section>
+
+      <section class="slide alu-table-slide">
+        <div class="kicker">Hack ALU Functions</div>
+        <h2>Constants and Unary Functions</h2>
+        <table class="truth-table alu-function-table"><thead><tr><th>zx</th><th>nx</th><th>zy</th><th>ny</th><th>f</th><th>no</th><th>out</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><strong>1</strong></td></tr><tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td><strong>−1</strong></td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td><strong>x</strong></td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>y</strong></td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td><strong>!x</strong></td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td><strong>!y</strong></td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td><strong>−x</strong></td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td><strong>−y</strong></td></tr><tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><strong>x+1</strong></td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td><strong>y+1</strong></td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td><strong>x−1</strong></td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td><strong>y−1</strong></td></tr></tbody></table>
+        <p class="table-note">Read each row from left to right as a sequence of control decisions.</p>
+      </section>
+
+      <section class="slide alu-table-slide binary-function-table-slide">
+        <div class="kicker">Hack ALU Functions</div>
+        <h2>Two-Input Arithmetic and Logic</h2>
+        <table class="truth-table alu-function-table"><thead><tr><th>zx</th><th>nx</th><th>zy</th><th>ny</th><th>f</th><th>no</th><th>out</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td><strong>x+y</strong></td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td><strong>x−y</strong></td></tr><tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td><strong>y−x</strong></td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>x&amp;y</strong></td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td><strong>x|y</strong></td></tr></tbody></table>
+        <div class="or-derivation"><strong>Why does the final row produce OR?</strong><p><code>!( (!x) &amp; (!y) ) = x | y</code> by De Morgan's law.</p></div>
+        <p class="prompt">Only 18 of the 64 possible control patterns are documented here. Other patterns may compute useful functions too.</p>
+      </section>
+
+      <section class="slide exercise-slide" data-slide-order="9">
+        <div class="kicker">Exercise 2</div>
+        <h2>Program the ALU</h2>
+        <p>Write the six-bit control pattern <code>zx nx zy ny f no</code> for each function. Justify at least two answers by tracing the control steps.</p>
+        <div class="alu-program-problems"><div><span>A</span><strong><code>out=0</code></strong></div><div><span>B</span><strong><code>out=y</code></strong></div><div><span>C</span><strong><code>out=x+1</code></strong></div><div><span>D</span><strong><code>out=−y</code></strong></div><div><span>E</span><strong><code>out=x−y</code></strong></div><div><span>F</span><strong><code>out=x|y</code></strong></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="program-alu-answer">Reveal answers</button>
+        <div id="program-alu-answer" class="answer six-answer-grid"><p><strong>A</strong> 101010</p><p><strong>B</strong> 110000</p><p><strong>C</strong> 011111</p><p><strong>D</strong> 110011</p><p><strong>E</strong> 010011</p><p><strong>F</strong> 010101</p></div>
+      </section>
+
+      <section class="slide exercise-slide tutorial-choice-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Design the ALU Functionality</h2>
+        <p>Answer these as implementation questions. Name intermediate buses carefully.</p>
+        <div class="alu-tutorial-grid"><div><span>1</span><p>Give a logic circuit for enabling the functionality of <code>zx</code>.</p></div><div><span>2</span><p>Enable the functions <code>zx</code> and <code>nx</code>.</p></div><div><span>3</span><p>Repeat the same design idea for <code>zy</code> and <code>ny</code>.</p></div><div><span>4</span><p>Show how <code>f</code> selects between <code>x &amp; y</code> and <code>x + y</code>.</p></div><div><span>5</span><p>Show how <code>no</code> optionally negates the selected output.</p></div><div><span>6</span><p>Find a control pattern not listed in the function table and determine what it computes.</p></div></div>
+      </section>
+
+      <section class="slide lab-preparation-slide">
+        <div class="kicker">Laboratory Preparation</div>
+        <h2>Build the Chapter 2 Chips</h2>
+        <div class="lab-chip-sequence"><div><span>1</span><strong>HalfAdder</strong></div><i>&#8594;</i><div><span>2</span><strong>FullAdder</strong></div><i>&#8594;</i><div><span>3</span><strong>Add16</strong></div><i>&#8594;</i><div><span>4</span><strong>Inc16</strong></div><i>&#8594;</i><div><span>5</span><strong>ALU</strong></div></div>
+        <div class="titled-method-box lab-rule-box"><strong>Allowed building blocks</strong><p>Use only the chips you gradually build in this lab and the chips from the previous week's lab. Test each chip before using it inside the next one.</p></div>
+        <p class="prompt">A correct specification is your debugging guide: test the smallest transformation that could explain a failing output.</p>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>Arithmetic Logic Unit (ALU)</h2>
+        <div class="remember-grid"><div><strong>One chip</strong><p>The ALU performs many arithmetic and logical operations.</p></div><div><strong>Control bits</strong><p>Six inputs decide how <code>x</code> and <code>y</code> are prepared and which operation is selected.</p></div><div><strong>Functions</strong><p>Different control patterns produce constants, unary operations, arithmetic, AND, and OR.</p></div><div><strong>Construction</strong><p>The ALU is built compositionally from gates and adders already available.</p></div></div>
+        <p class="prompt">The main idea is reuse: a single carefully controlled chip can stand in for many separate operations.</p>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Lecture | Sequential Logic</div>
+        <h2>Lecture 8: From Computing to Remembering</h2>
+        <p class="lead">Combinational chips compute from current inputs; the next challenge is preserving information over time.</p>
+        <div class="next-actions"><a class="button-link" href="lecture-8.html">Go to Lecture 8</a></div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>16</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
