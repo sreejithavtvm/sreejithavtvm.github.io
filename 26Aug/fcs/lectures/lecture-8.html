@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 8: Sequential Logic</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two sequential-lecture">
+    <main class="deck" aria-label="Lecture 8 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 8 | Sequential Logic</div>
+        <h1>Sequential Logic</h1>
+        <p class="lead">How can a circuit remember?</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Sequential Logic</div>
+        <h2>What Is Missing from Our Computer?</h2>
+        <div class="state-motivation-grid">
+          <div><strong>So far</strong><p>Every chip we built computes from its current inputs: gates, adders, and the ALU.</p></div>
+          <div><strong>But computers must remember</strong><p>A running program needs stored values, memory locations, and the address of the next instruction.</p></div>
+          <div><strong>Definition</strong><p><strong class="new-term">State</strong> is information retained from an earlier time.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Clock and Time</div>
+        <h2>Representing Time with a Clock</h2>
+        <div class="clock-layout expanded-clock-layout">
+          <figure class="clock-figure">
+            <figcaption>Clock signal and cycles</figcaption>
+            <svg viewBox="0 0 760 260" role="img" aria-label="Clock waveform showing tick phase, tock phase, cycle boundaries, and commit points">
+              <line x1="40" y1="190" x2="720" y2="190"/>
+              <path d="M80 150 H160 V80 H240 V150 H320 V80 H400 V150 H480 V80 H560 V150 H640 V80 H720" fill="none"/>
+              <g class="cycle-band"><rect x="80" y="35" width="160" height="180"/><rect x="240" y="35" width="160" height="180"/><rect x="400" y="35" width="160" height="180"/></g>
+              <line class="cycle-line" x1="80" y1="35" x2="80" y2="215"/><line class="cycle-line" x1="240" y1="35" x2="240" y2="215"/><line class="cycle-line" x1="400" y1="35" x2="400" y2="215"/><line class="cycle-line" x1="560" y1="35" x2="560" y2="215"/>
+              <text x="118" y="70">tick</text><text x="188" y="175">tock</text><text x="278" y="70">tick</text><text x="348" y="175">tock</text><text x="438" y="70">tick</text><text x="508" y="175">tock</text>
+              <text x="160" y="232">cycle 1</text><text x="320" y="232">cycle 2</text><text x="480" y="232">cycle 3</text>
+              <text x="220" y="32">commit</text><text x="380" y="32">commit</text><text x="540" y="32">commit</text>
+            </svg>
+          </figure>
+          <div class="vertical-spec">
+            <strong>Clock vocabulary</strong>
+            <dl>
+              <div><dt>Clock</dt><dd>A signal broadcast to all sequential chips so they agree on time.</dd></div>
+              <div><dt>Tick and tock</dt><dd>The two phases of the clock signal.</dd></div>
+              <div><dt>Cycle</dt><dd>One complete tick-tock interval; we treat it as one discrete time unit.</dd></div>
+              <div><dt>Commit</dt><dd>Stored outputs update only at cycle boundaries.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">Clock and Time</div>
+        <h2>What Happens During a Cycle?</h2>
+        <div class="book-image-layout">
+          <figure class="book-figure wide-book-figure"><img src="../assets/images/clock-cycle.png" alt="Clock cycle example showing a NOT gate and how input and output values change across cycles"><figcaption>Clock cycles make us say exactly when an input is sampled and when an output is observed.</figcaption></figure>
+          <div class="vertical-spec">
+            <strong>Reading the figure</strong>
+            <dl>
+              <div><dt>During a cycle</dt><dd>Combinational logic reacts to the input values it currently receives.</dd></div>
+              <div><dt>At a boundary</dt><dd>Sequential chips commit their stored outputs.</dd></div>
+              <div><dt>Why it matters</dt><dd>Without clock cycles, phrases like "previous input" and "next output" are ambiguous.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide chip-study-slide dff-study-slide">
+        <div class="kicker">Data Flip-Flop</div>
+        <h2>Data Flip-Flop (DFF)</h2>
+        <p>A <strong class="new-term">Data Flip-Flop (DFF)</strong> is the primitive one-bit time delay used by the simulator.</p>
+        <div class="dff-study-layout">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>DFF</dd></div><div><dt>Inputs:</dt><dd><code>in</code></dd></div><div><dt>Outputs:</dt><dd><code>out</code></dd></div><div><dt>Function:</dt><dd><code>out(t)=in(t-1)</code></dd></div><div><dt>Implementation:</dt><dd>Primitive, supplied by the simulator.</dd></div></dl></div>
+          <figure class="book-figure symbol-book-figure"><img src="../assets/images/dff.png" alt="DFF symbol"><figcaption>Symbol</figcaption></figure>
+          <figure class="book-figure cycle-book-figure"><img src="../assets/images/dff-cycle.png" alt="DFF timing diagram showing output as the previous cycle input"><figcaption>The output follows the previous cycle's input.</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide sequential-comparison-slide">
+        <div class="kicker">Sequential Logic</div>
+        <h2>Combinational Logic and Sequential Logic</h2>
+        <div class="book-image-layout">
+          <figure class="book-figure wide-book-figure"><img src="../assets/images/sequential.png" alt="Book figure comparing combinational and sequential chip structure"><figcaption>A sequential chip contains DFF gates, possibly surrounded by combinational logic.</figcaption></figure>
+          <div class="comparison-stack">
+            <div><span>Combinational chip</span><strong><code>out = f(in)</code></strong><p>Output depends only on current input values.</p></div>
+            <div><span>Sequential chip</span><strong><code>out(t) = f(in(t-1), out(t-1))</code></strong><p>Output can depend on earlier input values and earlier stored state.</p></div>
+          </div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> understand why feedback needs a time delay.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Data Flip-Flop</div>
+        <h2>Why Feedback Needs Time</h2>
+        <div class="feedback-text-grid">
+          <div><strong>Without time</strong><p>If a circuit output immediately feeds back into its own input, the output depends on itself at the same instant.</p></div>
+          <div><strong>With a DFF</strong><p>The feedback refers to the previous cycle, so the circuit can remember a value without creating an immediate circular dependency.</p></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> define the one-bit storage cell we want to build.</p>
+      </section>
+
+      <section class="slide chip-study-slide">
+        <div class="kicker">Registers</div>
+        <h2>What Is a One-Bit Register?</h2>
+        <p>A <strong class="new-term">one-bit register</strong> is a storage cell that remembers one bit until we explicitly load a new bit.</p>
+        <div class="chip-study-grid">
+          <div class="vertical-spec"><strong>Required behavior</strong><dl><div><dt>Read</dt><dd>The output continuously shows the currently stored bit.</dd></div><div><dt>Hold</dt><dd>If <code>load=0</code>, keep the stored bit even if <code>in</code> changes.</dd></div><div><dt>Load</dt><dd>If <code>load=1</code>, store the input bit at the next clock boundary.</dd></div></dl></div>
+          <figure class="book-figure symbol-book-figure"><img src="../assets/images/bit.png" alt="Bit chip symbol"><figcaption>Symbol</figcaption></figure>
+          <div class="delay-card"><strong>Terminology</strong><p>The Hack platform calls this one-bit register chip <code>Bit</code>.</p></div>
+        </div>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">Register</div>
+        <h2>Building a One-Bit Register: First Try</h2>
+        <div class="book-image-layout invalid-register-layout">
+          <figure class="book-figure centered-book-figure"><img src="../assets/images/invalid-dff.png" alt="Invalid design with DFF output connected directly back to its input"><figcaption>Invalid design: direct DFF feedback</figcaption></figure>
+          <div class="explanation-list">
+            <ul>
+              <li>It is not clear how we will ever load this device with a new data value.</li>
+              <li>There is no means to tell the DFF when to draw its input from <code>in</code> and when from <code>out</code>.</li>
+              <li>Internal pins must have fan-in 1: each internal pin must be fed from a single source only.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">Register</div>
+        <h2>Correct Implementation of a One-Bit Register</h2>
+        <div class="book-image-layout correct-register-layout">
+          <figure class="book-figure centered-book-figure"><img src="../assets/images/1bit-register.png" alt="One-bit register built from a Mux and a DFF"><figcaption>Bit = Mux + DFF + feedback</figcaption></figure>
+          <div class="explanation-list">
+            <ul>
+              <li>Introduce a multiplexor to resolve the input ambiguity.</li>
+              <li>The Mux select bit becomes the register's <code>load</code> bit.</li>
+              <li>If <code>load=1</code>, the register starts storing the new value on <code>in</code>.</li>
+              <li>If <code>load=0</code>, the register keeps storing its internal value.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide chip-study-slide">
+        <div class="kicker">Registers</div>
+        <h2>The Bit Contract</h2>
+        <div class="chip-study-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>Bit <span>(1-bit register)</span></dd></div><div><dt>Inputs:</dt><dd><code>in, load</code></dd></div><div><dt>Outputs:</dt><dd><code>out</code></dd></div><div><dt>Function:</dt><dd>If <code>load(t-1)</code> then <code>out(t)=in(t-1)</code>; else <code>out(t)=out(t-1)</code>.</dd></div></dl></div>
+          <div class="read-write-card"><strong>Read</strong><p>Probe <code>out</code>. This does not require <code>load=1</code>.</p><strong>Write</strong><p>Put the new bit on <code>in</code> and set <code>load=1</code>. The value appears next cycle.</p></div>
+          <figure class="book-figure symbol-book-figure"><img src="../assets/images/bit.png" alt="Bit chip symbol"><figcaption>Symbol</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Trace a Bit</h2>
+        <p>Use the Bit behavior: <code>load=1</code> loads at the next boundary; <code>load=0</code> holds the old value. Assume the stored bit starts as <code>0</code>.</p>
+        <div class="bit-trace-layout">
+          <figure class="book-figure symbol-book-figure"><img src="../assets/images/bit.png" alt="Bit chip symbol"><figcaption>Bit symbol</figcaption></figure>
+          <table class="truth-table timing-table"><thead><tr><th>Cycle</th><th>in</th><th>load</th><th>out after cycle</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>0</td><td class="pause-step" data-step>0</td></tr><tr><td>2</td><td>1</td><td>1</td><td class="pause-step" data-step>1</td></tr><tr><td>3</td><td>0</td><td>0</td><td class="pause-step" data-step>1</td></tr><tr><td>4</td><td>0</td><td>1</td><td class="pause-step" data-step>0</td></tr><tr><td>5</td><td>1</td><td>0</td><td class="pause-step" data-step>0</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Construct the Bit Chip</h2>
+        <div class="implementation-prompts">
+          <div><span>1</span><p>Draw the Mux-DFF feedback circuit.</p></div>
+          <div><span>2</span><p>Label <code>in</code>, <code>load</code>, <code>out</code>, and the feedback wire.</p></div>
+          <div><span>3</span><p>What goes wrong if the two Mux data inputs are exchanged?</p></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="bit-hdl-answer">Reveal HDL idea</button>
+        <div id="bit-hdl-answer" class="answer"><pre><code>PARTS:
+  Mux(a=old, b=in, sel=load, out=next);
+  DFF(in=next, out=old, out=out);</code></pre><p>The DFF output is used both as the feedback wire and as the chip output.</p></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Registers</div>
+        <h2>From One Bit to a Word</h2>
+        <p>A <strong class="new-term">register</strong> stores a multi-bit value. A stored multi-bit value is often called a <strong class="new-term">word</strong>.</p>
+        <div class="register-array"><div><strong>Bit</strong><span>0</span></div><div><strong>Bit</strong><span>1</span></div><div><strong>Bit</strong><span>2</span></div><i>...</i><div><strong>Bit</strong><span>15</span></div></div>
+        <p>All sixteen Bit chips share the same <code>load</code> signal, so all sixteen bits load together.</p>
+      </section>
+
+      <section class="slide chip-study-slide wide-chip-study">
+        <div class="kicker">Registers</div>
+        <h2>The Register Contract</h2>
+        <div class="wide-chip-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>Register</dd></div><div><dt>Inputs:</dt><dd><code>in[16], load</code></dd></div><div><dt>Outputs:</dt><dd><code>out[16]</code></dd></div><div><dt>Function:</dt><dd>If <code>load(t-1)</code> then <code>out(t)=in(t-1)</code>; else <code>out(t)=out(t-1)</code>.</dd></div><div><dt>Comment:</dt><dd>The assignment is a 16-bit operation.</dd></div></dl></div>
+          <div><strong class="panel-label">Example</strong><table class="truth-table behavior-table"><thead><tr><th>cycle</th><th>in[16]</th><th>load</th><th>out after cycle</th></tr></thead><tbody><tr><td>1</td><td>0000...0011</td><td>1</td><td>0000...0011</td></tr><tr><td>2</td><td>1111...1111</td><td>0</td><td>0000...0011</td></tr><tr><td>3</td><td>1111...1111</td><td>1</td><td>1111...1111</td></tr></tbody></table></div>
+          <figure class="book-figure symbol-book-figure"><img src="../assets/images/register.png" alt="Register chip symbol"><figcaption>Symbol</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Exit Questions</h2>
+        <div class="exit-grid">
+          <div><span>1</span><p>A Register stores <code>0000...0111</code>. During a cycle, <code>in=1111...1111</code> and <code>load=0</code>. What is <code>out</code> after the cycle?</p></div>
+          <div><span>2</span><p>The same Register now has <code>load=1</code>. When does the new input become visible at <code>out</code>?</p></div>
+          <div><span>3</span><p>If a Register is built from Bit chips, what signal must be shared by all sixteen Bits?</p></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="lecture8-exit-answer">Reveal answers</button>
+        <div id="lecture8-exit-answer" class="answer three-answer-grid"><p><strong>1:</strong> <code>0000...0111</code>; it holds the old word.</p><p><strong>2:</strong> At the next clock boundary, not immediately.</p><p><strong>3:</strong> The common <code>load</code> signal.</p></div>
+        <p class="next-step"><strong>Next lecture:</strong> arrange many Registers as random-access memory.</p>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Lecture | Memory</div>
+        <h2>Lecture 9: Random Access Memory</h2>
+        <p class="lead">Selecting one word among many using addresses and direct-access logic.</p>
+        <div class="next-actions"><a class="button-link" href="lecture-9.html">Go to Lecture 9</a></div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>17</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
