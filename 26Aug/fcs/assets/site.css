@@ -8038,6 +8038,101 @@ a {
   object-fit: contain;
 }
 
+.ram-concept-figure img {
+  max-height: 420px;
+  object-fit: contain;
+}
+
+.ram-symbol-figure img {
+  max-height: 245px;
+  object-fit: contain;
+}
+
+.ram-recursive-figure img {
+  max-height: 405px;
+  object-fit: contain;
+}
+
+.pc-symbol-layout {
+  display: grid;
+  grid-template-columns: minmax(480px, 1.1fr) minmax(320px, 0.9fr);
+  gap: 24px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.pc-symbol-figure img {
+  max-height: 210px;
+  object-fit: contain;
+}
+
+.pc-contract-grid {
+  grid-template-columns: minmax(360px, 1fr) minmax(260px, 0.72fr) minmax(320px, 0.86fr);
+}
+
+.pc-spec-card dl {
+  gap: 7px;
+}
+
+.pc-function {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8faf9;
+  white-space: pre-wrap;
+}
+
+.pc-function code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.pc-example-figure {
+  width: min(100%, 1120px);
+  margin: 10px auto 0;
+}
+
+.pc-example-figure img {
+  max-height: 420px;
+  object-fit: contain;
+}
+
+.chapter-hierarchy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.hierarchy-panel {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.hierarchy-panel strong {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--accent-dark);
+  font-size: 1.05rem;
+}
+
+.hierarchy-panel ol {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 1.25em;
+}
+
+.hierarchy-panel li {
+  font-size: 1rem !important;
+}
+
 .comparison-stack {
   display: grid;
   gap: 16px;
@@ -8110,6 +8205,8 @@ a {
   .book-image-layout,
   .dff-study-layout,
   .feedback-text-grid,
+  .pc-symbol-layout,
+  .chapter-hierarchy-grid,
   .ram8-diagram,
   .pc-interface,
   .exit-grid,

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 9: Random Access Memory</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two sequential-lecture memory-lecture">
+    <main class="deck" aria-label="Lecture 9 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 9 | Sequential Logic</div>
+        <h1>Random Access Memory</h1>
+        <p class="lead">Selecting one word among many.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Memory</div>
+        <h2>From One Register to Many</h2>
+        <div class="state-motivation-grid">
+          <div><strong>Register</strong><p>Stores one 16-bit word.</p></div>
+          <div><strong>Memory bank</strong><p>An array of fixed-width Registers.</p></div>
+          <div><strong>Two parameters</strong><p><strong>Width</strong> is bits per word. <strong>Size</strong> is number of words.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Random Access</div>
+        <h2>What Does Random Access Mean?</h2>
+        <p><strong class="new-term">Random access</strong> means any word can be accessed directly, in the same way, regardless of which word was accessed previously.</p>
+        <div class="book-image-layout ram-concept-layout">
+          <figure class="book-figure ram-concept-figure"><img src="../assets/images/random-access.png" alt="Conceptual RAM with n registers and direct access logic"><figcaption>Conceptual view of RAM</figcaption></figure>
+          <div class="comparison-stack">
+            <div><span>Not random in this sense</span><strong>unpredictable</strong><p>The memory does not choose a location randomly.</p></div>
+            <div><span>Random access means</span><strong>direct selection</strong><p>The address selects the word we want to read or write.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Random Access</div>
+        <h2>Addresses</h2>
+        <p>Each word is selected by a binary <strong class="new-term">address</strong>. If a memory has <code>2^k</code> words, it needs <code>k</code> address bits.</p>
+        <div class="address-example-grid"><div><strong>RAM8</strong><p>8 words = <code>2^3</code> words, so the address has 3 bits.</p></div><div><strong>Example address</strong><p><code>101</code> selects word number 5.</p></div><div><strong>Important</strong><p>Addresses are implemented by selection logic. They are not labels physically written on the registers.</p></div></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Address Capacity</h2>
+        <p>Find the number of address bits required for each memory.</p>
+        <table class="truth-table behavior-table address-table"><thead><tr><th>Memory</th><th>Number of words</th><th>Address bits</th></tr></thead><tbody><tr><td>RAM8</td><td>8</td><td class="pause-step" data-step>3</td></tr><tr><td>RAM64</td><td>64</td><td class="pause-step" data-step>6</td></tr><tr><td>RAM512</td><td>512</td><td class="pause-step" data-step>9</td></tr><tr><td>RAM4K</td><td>4096</td><td class="pause-step" data-step>12</td></tr><tr><td>RAM16K</td><td>16384</td><td class="pause-step" data-step>14</td></tr></tbody></table>
+        <p class="pause-step prompt" data-step>A 10-bit address can select <code>2^10 = 1024</code> locations.</p>
+      </section>
+
+      <section class="slide chip-study-slide wide-chip-study">
+        <div class="kicker">Memory</div>
+        <h2>The RAM Contract</h2>
+        <div class="wide-chip-grid ram-contract-grid">
+          <div class="vertical-spec"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>RAMn</dd></div><div><dt>Inputs:</dt><dd><code>in[16], address[k], load</code></dd></div><div><dt>Outputs:</dt><dd><code>out[16]</code></dd></div><div><dt>Read:</dt><dd><code>out(t)=RAM[address(t)](t)</code></dd></div><div><dt>Write:</dt><dd>If <code>load(t-1)</code>, then <code>RAM[address(t-1)](t)=in(t-1)</code>.</dd></div></dl></div>
+          <div><strong class="panel-label">Specific Hack RAM chips</strong><table class="truth-table behavior-table"><thead><tr><th>Chip</th><th>words</th><th>address bits</th></tr></thead><tbody><tr><td>RAM8</td><td>8</td><td>3</td></tr><tr><td>RAM64</td><td>64</td><td>6</td></tr><tr><td>RAM512</td><td>512</td><td>9</td></tr><tr><td>RAM4K</td><td>4096</td><td>12</td></tr><tr><td>RAM16K</td><td>16384</td><td>14</td></tr></tbody></table></div>
+          <figure class="book-figure symbol-book-figure ram-symbol-figure"><img src="../assets/images/ram-symbol.png" alt="RAM chip symbol"><figcaption>Symbol</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Memory</div>
+        <h2>Read Now, Write Next Cycle</h2>
+        <div class="comparison-panels">
+          <div><span>Read</span><strong>combinational</strong><p>Changing <code>address</code> selects the current word immediately.</p></div>
+          <div><span>Write</span><strong>clocked</strong><p>If <code>load=1</code>, the selected Register commits to <code>in</code> at the next cycle boundary.</p></div>
+        </div>
+        <p class="prompt">This asymmetry is the main timing idea for RAM.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Trace Reads and Writes</h2>
+        <p>Initial memory: address <code>00=7</code>, <code>01=2</code>, <code>10=9</code>, <code>11=4</code>. Fill <code>out during cycle</code> and update memory after each cycle.</p>
+        <table class="truth-table timing-table"><thead><tr><th>cycle</th><th>address</th><th>in</th><th>load</th><th>out during cycle</th></tr></thead><tbody><tr><td>1</td><td>01</td><td>8</td><td>0</td><td class="pause-step" data-step>2</td></tr><tr><td>2</td><td>10</td><td>5</td><td>1</td><td class="pause-step" data-step>9</td></tr><tr><td>3</td><td>10</td><td>0</td><td>0</td><td class="pause-step" data-step>5</td></tr><tr><td>4</td><td>00</td><td>3</td><td>1</td><td class="pause-step" data-step>7</td></tr></tbody></table>
+        <p class="pause-step prompt" data-step>After cycle 4, the changed words are address <code>10=5</code> and address <code>00=3</code>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">RAM Construction</div>
+        <h2>Building RAM8</h2>
+        <p>RAM8 contains eight 16-bit Registers plus direct-access logic.</p>
+        <div class="ram8-diagram">
+          <div class="ram8-question"><strong>Question 1</strong><p>How does <code>load</code> reach only the selected Register?</p><p class="pause-step" data-step><strong>Use:</strong> <code>DMux8Way</code>.</p></div>
+          <div class="ram-bank"><span>Register 0</span><span>Register 1</span><span>Register 2</span><span>Register 3</span><span>Register 4</span><span>Register 5</span><span>Register 6</span><span>Register 7</span></div>
+          <div class="ram8-question"><strong>Question 2</strong><p>How does only the selected Register reach <code>out</code>?</p><p class="pause-step" data-step><strong>Use:</strong> <code>Mux8Way16</code>.</p></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Complete the RAM8 Diagram</h2>
+        <div class="implementation-prompts">
+          <div><span>1</span><p>Add a <code>DMux8Way</code> to route <code>load</code>.</p></div>
+          <div><span>2</span><p>Add a <code>Mux8Way16</code> to select the output.</p></div>
+          <div><span>3</span><p>Connect <code>address[0..2]</code> to both selection circuits.</p></div>
+          <div><span>4</span><p>Write the corresponding HDL connection plan.</p></div>
+        </div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="ram8-hdl-answer">Reveal HDL plan</button>
+        <div id="ram8-hdl-answer" class="answer"><pre><code>PARTS:
+  DMux8Way(in=load, sel=address, a=l0, b=l1, ..., h=l7);
+  Register(in=in, load=l0, out=o0);
+  ...
+  Register(in=in, load=l7, out=o7);
+  Mux8Way16(a=o0, b=o1, ..., h=o7, sel=address, out=out);</code></pre></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hierarchical Addressing</div>
+        <h2>Building RAM64 from RAM8</h2>
+        <p>A six-bit RAM64 address can be read as <code>abc def</code>.</p>
+        <div class="address-split-grid"><div><strong>Upper three bits: <code>abc</code></strong><p>Select one of eight RAM8 chips.</p></div><div><strong>Lower three bits: <code>def</code></strong><p>Select one Register inside the chosen RAM8.</p></div></div>
+        <div class="memory-hierarchy-line"><div>RAM8</div><i>&times; 8</i><div>RAM64</div></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Find the Physical Path</h2>
+        <p>For each RAM64 address, identify the RAM8 bank and the Register inside that bank.</p>
+        <table class="truth-table behavior-table address-table"><thead><tr><th>RAM64 address</th><th>bank bits</th><th>offset bits</th><th>path</th></tr></thead><tbody><tr><td><code>000101</code></td><td>000</td><td>101</td><td class="pause-step" data-step>bank 0, register 5</td></tr><tr><td><code>011110</code></td><td>011</td><td>110</td><td class="pause-step" data-step>bank 3, register 6</td></tr><tr><td><code>111001</code></td><td>111</td><td>001</td><td class="pause-step" data-step>bank 7, register 1</td></tr></tbody></table>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hierarchical Addressing</div>
+        <h2>Recursive Memory Construction</h2>
+        <div class="book-image-layout ram-recursive-layout">
+          <figure class="book-figure wide-book-figure ram-recursive-figure"><img src="../assets/images/ram-recursive-construction.png" alt="Recursive construction of memory banks from Bit to Register to RAM8 and RAM64"><figcaption>Recursive ascent from registers to RAM</figcaption></figure>
+          <div class="vertical-spec">
+            <strong>Repeated idea</strong>
+            <dl>
+              <div><dt>Register to RAM8</dt><dd>Use eight Registers and direct-access logic.</dd></div>
+              <div><dt>RAM8 to RAM64</dt><dd>Use eight RAM8 chips and split the address into bank bits and offset bits.</dd></div>
+              <div><dt>Larger RAM chips</dt><dd>Repeat the same construction recursively.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 5</div>
+        <h2>Split the Address</h2>
+        <p>How should the address bits be divided at each construction step?</p>
+        <table class="truth-table behavior-table address-table"><thead><tr><th>Build</th><th>address bits</th><th>select subchip</th><th>inside subchip</th></tr></thead><tbody><tr><td>RAM512 from RAM64</td><td>9</td><td class="pause-step" data-step>upper 3</td><td class="pause-step" data-step>lower 6</td></tr><tr><td>RAM4K from RAM512</td><td>12</td><td class="pause-step" data-step>upper 3</td><td class="pause-step" data-step>lower 9</td></tr><tr><td>RAM16K from RAM4K</td><td>14</td><td class="pause-step" data-step>upper 2</td><td class="pause-step" data-step>lower 12</td></tr></tbody></table>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>Random Access Memory</h2>
+        <div class="remember-grid">
+          <div><strong>Registers</strong><p>store 16-bit words.</p></div>
+          <div><strong>Addresses</strong><p>select which word is read or written.</p></div>
+          <div><strong>Read/write timing</strong><p>read is immediate; write commits next cycle.</p></div>
+          <div><strong>Hierarchy</strong><p>large RAM chips are built recursively from smaller RAM chips.</p></div>
+        </div>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Lecture | Program Counter</div>
+        <h2>Lecture 10: Program Counter</h2>
+        <p class="lead">A stateful chip that can hold, increment, load, or reset a number.</p>
+        <div class="next-actions"><a class="button-link" href="lecture-10.html">Go to Lecture 10</a></div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>16</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

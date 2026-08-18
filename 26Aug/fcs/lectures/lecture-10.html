@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 10: Program Counter</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two sequential-lecture pc-lecture">
+    <main class="deck" aria-label="Lecture 10 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 10 | Sequential Logic</div>
+        <h1>Program Counter</h1>
+        <p class="lead">Remembering which instruction comes next.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Program Counter</div>
+        <h2>Why Does a Computer Need a Counter?</h2>
+        <div class="state-motivation-grid">
+          <div><strong>Normal execution</strong><p>Move to the next instruction: <code>PC = PC + 1</code>.</p></div>
+          <div><strong>Jump</strong><p>Load a different instruction address into the PC.</p></div>
+          <div><strong>Restart or wait</strong><p>Reset to 0, or hold the same instruction address.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Program Counter</div>
+        <h2>The PC Interface</h2>
+        <div class="pc-symbol-layout">
+          <figure class="book-figure pc-symbol-figure"><img src="../assets/images/program-counter.png" alt="Program Counter symbol with in, inc, load, reset, and out pins"><figcaption>Program Counter symbol</figcaption></figure>
+          <div class="vertical-spec">
+            <strong>Interface</strong>
+            <dl>
+              <div><dt>Data input</dt><dd><code>in[16]</code>, used when loading a new address.</dd></div>
+              <div><dt>Control inputs</dt><dd><code>inc</code>, <code>load</code>, and <code>reset</code>.</dd></div>
+              <div><dt>Output</dt><dd><code>out[16]</code>, the currently stored instruction address.</dd></div>
+            </dl>
+          </div>
+        </div>
+        <p>Each control input is one bit. They decide whether the next stored value is zero, the external input, the incremented value, or the old value.</p>
+      </section>
+
+      <section class="slide chip-study-slide wide-chip-study">
+        <div class="kicker">Program Counter</div>
+        <h2>The PC Contract</h2>
+        <div class="wide-chip-grid pc-contract-grid">
+          <div class="vertical-spec pc-spec-card"><strong>Specification</strong><dl><div><dt>Chip name:</dt><dd>PC</dd></div><div><dt>Inputs:</dt><dd><code>in[16], inc, load, reset</code></dd></div><div><dt>Outputs:</dt><dd><code>out[16]</code></dd></div><div><dt>Function:</dt><dd><pre class="pc-function"><code>if reset(t-1) then
+  out(t) = 0
+else if load(t-1) then
+  out(t) = in(t-1)
+else if inc(t-1) then
+  out(t) = out(t-1) + 1
+else
+  out(t) = out(t-1)</code></pre></dd></div></dl></div>
+          <div class="priority-stack"><strong>Control priority</strong><div><span>1</span><p><code>reset</code>: force zero</p></div><div><span>2</span><p><code>load</code>: load <code>in</code></p></div><div><span>3</span><p><code>inc</code>: increment</p></div><div><span>4</span><p>otherwise: hold</p></div></div>
+          <figure class="book-figure pc-symbol-figure"><img src="../assets/images/program-counter.png" alt="Program Counter symbol"><figcaption>Symbol</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Control Priority</div>
+        <h2>Why Priority Is Necessary</h2>
+        <p>What should happen when more than one control bit is 1?</p>
+        <div class="priority-reveal">
+          <div><strong>Example</strong><p><code>reset=1</code>, <code>load=1</code>, and <code>inc=1</code></p></div>
+          <div class="pause-step" data-step><strong>Contract says</strong><p><code>reset</code> wins, so the next output is <code>0</code>.</p></div>
+          <div class="pause-step" data-step><strong>Priority order</strong><p><code>reset &gt; load &gt; inc &gt; hold</code></p></div>
+        </div>
+        <p class="pause-step prompt" data-step>Priority is part of the specification, not merely an implementation choice.</p>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">Program Counter</div>
+        <h2>Example: Tracing the PC</h2>
+        <figure class="book-figure wide-book-figure pc-example-figure"><img src="../assets/images/pc-example.png" alt="Program Counter timing example showing reset, load, inc, in, out, cycles, and clock"><figcaption>Example behavior of the Program Counter over time</figcaption></figure>
+        <p class="prompt">Use the priority order <code>reset &gt; load &gt; inc &gt; hold</code> to read each cycle.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Trace the PC</h2>
+        <p>Assume the PC starts with <code>out=47</code>. Fill the output after each cycle.</p>
+        <table class="truth-table timing-table pc-trace-table"><thead><tr><th>cycle</th><th>in</th><th>reset</th><th>load</th><th>inc</th><th>out after cycle</th></tr></thead><tbody><tr><td>1</td><td>527</td><td>0</td><td>0</td><td>0</td><td class="pause-step" data-step>47</td></tr><tr><td>2</td><td>527</td><td>1</td><td>0</td><td>0</td><td class="pause-step" data-step>0</td></tr><tr><td>3</td><td>527</td><td>0</td><td>0</td><td>1</td><td class="pause-step" data-step>1</td></tr><tr><td>4</td><td>527</td><td>0</td><td>1</td><td>1</td><td class="pause-step" data-step>527</td></tr><tr><td>5</td><td>800</td><td>1</td><td>1</td><td>1</td><td class="pause-step" data-step>0</td></tr></tbody></table>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Sequential Design</div>
+        <h2>Constructing the PC</h2>
+        <p>Use known chips to compute candidate next values, then select the one mandated by the control priority.</p>
+        <div class="pc-construction-grid">
+          <div><strong>Register</strong><p>stores the current PC value.</p></div>
+          <div><strong>Inc16</strong><p>computes <code>out+1</code>.</p></div>
+          <div><strong>Mux16 / Mux4Way16</strong><p>selects among hold, increment, load, and reset candidates.</p></div>
+          <div><strong>Control logic</strong><p>enforces <code>reset &gt; load &gt; inc &gt; hold</code>.</p></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Control the Internal Register Load</h2>
+        <p>The internal Register changes only when its own <code>load</code> input is 1. When must the PC force that internal load to 1?</p>
+        <div class="center-question"><code>internalLoad = ?</code></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="pc-load-answer">Reveal answer</button>
+        <div id="pc-load-answer" class="answer"><p><code>internalLoad = reset OR load OR inc</code></p><p>If all three controls are 0, the PC holds its previous value, so the internal Register need not load.</p></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Debug a Broken PC</h2>
+        <p>A proposed PC gives <code>inc</code> priority over <code>load</code>. Find a counterexample.</p>
+        <div class="debug-case"><div><strong>Initial</strong><p><code>out=10</code></p></div><div><strong>Inputs</strong><p><code>in=200</code>, <code>load=1</code>, <code>inc=1</code>, <code>reset=0</code></p></div></div>
+        <button class="reveal secondary-reveal" type="button" data-reveal="broken-pc-answer">Reveal diagnosis</button>
+        <div id="broken-pc-answer" class="answer"><p>The specification says <code>load</code> wins, so the next output must be <code>200</code>. The broken design would output <code>11</code>. Therefore the priority order is wrong.</p></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Sequential Design</div>
+        <h2>Sequential HDL and Simulation</h2>
+        <div class="comparison-panels">
+          <div><span>Inside the cycle</span><strong>inputs may change</strong><p>Combinational logic may take time to settle.</p></div>
+          <div><span>At the boundary</span><strong>state commits</strong><p>DFF-based chips capture the value that should be remembered.</p></div>
+        </div>
+        <p>In simulator tests, <code>tick</code> and <code>tock</code> let us observe this clocked behavior.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Predict Before Simulation</h2>
+        <p>A Bit starts with <code>out=0</code>. Predict the observed output.</p>
+        <table class="truth-table timing-table"><thead><tr><th>cycle</th><th>in</th><th>load</th><th>out after cycle</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>0</td><td class="pause-step" data-step>0</td></tr><tr><td>2</td><td>1</td><td>1</td><td class="pause-step" data-step>1</td></tr><tr><td>3</td><td>0</td><td>0</td><td class="pause-step" data-step>1</td></tr><tr><td>4</td><td>0</td><td>1</td><td class="pause-step" data-step>0</td></tr></tbody></table>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Chapter Summary</div>
+        <h2>One Hierarchy, Built Bottom-Up</h2>
+        <div class="chapter-hierarchy-grid">
+          <div class="hierarchy-panel"><strong>Memory path</strong><ol><li>DFF</li><li>Bit</li><li>Register</li><li>RAM8</li><li>RAM64</li><li>RAM512, RAM4K, RAM16K</li></ol></div>
+          <div class="hierarchy-panel"><strong>Counter path</strong><ol><li>Register stores the current value</li><li>Inc16 computes the next value</li><li>Selection logic chooses reset, load, inc, or hold</li><li>PC becomes the controlled counter</li></ol></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide tutorial-choice-slide">
+        <div class="kicker">Exercise 5</div>
+        <h2>Chapter Tutorial Questions</h2>
+        <div class="alu-tutorial-grid sequential-tutorial-grid">
+          <div><span>1</span><p>Can two writes to different RAM addresses interfere? Explain using load routing.</p></div>
+          <div><span>2</span><p>A RAM has 2048 words of 16 bits. Find address width and total capacity in bytes.</p></div>
+          <div><span>3</span><p>Design a two-register memory using Registers, DMux, and Mux16.</p></div>
+          <div><span>4</span><p>Why can a sequential chip tolerate temporary unstable combinational values within a cycle?</p></div>
+          <div><span>5</span><p>If a 16-bit PC at <code>32767</code> increments, what bit pattern follows? Interpret it as unsigned and signed.</p></div>
+          <div><span>6</span><p>Write an HDL plan for PC reset and load priority using Mux16 chips.</p></div>
+        </div>
+      </section>
+
+      <section class="slide lab-preparation-slide">
+        <div class="kicker">Laboratory Preparation</div>
+        <h2>Build the Chapter 3 Chips</h2>
+        <div class="lab-chip-sequence sequential-lab-sequence"><div><span>1</span><strong>Bit</strong></div><div><span>2</span><strong>Register</strong></div><div><span>3</span><strong>RAM8</strong></div><div><span>4</span><strong>RAM64</strong></div><div><span>5</span><strong>RAM512</strong></div><div><span>6</span><strong>RAM4K</strong></div><div><span>7</span><strong>RAM16K</strong></div><div><span>8</span><strong>PC</strong></div></div>
+        <div class="titled-method-box lab-rule-box"><strong>Allowed building blocks</strong><p>Use primitive DFF, chips gradually built in this lab, and chips from previous chapters. Test every level before building on top of it.</p></div>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>Program Counter</h2>
+        <div class="remember-grid">
+          <div><strong>State</strong><p>The PC remembers the instruction address.</p></div>
+          <div><strong>Control</strong><p>It can reset, load, increment, or hold.</p></div>
+          <div><strong>Priority</strong><p><code>reset &gt; load &gt; inc &gt; hold</code>.</p></div>
+          <div><strong>Chapter idea</strong><p>A one-cycle delay makes feedback, memory, and counters possible.</p></div>
+        </div>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Lecture | Machine Language</div>
+        <h2>Lecture 11: Machine Language</h2>
+        <p class="lead">Now that the hardware can compute and remember, we can ask how programs speak to the machine.</p>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>17</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
