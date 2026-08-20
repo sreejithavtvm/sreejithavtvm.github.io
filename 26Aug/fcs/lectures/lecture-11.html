@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 11: Machine Language</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two machine-lecture">
+    <main class="deck" aria-label="Lecture 11 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 11 | Machine Language</div>
+        <h1>Machine Language</h1>
+        <p class="lead">Where hardware and software meet.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Machine Language</div>
+        <h1>Why Study Machine Language?</h1>
+        <ul class="machine-bullet-list">
+          <li>A computer can be understood through its hardware construction or through the instructions it can execute.</li>
+          <li>Low-level programs show both <strong>how to control a computer</strong> and <strong>why its hardware is designed as it is</strong>.</li>
+          <li>Machine language is the interface where symbolic instructions become physical operations in hardware.</li>
+          <li>It prepares us to build, in the next chapter, a computer that executes programs using the chips from Chapters 1–3.</li>
+        </ul>
+        <p class="prompt"><strong>Design goal:</strong> direct execution on—and precise control of—a particular hardware platform.</p>
+        <p class="next-step"><strong>Next:</strong> identify the hardware abstractions visible to a programmer.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Machine Language</div>
+        <h2>The Three Main Abstractions</h2>
+        <p>A machine language is an agreed-upon formalism for manipulating memory using a processor and a set of registers.</p>
+        <div class="hack-view-grid abstraction-grid">
+          <div class="model-box"><span>Memory</span><strong>An addressed array of words</strong><ul><li>Stores data and instructions.</li><li>Each fixed-width word has a unique address.</li><li><code>Memory[address]</code>, <code>RAM[address]</code>, and <code>M[address]</code> denote a selected word.</li></ul></div>
+          <div class="model-box"><span>Processor</span><strong>Central Processing Unit (CPU)</strong><ul><li>Performs arithmetic, logic, memory-access, and control operations.</li><li>Reads operands from registers or selected memory locations.</li><li>Stores results in registers or memory.</li></ul></div>
+          <div class="model-box"><span>Registers</span><strong>Small, fast local memory</strong><ul><li>Each register holds one value close to the processor.</li><li>Access is faster and instructions can be shorter than memory access.</li><li>Using registers reduces costly memory operations.</li></ul></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> see how operations are coded as instructions.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Machine Language</div>
+        <h2>A Program Is a Series of Coded Instructions</h2>
+        <p>Consider a possible instruction for a 16-bit computer:</p>
+        <div class="instruction-example"><code>1010 0011 0001 1001</code></div>
+        <div class="bit-field-grid instruction-field-example">
+          <div><span>1010</span><strong>operation</strong><p>For example, addition.</p></div>
+          <div><span>0011</span><strong>operand</strong><p>Register <code>R3</code>.</p></div>
+          <div><span>0001</span><strong>operand</strong><p>Register <code>R1</code>.</p></div>
+          <div><span>1001</span><strong>operand</strong><p>Register <code>R9</code>.</p></div>
+        </div>
+        <p>The meaning depends entirely on the hardware platform's <strong>instruction set</strong>. Under one possible specification, this could mean <code>R3 &larr; R1 + R9</code>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Machine Language</div>
+        <h2>From Binary Codes to Assembly Language</h2>
+        <div class="comparison-panels machine-panels">
+          <div><span>Binary instruction</span><strong><code>1010001100011001</code></strong><p>Directly represented as bits, but difficult for people to read and write.</p></div>
+          <div><span>Symbolic instruction</span><strong><code>ADD R3,R1,R9</code></strong><p>Uses <strong>mnemonics</strong>: short symbolic names that suggest the operation or hardware element.</p></div>
+        </div>
+        <div class="translation-line"><strong>assembly language</strong><i>&#8594;</i><strong>assembler</strong><i>&#8594;</i><strong>binary machine instructions</strong></div>
+        <p>Different computers have different syntax, registers, and operations. Nevertheless, their machine languages support similar kinds of commands.</p>
+        <p class="next-step"><strong>Next:</strong> study the common command families.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Machine-Language Commands</div>
+        <h2>Arithmetic and Logic Operations</h2>
+        <p>Every processor provides a fixed collection of arithmetic and Boolean operations.</p>
+        <div class="code-explanation-grid">
+          <pre><code>ADD R2,R1,R3
+// R2 &larr; R1 + R3
+
+ADD R2,R1,foo
+// R2 &larr; R1 + Memory[foo]
+
+AND R1,R1,R2
+// R1 &larr; R1 AND R2</code></pre>
+          <ul class="machine-bullet-list compact-list">
+            <li>Operands may come from registers or selected memory locations.</li>
+            <li>Results may be written to a register or a selected memory location.</li>
+            <li>Typical operations include addition, subtraction, bitwise negation, AND, and shifting.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Machine-Language Commands</div>
+        <h2>Memory Access and Flow of Control</h2>
+        <div class="comparison-panels machine-panels">
+          <div><span>Memory access</span><strong>Move or operate on stored values</strong><ul><li><strong>Load:</strong> memory to register.</li><li><strong>Store:</strong> register to memory.</li><li>Three common modes are <strong>direct</strong>, <strong>immediate</strong>, and <strong>indirect addressing</strong>.</li></ul></div>
+          <div><span>Flow of control</span><strong>Choose the next instruction</strong><ul class="command-example-list"><li><strong>Unconditional jump:</strong> always go to the named location.<div><code>JMP beginWhile</code></div></li><li><strong>Conditional jump:</strong> jump only when a Boolean condition holds.<div><code>JNG R1,endWhile</code></div><small>Jump to <code>endWhile</code> when the condition <code>R1 &lt; 0</code> is satisfied.</small></li></ul></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> compare the principal ways of specifying a memory address.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Identify the Kind of Command</h2>
+        <p>For each command, decide whether its main purpose is arithmetic/logic, memory access, or flow of control.</p>
+        <div class="exercise-card-grid command-family-exercise">
+          <div><span>A</span><p><code>ADD R2,R1,R3</code></p><strong class="pause-step" data-step>Arithmetic</strong></div>
+          <div><span>B</span><p><code>LOAD R1,67</code></p><strong class="pause-step" data-step>Memory access</strong></div>
+          <div><span>C</span><p><code>JMP beginWhile</code></p><strong class="pause-step" data-step>Flow of control</strong></div>
+          <div><span>D</span><p><code>JNG R1,endWhile</code></p><strong class="pause-step" data-step>Flow of control</strong></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Memory Access</div>
+        <h2>Direct and Immediate Addressing</h2>
+        <div class="comparison-panels machine-panels addressing-panels">
+          <div><span>Direct addressing</span><strong>The instruction names a memory address</strong><pre><code>LOAD R1,67
+// R1 &larr; Memory[67]
+
+LOAD R1,bar
+// if bar denotes address 67,
+// R1 &larr; Memory[67]</code></pre></div>
+          <div><span>Immediate addressing</span><strong>The instruction contains the value itself</strong><pre><code>LOADI R1,67
+// R1 &larr; 67</code></pre><p>The number <code>67</code> is treated as a constant, not as an address.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Memory Access</div>
+        <h2>Indirect Addressing</h2>
+        <p>The instruction identifies a register or memory location that <strong>holds the required address</strong>.</p>
+        <div class="indirect-flow no-arrows">
+          <div><span>1</span><strong>R1 contains 67</strong></div>
+          <div><span>2</span><strong>Use R1 as an address</strong></div>
+          <div><span>3</span><strong>Read Memory[67]</strong></div>
+        </div>
+        <pre class="center-code"><code>LOAD* R2,R1      // R2 &larr; Memory[R1]</code></pre>
+        <p>Indirect addressing is essential for pointers and arrays, whose target addresses are calculated while the program runs.</p>
+        <p class="next-step"><strong>Next:</strong> translate one array access step by step.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Memory Access</div>
+        <h2>Worked Example: Accessing an Array Element</h2>
+        <p>Assume each array element occupies one word. Then <code>foo[j]</code> is stored at address <code>foo + j</code>.</p>
+        <div class="program-explain-grid">
+          <div class="titled-method-box"><strong>High-level view</strong><pre><code>x = foo[j]
+
+// equivalently in C notation:
+x = *(foo + j)</code></pre></div>
+          <div class="titled-method-box"><strong>Possible machine-language translation</strong><pre><code>ADD R1,foo,j
+// R1 &larr; foo + j
+
+LOAD* R2,R1
+// R2 &larr; Memory[R1]
+
+STR R2,x
+// x &larr; R2</code></pre></div>
+        </div>
+        <p class="prompt">The first instruction computes an address; the second follows that address; the third stores the retrieved value.</p>
+        <p class="next-step"><strong>Next:</strong> specialize these ideas to the Hack computer.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Identify the Addressing Mode</h2>
+        <p>Name the addressing mode used in each case.</p>
+        <div class="exercise-card-grid addressing-exercise">
+          <div><span>A</span><p><code>LOAD R1,67</code></p><strong class="pause-step" data-step>Direct addressing</strong></div>
+          <div><span>B</span><p><code>LOADI R1,67</code></p><strong class="pause-step" data-step>Immediate addressing</strong></div>
+          <div><span>C</span><p><code>LOAD* R2,R1</code></p><strong class="pause-step" data-step>Indirect addressing</strong></div>
+          <div><span>D</span><p>After computing <code>foo+j</code>, which mode retrieves <code>foo[j]</code>?</p><strong class="pause-step" data-step>Indirect addressing</strong></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">The Hack Computer: Overview</div>
+        <h2>Memory Address Spaces</h2>
+        <ul class="machine-bullet-list compact-list">
+          <li>Hack is a <strong>16-bit computer</strong> with a CPU, instruction memory, data memory, screen, and keyboard.</li>
+          <li>The screen and keyboard are <strong>memory-mapped input/output devices</strong>.</li>
+          <li>Instruction memory and data memory are separate address spaces.</li>
+        </ul>
+        <div class="hack-view-grid hack-memory-grid">
+          <div class="model-box"><span>Instruction memory</span><strong>32K words × 16 bits</strong><p>Contains the program executed by the CPU. Programs are loaded from outside the running computer.</p></div>
+          <div class="model-box"><span>Data memory</span><strong>32K words × 16 bits</strong><p>Contains program data and the memory maps used to communicate with the screen and keyboard.</p></div>
+          <div class="model-box"><span>Address width</span><strong>15 bits</strong><p>A 15-bit address selects one of <code>2^15 = 32K</code> words in either address space.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">The Hack Computer: Overview</div>
+        <h2>The A and D Registers</h2>
+        <div class="comparison-panels machine-panels register-panels">
+          <div><span>D register</span><strong>A 16-bit data register</strong><p>Used to hold and manipulate data values.</p><small class="assembly-label">Assembly examples</small><pre><code>D=!A
+D=D+1</code></pre></div>
+          <div><span>A register</span><strong>Data and address register</strong><p>Its contents may be interpreted as a value, a data-memory address, or an instruction-memory address.</p><small class="assembly-label">Assembly example</small><pre><code>A=D-1
+D=M</code></pre></div>
+        </div>
+        <div class="register-note-grid">
+          <div class="titled-method-box"><strong>Using A to address data memory</strong><p>When A contains a data-memory address, <code>M</code> denotes the selected word <code>RAM[A]</code>. Thus, the valid assembly instruction <code>D=M</code> copies that word into D. <code>M</code> is not a third register.</p></div>
+          <div class="titled-method-box"><strong>Why does A have several roles?</strong><p>A Hack instruction cannot contain both a full operation code and a 15-bit address. One instruction sets A; the next uses the address stored in A.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hack Machine Language Specification</div>
+        <h2>The Special Command <code>@value</code></h2>
+        <p><code>@value</code> stores the specified number in the A register. The value may be written as a number or as a symbol that represents a number.</p>
+        <div class="comparison-panels machine-panels">
+          <div><span>Numeric value</span><strong><code>@17</code></strong><p>Stores <code>17</code> in the A register.</p></div>
+          <div><span>Symbolic value</span><strong><code>@sum</code></strong><p>If <code>sum</code> denotes address 17, this also stores <code>17</code> in A.</p></div>
+        </div>
+        <p>Therefore, <code>@17</code> and <code>@sum</code> have the same effect when <code>sum</code> refers to 17.</p>
+        <p class="next-step"><strong>Next:</strong> use A to select a data-memory word.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hack Machine Language Specification</div>
+        <h2>Using A to Select Data Memory</h2>
+        <p class="prompt memory-notation-reminder"><strong>Recall:</strong> <code>M</code> denotes <code>RAM[A]</code>, the data-memory word whose address is currently stored in A. It is not a separate register.</p>
+        <p>First read the two-line assembly program as a single unit.</p>
+        <pre class="hack-program-block"><code>@516
+D=M-1</code></pre>
+        <div class="line-explanation-grid">
+          <div><span>Line 1</span><strong><code>@516</code></strong><p>Store 516 in the A register. This selects data-memory address 516.</p></div>
+          <div><span>Line 2</span><strong><code>D=M-1</code></strong><p>After line 1, <code>A=516</code>, so <code>M</code> denotes <code>RAM[516]</code>. Therefore, compute <code>D=Memory[516]-1</code>.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Hack Machine Language Specification</div>
+        <h2>Writing an Unconditional Goto</h2>
+        <p>To continue execution at instruction address 35, use two assembly instructions:</p>
+        <pre class="hack-program-block goto-program"><code>@35
+0;JMP</code></pre>
+        <div class="line-explanation-grid goto-line-grid">
+          <div><span>Line 1</span><strong><code>@35</code></strong><p>Store 35 in A. The A register now contains the destination address.</p></div>
+          <div><span>Line 2</span><strong><code>0;JMP</code></strong><p><code>JMP</code> means jump unconditionally to the instruction address in A. Nothing is stored.</p></div>
+        </div>
+        <div class="titled-method-box goto-zero-note"><strong>Why is the computation 0?</strong><p>A Hack compute-and-jump instruction contains a computation before the semicolon. Here its result is discarded, and <code>JMP</code> does not test it. Any legal computation—such as <code>1</code>, <code>D</code>, or <code>A</code>—could replace <code>0</code>. We conventionally write <code>0;JMP</code> because 0 is simple and does not depend on stored data.</p></div>
+        <p class="next-step"><strong>Next lecture:</strong> define A- and C-instructions precisely.</p>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Lecture | Hack Machine Language</div>
+        <h2>Lecture 12: A- and C-Instructions</h2>
+        <p class="lead">Their symbolic forms, binary representations, and effects on the computer.</p>
+        <div class="next-actions"><a class="button-link" href="lecture-12.html">Go to Lecture 12</a></div>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>18</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
