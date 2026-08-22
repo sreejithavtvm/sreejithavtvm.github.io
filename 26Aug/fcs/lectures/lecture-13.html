@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 13: Branching, Symbols, and Input/Output</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two machine-lecture">
+    <main class="deck" aria-label="Lecture 13 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 13 | Machine Language</div>
+        <h1>Branching, Symbols, and Input/Output</h1>
+        <p class="lead">From straight-line instructions to complete programs.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Flow of Control</div>
+        <h2>Why Straight-Line Code Is Not Enough</h2>
+        <div class="machine-question-grid">
+          <div><strong>High-level idea</strong><pre><code>while (x &gt; 0) {
+  x = x - 1;
+}</code></pre></div>
+          <div><strong>Question for machine language</strong><p>After testing <code>x</code>, which instruction should execute next?</p><p class="pause-step" data-step><strong>Flow of control</strong> is the rule that decides the next instruction.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Flow of Control</div>
+        <h2>The Jump Field</h2>
+        <table class="truth-table jump-table"><thead><tr><th>jump</th><th>condition on ALU output</th></tr></thead><tbody><tr><td><code>JGT</code></td><td>greater than 0</td></tr><tr><td><code>JEQ</code></td><td>equal to 0</td></tr><tr><td><code>JGE</code></td><td>greater than or equal to 0</td></tr><tr><td><code>JLT</code></td><td>less than 0</td></tr><tr><td><code>JNE</code></td><td>not equal to 0</td></tr><tr><td><code>JLE</code></td><td>less than or equal to 0</td></tr><tr><td><code>JMP</code></td><td>always jump</td></tr></tbody></table>
+        <p>The condition is tested on the ALU output produced by that same C-instruction.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Flow of Control</div>
+        <h2>Where Does a Jump Go?</h2>
+        <div class="jump-flow">
+          <pre class="asm-code"><code>@END
+D;JLE</code></pre>
+          <div class="vertical-spec"><strong>Meaning</strong><dl><div><dt><code>@END</code></dt><dd>Load the target address into A.</dd></div><div><dt><code>D;JLE</code></dt><dd>Compute <code>D</code>; if the result is less than or equal to 0, jump to the instruction address currently in A.</dd></div><div><dt>Otherwise</dt><dd>Continue with the next instruction.</dd></div></dl></div>
+        </div>
+        <p>The Program Counter from Lecture 10 is what actually changes the next instruction address.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Flow of Control</div>
+        <h2>Conditional and Unconditional Forms</h2>
+        <div class="comparison-panels machine-panels">
+          <div><span>conditional</span><strong><code>D;JGT</code></strong><p>Jump only if the computed value <code>D</code> is positive.</p></div>
+          <div><span>unconditional</span><strong><code>0;JMP</code></strong><p>Compute a harmless value, then always jump. There is no destination.</p></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Will It Jump?</h2>
+        <p>Assume the A register already contains the target address <code>80</code>. If the jump is not taken, the next ROM address is <code>31</code>.</p>
+        <table class="truth-table timing-table"><thead><tr><th>D</th><th>instruction</th><th>next ROM address</th></tr></thead><tbody><tr><td>5</td><td><code>D;JGT</code></td><td class="pause-step" data-step>80</td></tr><tr><td>0</td><td><code>D;JNE</code></td><td class="pause-step" data-step>31</td></tr><tr><td>-3</td><td><code>D;JLE</code></td><td class="pause-step" data-step>80</td></tr><tr><td>0</td><td><code>0;JMP</code></td><td class="pause-step" data-step>80</td></tr></tbody></table>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Symbols</div>
+        <h2>Labels Give Addresses Names</h2>
+        <div class="program-explain-grid">
+          <pre class="asm-code"><code>(LOOP)
+@LOOP
+0;JMP</code></pre>
+          <div class="vertical-spec"><strong>Label rule</strong><dl><div><dt>Form</dt><dd><code>(NAME)</code></dd></div><div><dt>Meaning</dt><dd>Name the ROM address of the next real instruction.</dd></div><div><dt>Important</dt><dd>A label is a pseudo-command. It produces no machine instruction and consumes no ROM address.</dd></div></dl></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Assign ROM Addresses</h2>
+        <div class="program-explain-grid">
+          <pre class="asm-code"><code>// count down
+@3
+D=A
+(LOOP)
+@END
+D;JEQ
+D=D-1
+@LOOP
+0;JMP
+(END)
+@END
+0;JMP</code></pre>
+          <div class="pause-step" data-step><strong>Answer</strong><p>Only A- and C-instructions are numbered.</p><p><code>LOOP = 2</code>, because the next real instruction after <code>(LOOP)</code> is <code>@END</code>.</p><p><code>END = 8</code>, because the next real instruction after <code>(END)</code> is <code>@END</code>.</p></div>
+        </div>
+      </section>
+
+      <section class="slide program-slide">
+        <div class="kicker">Loops</div>
+        <h2>From a While Loop to Assembly</h2>
+        <div class="loop-blocks">
+          <div><span>1</span><strong>initialize</strong><pre><code>@R0
+D=M
+@i
+M=D</code></pre></div>
+          <div class="pause-step" data-step><span>2</span><strong>test</strong><pre><code>(LOOP)
+@i
+D=M
+@END
+D;JEQ</code></pre></div>
+          <div class="pause-step" data-step><span>3</span><strong>body and back edge</strong><pre><code>@i
+M=M-1
+@LOOP
+0;JMP</code></pre></div>
+          <div class="pause-step" data-step><span>4</span><strong>terminal loop</strong><pre><code>(END)
+@END
+0;JMP</code></pre></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Write and Trace a Multiplication Loop</h2>
+        <p>For non-negative inputs, compute <code>R2 = R0 * R1</code> by repeated addition.</p>
+        <div class="exercise-card-grid">
+          <div><span>1</span><p>Initialize <code>R2</code> to 0.</p></div>
+          <div><span>2</span><p>Use one register as a counter, starting from <code>R1</code>.</p></div>
+          <div><span>3</span><p>Each iteration adds <code>R0</code> to <code>R2</code>.</p></div>
+          <div><span>4</span><p>Stop when the counter becomes 0.</p></div>
+        </div>
+        <p class="pause-step prompt" data-step>Trace the first two iterations for <code>R0=3</code> and <code>R1=2</code>: <code>R2</code> becomes 3, then 6.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Symbols</div>
+        <h2>Three Kinds of Symbols</h2>
+        <div class="symbol-grid">
+          <div><span>predefined</span><strong><code>R0</code>-<code>R15</code>, <code>SCREEN</code>, <code>KBD</code></strong><p>Known RAM addresses.</p></div>
+          <div><span>label</span><strong><code>(LOOP)</code></strong><p>Names a ROM instruction address.</p></div>
+          <div><span>variable</span><strong><code>counter</code></strong><p>Allocated by the assembler beginning at RAM address 16.</p></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Resolve the Symbols</h2>
+        <table class="truth-table timing-table"><thead><tr><th>symbol</th><th>kind</th><th>RAM or ROM?</th></tr></thead><tbody><tr><td><code>R0</code></td><td class="pause-step" data-step>predefined</td><td class="pause-step" data-step>RAM</td></tr><tr><td><code>LOOP</code> from <code>(LOOP)</code></td><td class="pause-step" data-step>label</td><td class="pause-step" data-step>ROM</td></tr><tr><td><code>counter</code></td><td class="pause-step" data-step>variable</td><td class="pause-step" data-step>RAM</td></tr><tr><td><code>SCREEN</code></td><td class="pause-step" data-step>predefined</td><td class="pause-step" data-step>RAM</td></tr><tr><td><code>KBD</code></td><td class="pause-step" data-step>predefined</td><td class="pause-step" data-step>RAM</td></tr></tbody></table>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Input and Output</div>
+        <h2>Memory-Mapped Input/Output</h2>
+        <div class="io-map-grid">
+          <div><strong>Screen</strong><p><code>SCREEN = 16384</code></p><p>The 512-by-256 monochrome display occupies 8K words, 16 pixels per word.</p></div>
+          <div><strong>Keyboard</strong><p><code>KBD = 24576</code></p><p>After <code>@KBD</code>, reading <code>M</code> gives 0 if no key is pressed and a key code otherwise.</p></div>
+          <div><strong>Key idea</strong><p>There are no special screen or keyboard instructions. Programs use ordinary RAM reads and writes.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Input and Output</div>
+        <h2>The Screen and Keyboard Maps</h2>
+        <div class="program-explain-grid">
+          <pre class="asm-code"><code>@SCREEN
+M=-1
+
+@KBD
+D=M
+@KEY_PRESSED
+D;JNE</code></pre>
+          <div class="vertical-spec"><strong>Reading the code</strong><dl><div><dt><code>@SCREEN</code>, <code>M=-1</code></dt><dd>Write all 1s into the first screen word, blackening 16 pixels.</dd></div><div><dt><code>@KBD</code>, <code>D=M</code></dt><dd>Read the current keyboard value.</dd></div><div><dt><code>D;JNE</code></dt><dd>Branch if some key is pressed.</dd></div></dl></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 5</div>
+        <h2>Design the Fill Loop</h2>
+        <p>Outline the program before writing complete assembly.</p>
+        <div class="exercise-card-grid fill-grid">
+          <div><span>1</span><p>Repeatedly check <code>KBD</code>.</p></div>
+          <div><span>2</span><p>If a key is pressed, choose fill value <code>-1</code>.</p></div>
+          <div><span>3</span><p>If no key is pressed, choose fill value <code>0</code>.</p></div>
+          <div><span>4</span><p>Walk through all screen words from <code>SCREEN</code> to <code>SCREEN+8191</code>.</p></div>
+          <div><span>5</span><p>Write the fill value to each screen word.</p></div>
+          <div><span>6</span><p>Jump back and check the keyboard again.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Chapter Summary</div>
+        <h2>Assembly Files and Execution Tools</h2>
+        <div class="translation-line big-translation"><code>Prog.asm</code><i>&#8594;</i><strong>assembler</strong><i>&#8594;</i><code>Prog.hack</code><i>&#8594;</i><strong>CPU emulator</strong></div>
+        <div class="comparison-panels machine-panels">
+          <div><span><code>.asm</code></span><strong>symbolic assembly</strong><p>May contain comments, blank lines, labels, and symbols.</p></div>
+          <div><span><code>.hack</code></span><strong>binary program</strong><p>One 16-bit instruction per line.</p></div>
+        </div>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>Branching, Symbols, and Input/Output</h2>
+        <div class="remember-grid">
+          <div><strong>Jump</strong><p>A jump tests the ALU output and, if taken, loads the PC from A.</p></div>
+          <div><strong>Labels</strong><p>Labels name ROM addresses and do not create instructions.</p></div>
+          <div><strong>Symbols</strong><p>Predefined and variable symbols denote RAM addresses; labels denote ROM addresses.</p></div>
+          <div><strong>I/O</strong><p>Screen and keyboard are accessed through ordinary RAM reads and writes.</p></div>
+        </div>
+      </section>
+
+      <section class="slide title-slide lecture-preview-slide">
+        <div class="kicker">Next Chapter | Computer Architecture</div>
+        <h2>Lecture 14: Building the Computer</h2>
+        <p class="lead">We now know the instructions; next we build the CPU and computer that execute them.</p>
+      </section>
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>18</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

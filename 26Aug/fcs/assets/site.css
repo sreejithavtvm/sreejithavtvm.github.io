@@ -8199,6 +8199,435 @@ a {
   text-align: right;
 }
 
+/* Lecture 12: Hack instruction set, symbols, and memory-mapped I/O. */
+.lecture-twelve .recap-image-layout,
+.lecture-twelve .compute-spec-layout,
+.lecture-twelve .jump-spec-layout,
+.lecture-twelve .screen-spec-grid,
+.lecture-twelve .keyboard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.lecture-twelve .architecture-figure img {
+  max-height: 480px;
+  object-fit: contain;
+}
+
+.lecture-twelve .wide-machine-figure img {
+  max-height: 490px;
+  object-fit: contain;
+}
+
+.lecture-twelve .assembly-recap-slide .wide-machine-figure figcaption,
+.lecture-twelve .add-worked-slide .add-example-figure figcaption {
+  display: none;
+}
+
+.lecture-twelve .add-example-figure {
+  width: min(100%, 900px);
+  padding: 10px;
+}
+
+.lecture-twelve .termination-note {
+  margin: 0 0 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 0.96rem !important;
+}
+
+.lecture-twelve .add-example-figure img {
+  max-height: 560px;
+  object-fit: contain;
+}
+
+.lecture-twelve .add-worked-slide {
+  padding-top: 30px;
+}
+
+.lecture-twelve .add-worked-slide .next-step {
+  width: 360px;
+  max-width: 360px;
+}
+
+.lecture-twelve .instruction-form {
+  width: min(100%, 880px);
+  margin: 18px auto;
+}
+
+.lecture-twelve .instruction-form code {
+  font-size: 1.12rem;
+  line-height: 1.5;
+}
+
+.lecture-twelve .instruction-format-figure {
+  width: min(100%, 1020px);
+  margin: 18px auto;
+  padding: 12px 18px;
+}
+
+.lecture-twelve .instruction-format-figure img {
+  width: 100%;
+  max-height: 145px;
+  object-fit: contain;
+}
+
+.lecture-twelve .c-instruction-overview-slide .instruction-form {
+  margin: 8px auto;
+}
+
+.lecture-twelve .c-instruction-overview-slide .instruction-format-figure {
+  margin: 8px auto 12px;
+}
+
+.lecture-twelve .c-instruction-overview-slide .field-semantics-grid {
+  gap: 12px;
+}
+
+.lecture-twelve .c-instruction-overview-slide .field-semantics-grid > div {
+  padding: 11px 14px;
+}
+
+.lecture-twelve .compact-instruction-note {
+  margin: 12px 0 0;
+  font-size: 0.96rem !important;
+}
+
+.lecture-twelve .binary-example-line {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.lecture-twelve .binary-example-line code {
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.lecture-twelve .purpose-list {
+  display: grid;
+  gap: 16px;
+  margin: 18px 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: purpose;
+}
+
+.lecture-twelve .purpose-list li {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.35fr) minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  counter-increment: purpose;
+}
+
+.lecture-twelve .purpose-list li::before {
+  content: counter(purpose);
+  position: absolute;
+  color: transparent;
+}
+
+.lecture-twelve .purpose-list span {
+  font-size: 1rem;
+}
+
+.lecture-twelve .purpose-code {
+  margin: 0;
+  padding: 10px 14px;
+  overflow: visible;
+}
+
+.lecture-twelve .purpose-code code {
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.lecture-twelve .field-semantics-grid,
+.lecture-twelve .encoding-example-stack,
+.lecture-twelve .assembly-binary-grid,
+.lecture-twelve .line-by-line-list,
+.lecture-twelve .warning-box {
+  display: grid;
+  gap: 16px;
+}
+
+.lecture-twelve .field-semantics-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.lecture-twelve .field-semantics-grid > div,
+.lecture-twelve .encoding-example-stack > div,
+.lecture-twelve .assembly-binary-grid > div,
+.lecture-twelve .warning-box {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.lecture-twelve .field-semantics-grid strong,
+.lecture-twelve .encoding-example-stack span,
+.lecture-twelve .assembly-binary-grid span,
+.lecture-twelve .warning-box strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--accent-dark);
+  font-weight: 900;
+}
+
+.lecture-twelve .field-semantics-grid p,
+.lecture-twelve .warning-box p {
+  margin: 0;
+  font-size: 0.94rem !important;
+}
+
+.lecture-twelve .compute-spec-layout {
+  grid-template-columns: minmax(520px, 1fr) minmax(320px, 0.72fr);
+  align-items: start;
+}
+
+.lecture-twelve .c-field-reminder-figure {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+}
+
+.lecture-twelve .c-field-reminder-figure img {
+  width: 100%;
+  max-height: 82px;
+  object-fit: contain;
+}
+
+.lecture-twelve .c-field-reminder-figure figcaption {
+  font-size: 0.72rem;
+}
+
+.lecture-twelve .binary-field-example {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--warm);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.lecture-twelve .binary-field-example > strong {
+  color: var(--accent-dark);
+}
+
+.lecture-twelve .binary-field-example > code {
+  width: fit-content;
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.lecture-twelve .binary-field-example p {
+  margin: 0;
+  font-size: 0.9rem !important;
+}
+
+.lecture-twelve .compute-table-figure {
+  padding: 8px 12px;
+}
+
+.lecture-twelve .compute-table-figure img {
+  max-height: 495px;
+  object-fit: contain;
+}
+
+.lecture-twelve .encoding-example-stack {
+  margin: 22px 0;
+}
+
+.lecture-twelve .encoding-example-stack > div {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.lecture-twelve .encoding-example-stack strong,
+.lecture-twelve .encoding-example-stack small {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.lecture-twelve .destination-figure {
+  width: min(100%, 1040px);
+  margin: 0 auto 16px;
+  padding: 10px 16px;
+}
+
+.lecture-twelve .destination-figure img {
+  max-height: 330px;
+  object-fit: contain;
+}
+
+.lecture-twelve .field-spec-example-layout {
+  display: grid;
+  grid-template-columns: minmax(500px, 1fr) minmax(380px, 0.8fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.lecture-twelve .field-spec-example-layout .destination-figure {
+  margin: 0;
+}
+
+.lecture-twelve .destination-notes {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 36px;
+  width: min(100%, 1040px);
+  margin: 0 auto;
+}
+
+.lecture-twelve .assembly-binary-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 20px 0;
+}
+
+.lecture-twelve .assembly-binary-grid pre {
+  margin-top: 10px;
+}
+
+.lecture-twelve .line-by-line-list {
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.lecture-twelve .line-by-line-list li {
+  padding: 12px 16px;
+  border-left: 4px solid var(--accent);
+  background: #fff;
+  font-size: 1rem !important;
+}
+
+.lecture-twelve .jump-spec-layout {
+  grid-template-columns: minmax(500px, 1fr) minmax(350px, 0.8fr);
+  align-items: start;
+}
+
+.lecture-twelve .jump-table-figure img,
+.lecture-twelve .jump-example-figure img {
+  max-height: 390px;
+  object-fit: contain;
+}
+
+.lecture-twelve .jump-example-figure {
+  width: min(100%, 1040px);
+  margin: 0 auto 14px;
+}
+
+.lecture-twelve .compact-method-box {
+  width: min(100%, 1040px);
+  margin: 14px auto 0;
+  padding: 14px 18px;
+}
+
+.lecture-twelve .conflict-panels {
+  margin-bottom: 20px;
+}
+
+.lecture-twelve .warning-box {
+  border-left: 6px solid var(--warm);
+}
+
+.lecture-twelve .predefined-symbol-table {
+  width: 100%;
+  max-width: none;
+  margin-top: 20px;
+}
+
+.lecture-twelve .predefined-symbol-table th,
+.lecture-twelve .predefined-symbol-table td {
+  padding: 12px 16px;
+}
+
+.lecture-twelve .screen-spec-grid {
+  align-items: stretch;
+}
+
+.lecture-twelve .screen-formula-box {
+  margin: 0;
+}
+
+.lecture-twelve .screen-formula-box code {
+  display: block;
+  margin: 8px 0 18px;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.lecture-twelve .keyboard-layout {
+  grid-template-columns: minmax(0, 0.9fr) minmax(480px, 1.1fr);
+  align-items: start;
+}
+
+.lecture-twelve .keyboard-figure img {
+  max-height: 390px;
+  object-fit: contain;
+}
+
+.lecture-twelve .fun-lab-box {
+  margin: 18px 0 0;
+  padding: 13px 17px;
+  border-left: 6px solid var(--warm);
+}
+
+.lecture-twelve .fun-lab-box p {
+  margin: 4px 0 0;
+  font-size: 1rem !important;
+}
+
+.lecture-twelve .machine-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.lecture-twelve .instruction-type-answer {
+  margin-top: 24px;
+}
+
+.lecture-twelve .instruction-type-answer.pause-step.visible {
+  display: grid !important;
+  gap: 18px;
+}
+
+.lecture-twelve .instruction-type-figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.lecture-twelve .instruction-type-figures figure {
+  padding: 12px 18px;
+}
+
+.lecture-twelve .instruction-type-figures img {
+  width: 100%;
+  max-height: 175px;
+  object-fit: contain;
+}
+
+.lecture-twelve .instruction-type-rule {
+  margin: 0;
+  padding: 15px 18px;
+  border-left: 6px solid var(--warm);
+}
+
+.lecture-twelve .instruction-type-rule p {
+  margin: 5px 0 0;
+  font-size: 1rem !important;
+}
+
 .machine-bullet-list {
   display: grid;
   gap: 14px;
@@ -8802,6 +9231,28 @@ a {
 }
 
 @media (max-width: 900px) {
+  .lecture-twelve .recap-image-layout,
+  .lecture-twelve .compute-spec-layout,
+  .lecture-twelve .jump-spec-layout,
+  .lecture-twelve .screen-spec-grid,
+  .lecture-twelve .keyboard-layout,
+  .lecture-twelve .field-semantics-grid,
+  .lecture-twelve .assembly-binary-grid,
+  .lecture-twelve .machine-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lecture-twelve .purpose-list li,
+  .lecture-twelve .encoding-example-stack > div {
+    grid-template-columns: 1fr;
+  }
+
+  .lecture-twelve .binary-example-line {
+    grid-auto-flow: row;
+    grid-auto-columns: 1fr;
+    text-align: center;
+  }
+
   .code-explanation-grid,
   .hack-example-grid,
   .machine-lecture .machine-panels,

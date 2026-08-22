@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 12: Hack Machine Language</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two machine-lecture lecture-twelve">
+    <main class="deck" aria-label="Lecture 12 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 12 | Machine Language</div>
+        <h1>Hack Machine Language</h1>
+        <p class="lead">Instructions, symbols, and memory-mapped input/output.</p>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">Recap</div>
+        <h2>The Hack Memory System</h2>
+        <div class="recap-image-layout">
+          <figure class="book-figure architecture-figure"><img src="../assets/images/architecture.png" alt="Hack architecture showing data memory RAM, instruction memory ROM, address register A, and data register D"><figcaption>Programmer-visible memory and registers</figcaption></figure>
+          <ul class="machine-bullet-list compact-list">
+            <li><strong>ROM</strong> stores program instructions.</li>
+            <li><strong>RAM</strong> stores program data.</li>
+            <li><strong>A</strong> can hold a value or select an address in RAM or ROM.</li>
+            <li><strong>D</strong> stores and manipulates data.</li>
+            <li><strong>M</strong> denotes the selected data-memory word, <code>RAM[A]</code>.</li>
+          </ul>
+        </div>
+        <p class="next-step"><strong>Next:</strong> recall what small Hack programs look like.</p>
+      </section>
+
+      <section class="slide book-image-slide assembly-recap-slide">
+        <div class="kicker">Recap</div>
+        <h2>Hack Assembly Examples</h2>
+        <figure class="book-figure wide-machine-figure hack-examples-figure"><img src="../assets/images/hack-examples.png" alt="Hack assembly examples for memory access, branching, and variables"><figcaption>Memory access, branching, and variable-use examples</figcaption></figure>
+        <p class="prompt">In each example, identify where A is being used as a value, a RAM address, or a jump address.</p>
+      </section>
+
+      <section class="slide book-image-slide add-worked-slide">
+        <div class="kicker">Worked Example</div>
+        <h2>Add the Integers from 1 to 100</h2>
+        <p class="prompt termination-note"><strong>Termination convention:</strong> In Hack, the program stops running when it enters an infinite loop. The infinite loop at the end is therefore the standard way to “terminate” a Hack program.</p>
+        <figure class="book-figure add-example-figure"><img src="../assets/images/add-algo.png" alt="C algorithm and Hack assembly program that add the integers from 1 through 100"><figcaption>High-level algorithm and corresponding Hack assembly</figcaption></figure>
+        <p class="next-step"><strong>Next:</strong> specify the two instruction types used by this program.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">A-Instruction</div>
+        <h2>Loading the A Register</h2>
+        <pre class="instruction-form"><code>@value    // value is a non-negative decimal number
+          // or a symbol that refers to such a number</code></pre>
+        <p>The A-instruction stores the specified value in the A register.</p>
+        <figure class="book-figure instruction-format-figure"><img src="../assets/images/a-instruction.png" alt="A-instruction binary format with leading zero followed by fifteen value bits"><figcaption>Binary format: one leading 0 followed by a 15-bit value</figcaption></figure>
+        <div class="binary-example-line"><code>0000 0000 0000 0111</code><strong>means</strong><code>@7</code></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">A-Instruction</div>
+        <h2>Three Uses of <code>@value</code></h2>
+        <ol class="purpose-list">
+          <li><strong>Enter a constant.</strong><span><code>@5</code> places the binary representation of 5 in A.</span></li>
+          <li><strong>Select data memory.</strong><pre class="purpose-code"><code>@17    // sets A to address 17
+D=M    // copies RAM[A], which is RAM[17], into D</code></pre></li>
+          <li><strong>Select a jump destination.</strong><pre class="purpose-code"><code>@17    // sets A to address 17
+0;JMP  // jumps to address 17 in ROM;
+       // the next instruction is read from ROM[17]</code></pre></li>
+        </ol>
+        <p class="prompt">The same A register supports three roles; the following instruction determines how its value is interpreted.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Read and Encode A-Instructions</h2>
+        <div class="exercise-card-grid">
+          <div><span>A</span><p>What value does <code>@21</code> place in A?</p><strong class="pause-step" data-step>21</strong></div>
+          <div><span>B</span><p>Give the binary form of the A-instruction <code>@17</code>.</p><strong class="pause-step" data-step><code>0000000000010001</code></strong></div>
+          <div><span>C</span><p>Decode <code>0000000000010001</code>.</p><strong class="pause-step" data-step><code>@17</code></strong></div>
+          <div><span>D</span><p>Does <code>@100</code> read <code>RAM[100]</code>?</p><strong class="pause-step" data-step>No. It only sets <code>A=100</code>.</strong></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> introduce the instruction that computes, stores, and jumps.</p>
+      </section>
+
+      <section class="slide c-instruction-overview-slide">
+        <div class="kicker">C-Instruction</div>
+        <h2>Symbolic and Binary Fields</h2>
+        <p>A C-instruction computes a value, optionally stores it, and optionally jumps.</p>
+        <pre class="instruction-form"><code>dest=comp;jump</code></pre>
+        <figure class="book-figure instruction-format-figure c-instruction-figure"><img src="../assets/images/c-instruction.png" alt="C-instruction binary format showing fixed 111 prefix and comp, dest, and jump fields"><figcaption><code>111a cccccc ddd jjj</code></figcaption></figure>
+        <div class="field-semantics-grid">
+          <div><strong><code>111</code></strong><p>Identifies a C-instruction; the two bits after the leading 1 are reserved and fixed to 1.</p></div>
+          <div><strong><code>a cccccc</code></strong><p><code>comp</code>: what the ALU computes.</p></div>
+          <div><strong><code>ddd</code></strong><p><code>dest</code>: where the result is stored.</p></div>
+          <div><strong><code>jjj</code></strong><p><code>jump</code>: which instruction executes next.</p></div>
+        </div>
+        <p class="compact-instruction-note">If <code>dest</code> is empty, omit <code>=</code>. If <code>jump</code> is empty, omit <code>;</code>.</p>
+        <p class="next-step"><strong>Next:</strong> examine each field in order—computation, destination, then jump.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Separate the Three Fields</h2>
+        <p>For each symbolic C-instruction, identify <code>dest</code>, <code>comp</code>, and <code>jump</code>.</p>
+        <table class="truth-table timing-table c-parse-table"><thead><tr><th>instruction</th><th>dest</th><th>comp</th><th>jump</th></tr></thead><tbody><tr><td><code>D=M+1</code></td><td class="pause-step" data-step>D</td><td class="pause-step" data-step>M+1</td><td class="pause-step" data-step>empty</td></tr><tr><td><code>D;JGT</code></td><td class="pause-step" data-step>empty</td><td class="pause-step" data-step>D</td><td class="pause-step" data-step>JGT</td></tr><tr><td><code>0;JMP</code></td><td class="pause-step" data-step>empty</td><td class="pause-step" data-step>0</td><td class="pause-step" data-step>JMP</td></tr><tr><td><code>MD=D-1</code></td><td class="pause-step" data-step>MD</td><td class="pause-step" data-step>D-1</td><td class="pause-step" data-step>empty</td></tr></tbody></table>
+      </section>
+
+      <section class="slide book-image-slide computation-spec-slide">
+        <div class="kicker">C-Instruction | Computation</div>
+        <h2>The Computation Specification</h2>
+        <div class="compute-spec-layout">
+          <figure class="book-figure compute-table-figure"><img src="../assets/images/c-instruction-compute.png" alt="Table of Hack comp mnemonics and the a and six c bits"><figcaption>The 28 documented computations</figcaption></figure>
+          <div>
+            <figure class="book-figure c-field-reminder-figure"><img src="../assets/images/c-instruction.png" alt="C-instruction format highlighting the computation, destination, and jump fields"><figcaption>Recall the C-instruction fields</figcaption></figure>
+            <ul class="machine-bullet-list compact-list">
+              <li><code>D</code> and <code>A</code> name registers; <code>M</code> denotes <code>Memory[A]</code>.</li>
+              <li><code>+</code> and <code>-</code> are 16-bit two's-complement operations.</li>
+              <li><code>!</code>, <code>|</code>, and <code>&amp;</code> are bitwise NOT, OR, and AND.</li>
+              <li>The <code>a</code>-bit chooses A or M; the six <code>c</code>-bits match the Hack ALU controls.</li>
+              <li>Seven bits could encode 128 patterns, but only these 28 functions are documented.</li>
+            </ul>
+            <div class="binary-field-example"><strong>Example: compute <code>D-1</code></strong><code>111 0 001110 000 000</code><p>The computation field <code>0 001110</code> asks the ALU for <code>D-1</code>. Destination and jump are both <code>000</code>, so the result is neither stored nor used to jump.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">C-Instruction | Computation</div>
+        <h2>Encoding Computations</h2>
+        <p>Start with the format <code>111a cccccc ddd jjj</code>. Here, both destination and jump are empty, so their six bits are 0.</p>
+        <div class="encoding-example-stack">
+          <div><span><code>D-1</code></span><strong><code>111 0 001110 000 000</code></strong><small><code>1110 0011 1000 0000</code></small></div>
+          <div><span><code>D|M</code></span><strong><code>111 1 010101 000 000</code></strong><small><code>1111 0101 0100 0000</code></small></div>
+          <div><span><code>-1</code></span><strong><code>111 0 111010 000 000</code></strong><small><code>1110 1110 1000 0000</code></small></div>
+        </div>
+        <p class="prompt">Changing A to M in a documented pair changes the <code>a</code>-bit from 0 to 1 while retaining the six ALU-control bits.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Use the Computation Table</h2>
+        <div class="exercise-card-grid computation-exercise-grid">
+          <div><span>A</span><p>Find the seven comp bits for <code>D+A</code>.</p><strong class="pause-step" data-step><code>0 000010</code></strong></div>
+          <div><span>B</span><p>Find the seven comp bits for <code>D+M</code>.</p><strong class="pause-step" data-step><code>1 000010</code></strong></div>
+          <div><span>C</span><p>Is <code>D*2</code> a documented comp mnemonic?</p><strong class="pause-step" data-step>No</strong></div>
+          <div><span>D</span><p>Encode <code>!M</code> with empty dest and jump.</p><strong class="pause-step" data-step><code>1111 1100 0100 0000</code></strong></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> decide where the ALU result is stored.</p>
+      </section>
+
+      <section class="slide book-image-slide destination-spec-slide">
+        <div class="kicker">C-Instruction | Destination</div>
+        <h2>The Destination Specification</h2>
+        <div class="field-spec-example-layout">
+          <figure class="book-figure destination-figure"><img src="../assets/images/dest-field.png" alt="Table mapping the three destination bits to A, D, M, and combined destinations"><figcaption>The three destination bits</figcaption></figure>
+          <div>
+            <figure class="book-figure c-field-reminder-figure"><img src="../assets/images/c-instruction.png" alt="C-instruction format highlighting the computation, destination, and jump fields"><figcaption>Recall the C-instruction fields</figcaption></figure>
+            <ul class="machine-bullet-list compact-list destination-notes">
+              <li><code>d1</code> stores the ALU output in A.</li>
+              <li><code>d2</code> stores it in D.</li>
+              <li><code>d3</code> stores it in M, meaning <code>Memory[A]</code>.</li>
+              <li>Zero, one, or several destination bits may be asserted.</li>
+            </ul>
+            <div class="binary-field-example"><strong>Example: <code>D=A</code></strong><code>111 0 110000 010 000</code><p>The ALU outputs A. Destination bits <code>010</code> copy that result into D; jump bits <code>000</code> continue with the next instruction.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">C-Instruction | Destination</div>
+        <h2>Example: Store One Result in M and D</h2>
+        <p>Increment <code>Memory[7]</code> and store the same result in D.</p>
+        <div class="assembly-binary-grid">
+          <div><span>Assembly</span><pre><code>@7
+MD=M+1</code></pre></div>
+          <div><span>Binary</span><pre><code>0000 0000 0000 0111
+1111 1101 1101 1000</code></pre></div>
+        </div>
+        <ol class="line-by-line-list">
+          <li><code>@7</code> sets <code>A=7</code>, so M now denotes <code>Memory[7]</code>.</li>
+          <li><code>M+1</code> is computed once.</li>
+          <li>The destination <code>MD</code> stores that one result in both <code>Memory[7]</code> and D.</li>
+        </ol>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Choose the Destination Bits</h2>
+        <table class="truth-table timing-table"><thead><tr><th>desired destination</th><th>mnemonic</th><th><code>d1d2d3</code></th></tr></thead><tbody><tr><td>D only</td><td class="pause-step" data-step><code>D</code></td><td class="pause-step" data-step><code>010</code></td></tr><tr><td>A and M</td><td class="pause-step" data-step><code>AM</code></td><td class="pause-step" data-step><code>101</code></td></tr><tr><td>A, D, and M</td><td class="pause-step" data-step><code>AMD</code></td><td class="pause-step" data-step><code>111</code></td></tr><tr><td>store nowhere</td><td class="pause-step" data-step><code>null</code></td><td class="pause-step" data-step><code>000</code></td></tr></tbody></table>
+        <p class="next-step"><strong>Next:</strong> use the ALU result to decide which instruction executes next.</p>
+      </section>
+
+      <section class="slide book-image-slide jump-spec-slide">
+        <div class="kicker">C-Instruction | Jump</div>
+        <h2>The Jump Specification</h2>
+        <div class="jump-spec-layout">
+          <figure class="book-figure jump-table-figure"><img src="../assets/images/jump-instruction.png" alt="Table mapping the three jump bits to Hack jump mnemonics and ALU output conditions"><figcaption>Jump bits and conditions</figcaption></figure>
+          <div>
+            <figure class="book-figure c-field-reminder-figure"><img src="../assets/images/c-instruction.png" alt="C-instruction format highlighting the computation, destination, and jump fields"><figcaption>Recall the C-instruction fields</figcaption></figure>
+            <ul class="machine-bullet-list compact-list">
+              <li>Normally, execution continues with the next instruction.</li>
+              <li>For a jump, A must already contain the target instruction address.</li>
+              <li>The jump condition tests the ALU output produced by the same C-instruction.</li>
+              <li><code>j1</code>, <code>j2</code>, and <code>j3</code> enable jumps for negative, zero, and positive outputs.</li>
+            </ul>
+            <div class="binary-field-example"><strong>Example: <code>D;JGT</code></strong><code>111 0 001100 000 001</code><p>The ALU outputs D. Jump bits <code>001</code> make the computer continue from <code>ROM[A]</code> when D is positive; otherwise it executes the next instruction.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">C-Instruction | Jump</div>
+        <h2>Worked Example: Conditional and Unconditional Jumps</h2>
+        <figure class="book-figure jump-example-figure"><img src="../assets/images/jump-example.png" alt="Hack assembly implementing if Memory 3 equals 5 then goto 100 else goto 200"><figcaption><code>out</code> is the ALU result; a taken jump continues at the instruction address in A</figcaption></figure>
+        <div class="titled-method-box compact-method-box"><strong>Why <code>0;JMP</code>?</strong><p>A C-instruction must specify a computation. For an unconditional jump the result is ignored, so 0 is a simple conventional choice.</p></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 5</div>
+        <h2>Will the Computer Jump?</h2>
+        <p>Assume A already contains the target instruction address.</p>
+        <table class="truth-table timing-table"><thead><tr><th>instruction</th><th>ALU output</th><th>jump?</th></tr></thead><tbody><tr><td><code>D;JGT</code></td><td>7</td><td class="pause-step" data-step>Yes</td></tr><tr><td><code>D;JGT</code></td><td>0</td><td class="pause-step" data-step>No</td></tr><tr><td><code>D;JLE</code></td><td>-3</td><td class="pause-step" data-step>Yes</td></tr><tr><td><code>0;JMP</code></td><td>0</td><td class="pause-step" data-step>Yes</td></tr></tbody></table>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">The A Register</div>
+        <h2>Avoid Conflicting Uses of A</h2>
+        <div class="comparison-panels machine-panels conflict-panels">
+          <div><span>Data-memory role</span><strong>A selects <code>Memory[A]</code></strong><p>A following instruction involving M treats A as a RAM address.</p></div>
+          <div><span>Jump role</span><strong>A selects an instruction</strong><p>A C-instruction with nonzero jump bits treats A as the target instruction address.</p></div>
+        </div>
+        <div class="warning-box"><strong>Programming rule</strong><p>To prevent conflict, a well-written C-instruction that may jump should not also refer to M, and an instruction involving M should not also request a jump.</p></div>
+        <p class="next-step"><strong>Next:</strong> replace hard-coded addresses with meaningful symbols.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 6</div>
+        <h2>Which Instructions Avoid the Conflict?</h2>
+        <div class="legal-grid conflict-exercise-grid">
+          <div><code>D=M</code><strong class="pause-step" data-step>Safe: M, no jump</strong></div>
+          <div><code>D;JGT</code><strong class="pause-step" data-step>Safe: jump, no M</strong></div>
+          <div><code>M;JGT</code><strong class="pause-step" data-step>Avoid: M and jump</strong></div>
+          <div><code>0;JMP</code><strong class="pause-step" data-step>Safe: jump, no M</strong></div>
+        </div>
+      </section>
+
+
+      <section class="slide instruction-type-question-slide">
+        <div class="kicker">Question</div>
+        <h2>How Does Hack Identify the Instruction Type?</h2>
+        <p class="slide-subtitle">How does Hack know whether an instruction is an A-instruction or a C-instruction?</p>
+        <div class="instruction-type-answer pause-step" data-step>
+          <div class="instruction-type-figures">
+            <figure class="book-figure"><img src="../assets/images/a-instruction.png" alt="A-instruction format beginning with a zero bit"><figcaption>A-instruction</figcaption></figure>
+            <figure class="book-figure"><img src="../assets/images/c-instruction.png" alt="C-instruction format beginning with a one bit"><figcaption>C-instruction</figcaption></figure>
+          </div>
+          <div class="titled-method-box instruction-type-rule"><strong>The first bit reveals the type</strong><p><code>0</code> means A-instruction; <code>1</code> means C-instruction. Hack can therefore identify the instruction type by inspecting its first bit.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Symbols</div>
+        <h2>Three Ways Symbols Enter a Program</h2>
+        <div class="symbol-grid symbol-kind-grid">
+          <div><span>Predefined</span><strong>Known before assembly</strong><p>Names such as <code>R0</code>, <code>SCREEN</code>, and <code>KBD</code>.</p></div>
+          <div><span>Labels</span><strong>Name instruction addresses</strong><p>Declared using a pseudo-command such as <code>(LOOP)</code>.</p></div>
+          <div><span>Variables</span><strong>Name allocated RAM words</strong><p>New symbols are assigned RAM addresses beginning at 16.</p></div>
+        </div>
+        <p>Assembly commands may use a numeric address or a symbol that the assembler resolves to an address.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Symbols | Predefined</div>
+        <h2>Predefined RAM Symbols</h2>
+        <table class="truth-table predefined-symbol-table"><thead><tr><th>group</th><th>symbols</th><th>RAM addresses</th></tr></thead><tbody><tr><td>Virtual registers</td><td><code>R0</code>–<code>R15</code></td><td>0–15</td></tr><tr><td>Pointers</td><td><code>SP, LCL, ARG, THIS, THAT</code></td><td>0, 1, 2, 3, 4</td></tr><tr><td>Input/output</td><td><code>SCREEN, KBD</code></td><td>16384, 24576</td></tr></tbody></table>
+        <div class="titled-method-box"><strong>Two names may denote one address</strong><p>For example, <code>R2</code> and <code>ARG</code> both denote RAM address 2.</p></div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Symbols | Labels and Variables</div>
+        <h2>User-Defined Symbols</h2>
+        <div class="comparison-panels machine-panels user-symbol-panels">
+          <div><span>Label symbol</span><strong><code>(LOOP)</code></strong><ul><li>Names the ROM address of the next real instruction.</li><li>The declaration produces no machine instruction.</li><li>A label is declared once but may be used before or after its declaration.</li></ul></div>
+          <div><span>Variable symbol</span><strong><code>@count</code></strong><ul><li>A symbol that is neither predefined nor declared as a label.</li><li>The assembler assigns it a unique RAM address.</li><li>Allocation begins at RAM address 16.</li></ul></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 7</div>
+        <h2>Classify and Resolve the Symbols</h2>
+        <div class="exercise-card-grid symbol-exercise-grid">
+          <div><span>A</span><p><code>@R5</code></p><strong class="pause-step" data-step>Predefined; RAM address 5</strong></div>
+          <div><span>B</span><p><code>@SCREEN</code></p><strong class="pause-step" data-step>Predefined; RAM address 16384</strong></div>
+          <div><span>C</span><p><code>(LOOP)</code></p><strong class="pause-step" data-step>Label; next ROM instruction address</strong></div>
+          <div><span>D</span><p><code>@count</code>, first new variable</p><strong class="pause-step" data-step>Variable; RAM address 16</strong></div>
+        </div>
+        <p class="next-step"><strong>Next:</strong> use ordinary memory access to communicate with devices.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Input and Output</div>
+        <h2>Memory-Mapped Devices</h2>
+        <p>The Hack computer interacts with its screen and keyboard through designated RAM addresses.</p>
+        <div class="io-map-grid io-overview-grid">
+          <div><span>Screen output</span><strong>Write to its memory map</strong><p>Changing bits in the screen segment changes pixels on the physical display.</p></div>
+          <div><span>Keyboard input</span><strong>Read its memory map</strong><p>The keyboard's current key code appears in a designated RAM word.</p></div>
+          <div><span>Continuous refresh</span><strong>Hardware keeps them synchronized</strong><p>Programs use ordinary memory instructions; no special screen or keyboard instruction is needed.</p></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Input and Output | Screen</div>
+        <h2>The Screen Memory Map</h2>
+        <div class="screen-spec-grid">
+          <div class="vertical-spec"><strong>Screen specification</strong><dl><div><dt>Dimensions</dt><dd>512 × 256 black-and-white pixels</dd></div><div><dt>Base address</dt><dd><code>SCREEN = 16384</code></dd></div><div><dt>Map size</dt><dd>8K 16-bit words</dd></div><div><dt>One row</dt><dd>32 consecutive words</dd></div><div><dt>Bit value</dt><dd>1 = black, 0 = white</dd></div></dl></div>
+          <div class="titled-method-box screen-formula-box"><strong>Pixel at row r, column c</strong><p>Word address:</p><code>16384 + r × 32 + floor(c / 16)</code><p>Bit within that word:</p><code>c mod 16</code></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Input and Output | Screen</div>
+        <h2>Example: Draw the Top-Left Pixel</h2>
+        <div class="program-explain-grid screen-program-grid">
+          <pre class="asm-code"><code>@SCREEN
+M=1</code></pre>
+          <ol class="line-by-line-list">
+            <li><code>@SCREEN</code> sets A to 16384, the first word of the screen map.</li>
+            <li>That word controls the 16 left-most pixels of the top row.</li>
+            <li><code>M=1</code> sets its least significant bit to 1, blackening the top-left pixel.</li>
+          </ol>
+        </div>
+        <div class="titled-method-box fun-lab-box"><strong>Fun lab task</strong><p>Draw a picture on the Hack screen by writing suitable bit patterns into the screen memory map.</p></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 8</div>
+        <h2>Locate Screen Pixels</h2>
+        <div class="exercise-card-grid screen-exercise-grid">
+          <div><span>A</span><p>Which RAM word contains row 0, column 17?</p><strong class="pause-step" data-step><code>RAM[16385]</code></strong></div>
+          <div><span>B</span><p>Which bit within that word represents column 17?</p><strong class="pause-step" data-step>Bit 1</strong></div>
+          <div><span>C</span><p>Which address begins row 1?</p><strong class="pause-step" data-step><code>16384+32 = 16416</code></strong></div>
+          <div><span>D</span><p>What values represent black and white?</p><strong class="pause-step" data-step>1 = black; 0 = white</strong></div>
+        </div>
+      </section>
+
+      <section class="slide book-image-slide">
+        <div class="kicker">Input and Output | Keyboard</div>
+        <h2>The Keyboard Memory Map</h2>
+        <div class="keyboard-layout">
+          <div>
+            <ul class="machine-bullet-list compact-list">
+              <li><code>KBD</code> denotes RAM address 24576.</li>
+              <li>When no key is pressed, <code>RAM[24576]</code> contains 0.</li>
+              <li>When a key is pressed, it contains that key's 16-bit code.</li>
+              <li>Ordinary characters use their usual codes; special Hack keys use the codes shown.</li>
+            </ul>
+            <pre><code>@KBD
+D=M    // D receives the current key code</code></pre>
+          </div>
+          <figure class="book-figure keyboard-figure"><img src="../assets/images/hack-keyboard.png" alt="Hack keyboard codes for newline, arrows, home, end, page keys, insert, delete, escape, and function keys"><figcaption>Special keyboard codes</figcaption></figure>
+        </div>
+        <div class="titled-method-box fun-lab-box"><strong>Fun lab task</strong><p>Write a program that displays the key currently being pressed on the screen.</p></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 9</div>
+        <h2>Reason About Keyboard Input</h2>
+        <div class="exercise-card-grid keyboard-exercise-grid">
+          <div><span>A</span><p>After <code>@KBD</code> and <code>D=M</code>, what is D when no key is pressed?</p><strong class="pause-step" data-step>0</strong></div>
+          <div><span>B</span><p>What is D when the left-arrow key is pressed?</p><strong class="pause-step" data-step>130</strong></div>
+          <div><span>C</span><p>Which jump tests whether any key is pressed?</p><strong class="pause-step" data-step>After <code>D=M</code>, use <code>D;JNE</code>.</strong></div>
+          <div><span>D</span><p>Does reading <code>KBD</code> require a special input instruction?</p><strong class="pause-step" data-step>No. It is an ordinary memory read.</strong></div>
+        </div>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>Hack Machine Language</h2>
+        <div class="remember-grid machine-summary-grid">
+          <div><strong>A-instruction</strong><p><code>@value</code> loads a constant or address into A.</p></div>
+          <div><strong>C-instruction</strong><p><code>dest=comp;jump</code> computes, stores, and controls execution.</p></div>
+          <div><strong>Symbols</strong><p>Predefined names, labels, and variables replace numeric addresses.</p></div>
+          <div><strong>Input/output</strong><p>Screen writes and keyboard reads are ordinary memory accesses.</p></div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>32</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
