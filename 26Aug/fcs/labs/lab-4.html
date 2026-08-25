@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 4: Hack Machine Language</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body>
+    <main class="site-shell">
+      <nav class="topbar" aria-label="Course navigation">
+        <a class="brand" href="../index.html">
+          <span class="chip-mark">CS2011</span>
+          <span class="lab-code">CS2111 Laboratory</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html#lectures">Lectures</a>
+          <a href="https://nand2tetris.github.io/web-ide/asm/">Assembly tools</a>
+          <a href="https://www.nand2tetris.org/project04">Project 4</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Laboratory assignment · 27 August</p>
+          <h1>Lab 4: Hack Machine Language</h1>
+          <p>
+            Write and test two Hack assembly programs. When executed on the CPU emulator,
+            your programs should generate the results required by the supplied project test scripts.
+          </p>
+          <a class="primary-link" href="../index.html#lab-4-machine-language">Back to course home</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Programs</p>
+            <h2>What to submit</h2>
+          </div>
+          <p>Complete both source files with the exact required names and locations.</p>
+        </div>
+
+        <div class="lab-program-grid">
+          <section class="lab-program-card">
+            <span class="lab-program-number">Program 1</span>
+            <h3><code>Mult.asm</code>: multiplication</h3>
+            <dl class="lab-contract-list">
+              <div><dt>File</dt><dd><code>projects/04/mult/Mult.asm</code></dd></div>
+              <div><dt>Inputs</dt><dd>The current values stored in <code>R0</code> and <code>R1</code>.</dd></div>
+              <div><dt>Output</dt><dd>Compute <code>R0 * R1</code> and store the result in <code>R2</code>.</dd></div>
+              <div><dt>Assume</dt><dd><code>R0 &gt;= 0</code>, <code>R1 &gt;= 0</code>, and <code>R0 * R1 &lt; 32768</code>. Your program need not test these conditions.</dd></div>
+              <div><dt>Test</dt><dd>Run <code>Mult.tst</code>. The output is checked against <code>Mult.cmp</code> on representative values.</dd></div>
+            </dl>
+          </section>
+
+          <section class="lab-program-card">
+            <span class="lab-program-number">Program 2</span>
+            <h3><code>Fill.asm</code>: keyboard and screen I/O</h3>
+            <dl class="lab-contract-list">
+              <div><dt>File</dt><dd><code>projects/04/fill/Fill.asm</code></dd></div>
+              <div><dt>Loop</dt><dd>Run continuously in an infinite loop that listens to the keyboard.</dd></div>
+              <div><dt>Key pressed</dt><dd>Blacken the screen by writing black in every pixel.</dd></div>
+              <div><dt>No key</dt><dd>Clear the screen by writing white in every pixel.</dd></div>
+              <div><dt>Order</dt><dd>You may process pixels in any spatial order, as long as holding or releasing a key long enough eventually gives a fully blackened or cleared screen.</dd></div>
+              <div><dt>Test</dt><dd>Run <code>Fill.tst</code>. There is no compare file, so inspect the simulated screen visually.</dd></div>
+            </dl>
+          </section>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Workflow</p>
+            <h2>Recommended procedure</h2>
+          </div>
+          <p>Write, assemble, test, debug, and repeat until the emulator behavior is correct.</p>
+        </div>
+
+        <section class="lab-workflow" aria-labelledby="lab-4-workflow-title">
+          <h3 id="lab-4-workflow-title">Steps</h3>
+          <ol>
+            <li>Go to the assembler tab of the emulator.</li>
+            <li>Click the "Load File" button. Open the file <code>projects/04/mult/Mult.asm</code> or <code>projects/04/fill/Fill.asm</code>.</li>
+            <li>Write your assembly code in the editor.</li>
+            <li>Use the assembler to translate your program. If there are syntax errors, fix the source file and assemble again.</li>
+            <li>After successful assembly, the assembler will produce <code>Mult.hack</code> or <code>Fill.hack</code>. You can either download the file or use the emulator's "Load in CPU Emulator" button to open it directly. </li>
+            <li>Use the CPU emulator to test <code>Mult.hack</code> or <code>Fill.hack</code>, either interactively or with the supplied <code>Mult.tst</code> or <code>Fill.tst</code> script.</li>
+            <li>To load the test script, click the "Load a test script" button and select the appropriate test file.</li>
+            <li>If there are run-time errors or wrong results, edit <code>Mult.asm</code> or <code>Fill.asm</code>, assemble again, and rerun the emulator test.</li>
+            <li>Repeat the same process for <code>projects/04/fill/Fill.asm</code> using the <code>projects/04/fill</code> directory.</li>
+          </ol>
+        </section>
+
+        <div class="lab-resource-links">
+          <a class="button-link" href="https://nand2tetris.github.io/web-ide/asm/">Open Web IDE</a>
+          <a class="button-link" href="https://www.nand2tetris.org/project04">Project 4 files and specification</a>
+          <a class="button-link" href="https://www.nand2tetris.org/software">Download assembler and CPU emulator</a>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <p>CS2011 Foundations of Computing Systems | CS2111 Laboratory</p>
+      </footer>
+    </main>
+  </body>
+</html>
