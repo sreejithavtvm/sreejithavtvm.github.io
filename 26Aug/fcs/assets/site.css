@@ -9522,6 +9522,518 @@ a {
   .alu-pipeline .pipeline-result { grid-column: 1; }
 }
 
+/* Lecture 13: stored programs, von Neumann architecture, and the Hack overview. */
+.architecture-lecture .architecture-opening {
+  margin: 0 0 24px;
+  font-size: 1.12rem !important;
+}
+
+.architecture-lecture .stored-program-concept {
+  width: min(100%, 1120px);
+  margin-top: 12px;
+  padding: 30px 34px;
+}
+
+.architecture-lecture .stored-program-concept > strong {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.architecture-lecture .stored-program-concept > p {
+  margin-bottom: 22px;
+  font-size: 1.08rem !important;
+}
+
+.architecture-lecture .stored-program-concept .architecture-list {
+  gap: 18px;
+}
+
+.architecture-lecture .stored-program-concept li strong {
+  display: inline;
+  margin: 0;
+  color: inherit;
+}
+
+.architecture-lecture .stored-program-grid,
+.architecture-lecture .architecture-image-layout,
+.architecture-lecture .register-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1.28fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.architecture-lecture .architecture-image-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(430px, 0.88fr);
+}
+
+.architecture-lecture .architecture-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.architecture-lecture .architecture-sublist {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding-left: 1.25em;
+}
+
+.architecture-lecture .architecture-sublist li {
+  font-size: 0.98rem !important;
+  line-height: 1.42;
+}
+
+.architecture-lecture .von-neumann-slide .architecture-image-layout {
+  margin-top: 34px;
+  align-items: center;
+}
+
+.architecture-lecture .von-neumann-slide .architecture-list {
+  gap: 16px;
+}
+
+.architecture-lecture .architecture-list li,
+.architecture-lecture .memory-types-grid li,
+.architecture-lecture .fetch-execute-grid li,
+.architecture-lecture .hack-overview-grid li {
+  font-size: 1rem !important;
+  line-height: 1.42;
+}
+
+.architecture-lecture .architecture-callout,
+.architecture-lecture .architecture-answer,
+.architecture-lecture .memory-types-grid > div,
+.architecture-lecture .cpu-parts-grid > div,
+.architecture-lecture .register-types-grid > div,
+.architecture-lecture .io-flow-grid > div,
+.architecture-lecture .hack-overview-grid > div,
+.architecture-lecture .fetch-execute-grid > div,
+.architecture-lecture .architecture-exercise-grid > div,
+.architecture-lecture .reuse-grid > div {
+  padding: 17px 19px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.architecture-lecture .architecture-callout,
+.architecture-lecture .architecture-answer {
+  border-left: 6px solid var(--warm);
+}
+
+.architecture-lecture .architecture-callout strong,
+.architecture-lecture .architecture-answer strong,
+.architecture-lecture .memory-types-grid > div > strong,
+.architecture-lecture .cpu-parts-grid strong,
+.architecture-lecture .register-types-grid strong,
+.architecture-lecture .io-flow-grid strong,
+.architecture-lecture .hack-overview-grid > div > strong,
+.architecture-lecture .fetch-execute-grid > div > strong,
+.architecture-lecture .reuse-grid strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--accent-dark);
+  font-weight: 900;
+}
+
+.architecture-lecture .architecture-callout p,
+.architecture-lecture .architecture-answer p,
+.architecture-lecture .cpu-parts-grid p,
+.architecture-lecture .register-types-grid p,
+.architecture-lecture .io-flow-grid p {
+  margin: 0;
+  font-size: 0.98rem !important;
+}
+
+.architecture-lecture .architecture-answer {
+  margin-top: 38px;
+}
+
+.architecture-lecture .architecture-answer.visible {
+  display: block !important;
+}
+
+.architecture-lecture .von-neumann-figure {
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+}
+
+.architecture-lecture .von-neumann-figure img {
+  width: 100%;
+  max-height: 390px;
+  object-fit: contain;
+}
+
+.architecture-lecture .memory-types-grid,
+.architecture-lecture .io-flow-grid,
+.architecture-lecture .fetch-execute-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin: 18px 0;
+}
+
+.architecture-lecture .memory-types-grid ul,
+.architecture-lecture .hack-overview-grid ul,
+.architecture-lecture .fetch-execute-grid ul {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding-left: 1.15em;
+}
+
+.architecture-lecture .memory-architecture-slide .memory-types-grid {
+  gap: 26px;
+  margin: 28px 0 24px;
+}
+
+.architecture-lecture .memory-architecture-slide .memory-types-grid > div {
+  padding: 24px 26px;
+}
+
+.architecture-lecture .memory-architecture-slide .memory-types-grid ul {
+  gap: 12px;
+  margin-top: 13px;
+}
+
+.architecture-lecture .memory-architecture-slide .architecture-note {
+  margin-top: 22px;
+  padding: 16px 18px;
+}
+
+.architecture-lecture .architecture-note {
+  margin: 14px 0 0;
+  padding: 11px 15px;
+  border-left: 5px solid var(--accent);
+  background: rgba(15, 118, 110, 0.07);
+  font-size: 0.95rem !important;
+}
+
+.architecture-lecture .cpu-parts-grid,
+.architecture-lecture .register-types-grid,
+.architecture-lecture .hack-overview-grid,
+.architecture-lecture .architecture-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.architecture-lecture .cpu-parts-detailed {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.architecture-lecture .cpu-parts-detailed .control-unit-card {
+  grid-column: 1 / -1;
+  padding-block: 14px;
+}
+
+.architecture-lecture .control-unit-card ul {
+  display: grid;
+  gap: 7px;
+  margin: 8px 0 0;
+  padding-left: 1.2em;
+}
+
+.architecture-lecture .control-unit-card li {
+  font-size: 1rem !important;
+  line-height: 1.36;
+}
+
+.architecture-lecture .cpu-operation-cycle {
+  padding: 13px 17px;
+  border-left: 6px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.architecture-lecture .cpu-operation-cycle > strong {
+  display: block;
+  color: var(--accent-dark);
+  font-weight: 900;
+}
+
+.architecture-lecture .cpu-operation-cycle .fetch-loop-strip {
+  grid-template-columns: repeat(7, max-content);
+  margin: 9px 0 0;
+  padding: 5px 0 0;
+}
+
+.architecture-lecture .fetch-loop-strip {
+  display: grid;
+  grid-template-columns: auto repeat(7, max-content);
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 19px;
+  padding: 13px 16px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.architecture-lecture .fetch-loop-strip strong {
+  color: var(--accent-dark);
+}
+
+.architecture-lecture .fetch-loop-strip i {
+  color: var(--warm);
+  font-style: normal;
+  font-size: 1.3rem;
+}
+
+.architecture-lecture .architecture-exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.architecture-lecture .architecture-exercise-grid.three-items {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.architecture-lecture .architecture-exercise-grid span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.architecture-lecture .architecture-exercise-grid p {
+  min-height: 2.7em;
+  margin: 8px 0 14px;
+  font-size: 1rem !important;
+}
+
+.architecture-lecture .architecture-exercise-grid strong.pause-step.visible {
+  display: block !important;
+  color: var(--accent-dark);
+}
+
+.architecture-lecture .register-layout {
+  grid-template-columns: minmax(300px, 0.62fr) minmax(0, 1.38fr);
+  align-items: stretch;
+}
+
+.architecture-lecture .vertical-register-layout {
+  grid-template-columns: 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.architecture-lecture .register-motivation {
+  padding: 24px 28px;
+}
+
+.architecture-lecture .register-motivation > strong {
+  font-size: 1.08rem;
+}
+
+.architecture-lecture .register-motivation > p {
+  margin-bottom: 8px;
+}
+
+.architecture-lecture .register-motivation .register-benefit-lead {
+  margin: 17px 0 8px;
+  font-weight: 800;
+}
+
+.architecture-lecture .ram-round-trip,
+.architecture-lecture .register-reasons {
+  display: grid;
+  margin: 8px 0 0;
+  padding-left: 1.35em;
+}
+
+.architecture-lecture .ram-round-trip {
+  gap: 8px;
+}
+
+.architecture-lecture .register-reasons {
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.architecture-lecture .ram-round-trip li,
+.architecture-lecture .register-reasons li {
+  font-size: 1rem !important;
+  line-height: 1.4;
+}
+
+.architecture-lecture .register-motivation li strong {
+  display: inline;
+  margin: 0;
+  color: inherit;
+}
+
+.architecture-lecture .register-types-list {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0;
+}
+
+.architecture-lecture .register-types-list > div {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.28fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 17px 21px;
+}
+
+.architecture-lecture .register-types-list strong {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.architecture-lecture .register-types-list p {
+  font-size: 1.02rem !important;
+}
+
+.architecture-lecture .register-types-grid {
+  margin: 0;
+}
+
+.architecture-lecture .compact-callout {
+  margin-top: 20px;
+  padding-block: 13px;
+}
+
+.architecture-lecture .memory-mapped-io-slide {
+  padding-bottom: 110px;
+}
+
+.architecture-lecture .io-explanation-stack {
+  display: grid;
+  gap: 15px;
+  width: 100%;
+  margin: 18px 0 8px;
+}
+
+.architecture-lecture .io-explanation-section {
+  padding: 16px 21px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.architecture-lecture .io-motivation-section {
+  border-left-color: var(--warm);
+}
+
+.architecture-lecture .io-consequence-section {
+  border-left-color: var(--good);
+}
+
+.architecture-lecture .io-explanation-section > strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--accent-dark);
+  font-size: 1.06rem;
+  font-weight: 900;
+}
+
+.architecture-lecture .io-explanation-section p {
+  margin: 5px 0;
+  font-size: 0.98rem !important;
+  line-height: 1.38;
+}
+
+.architecture-lecture .io-explanation-section ul,
+.architecture-lecture .io-explanation-section ol {
+  display: grid;
+  gap: 6px;
+  margin: 7px 0 0;
+  padding-left: 1.35em;
+}
+
+.architecture-lecture .io-explanation-section li {
+  font-size: 0.97rem !important;
+  line-height: 1.36;
+}
+
+.architecture-lecture .io-explanation-section li strong {
+  display: inline;
+  margin: 0;
+  color: inherit;
+}
+
+.architecture-lecture .two-programs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+  width: min(100%, 860px);
+  margin: 24px auto 0;
+}
+
+.architecture-lecture .two-programs-grid pre {
+  margin: 0;
+  text-align: center;
+}
+
+.architecture-lecture .reuse-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.architecture-lecture .reuse-grid > div {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.architecture-lecture .reuse-grid strong {
+  margin: 0;
+}
+
+.architecture-lecture .reuse-grid span.visible {
+  display: block !important;
+}
+
+.architecture-lecture .compact-architecture-slide h2 {
+  font-size: clamp(2.05rem, 3.15vw, 3.45rem);
+}
+
+.architecture-lecture .compact-architecture-slide > p,
+.architecture-lecture .compact-architecture-slide > .architecture-opening {
+  font-size: 1rem !important;
+}
+
+@media (max-width: 900px) {
+  .architecture-lecture .stored-program-grid,
+  .architecture-lecture .architecture-image-layout,
+  .architecture-lecture .register-layout,
+  .architecture-lecture .memory-types-grid,
+  .architecture-lecture .cpu-parts-grid,
+  .architecture-lecture .register-types-grid,
+  .architecture-lecture .io-flow-grid,
+  .architecture-lecture .hack-overview-grid,
+  .architecture-lecture .fetch-execute-grid,
+  .architecture-lecture .architecture-exercise-grid,
+  .architecture-lecture .architecture-exercise-grid.three-items,
+  .architecture-lecture .reuse-grid,
+  .architecture-lecture .architecture-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-lecture .fetch-loop-strip {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .architecture-lecture .fetch-loop-strip i {
+    transform: rotate(90deg);
+  }
+}
+
 @media print {
   .deck-body {
     overflow: visible;

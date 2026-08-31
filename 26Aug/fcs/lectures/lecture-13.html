@@ -3,213 +3,307 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lecture 13: Branching, Symbols, and Input/Output</title>
+    <title>Lecture 13: Computer Architecture</title>
     <link rel="stylesheet" href="../assets/site.css">
   </head>
-  <body class="deck-body lecture-two machine-lecture">
+  <body class="deck-body lecture-two machine-lecture architecture-lecture">
     <main class="deck" aria-label="Lecture 13 slides">
       <section class="slide current title-slide">
-        <div class="kicker">Lecture 13 | Machine Language</div>
-        <h1>Branching, Symbols, and Input/Output</h1>
-        <p class="lead">From straight-line instructions to complete programs.</p>
+        <div class="kicker">Lecture 13 | Computer Architecture</div>
+        <h1>Computer Architecture</h1>
+        <p class="lead">From stored programs to the Hack hardware platform.</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Flow of Control</div>
-        <h2>Why Straight-Line Code Is Not Enough</h2>
-        <div class="machine-question-grid">
-          <div><strong>High-level idea</strong><pre><code>while (x &gt; 0) {
-  x = x - 1;
-}</code></pre></div>
-          <div><strong>Question for machine language</strong><p>After testing <code>x</code>, which instruction should execute next?</p><p class="pause-step" data-step><strong>Flow of control</strong> is the rule that decides the next instruction.</p></div>
+      <section class="slide compact-architecture-slide stored-program-slide">
+        <div class="kicker">Stored Program Concept</div>
+        <h2>Finite Hardware, Practically Infinite Uses</h2>
+        <p class="architecture-opening">A digital computer is unusually versatile: the same finite machine can run games, edit documents, and perform scientific calculations.</p>
+        <div class="architecture-callout stored-program-concept">
+          <strong>The stored program concept</strong>
+          <p>Keep the program's instructions in memory, represented and manipulated just like data.</p>
+          <ul class="architecture-list">
+            <li>The computer has a fixed hardware platform and a fixed repertoire of instructions.</li>
+            <li>These instructions can be combined like building blocks to form sophisticated programs.</li>
+            <li>The program's logic is stored in memory rather than permanently embedded in the hardware.</li>
+            <li>Loading different <strong>software</strong> makes the same hardware behave differently.</li>
+          </ul>
         </div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Flow of Control</div>
-        <h2>The Jump Field</h2>
-        <table class="truth-table jump-table"><thead><tr><th>jump</th><th>condition on ALU output</th></tr></thead><tbody><tr><td><code>JGT</code></td><td>greater than 0</td></tr><tr><td><code>JEQ</code></td><td>equal to 0</td></tr><tr><td><code>JGE</code></td><td>greater than or equal to 0</td></tr><tr><td><code>JLT</code></td><td>less than 0</td></tr><tr><td><code>JNE</code></td><td>not equal to 0</td></tr><tr><td><code>JLE</code></td><td>less than or equal to 0</td></tr><tr><td><code>JMP</code></td><td>always jump</td></tr></tbody></table>
-        <p>The condition is tested on the ALU output produced by that same C-instruction.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Flow of Control</div>
-        <h2>Where Does a Jump Go?</h2>
-        <div class="jump-flow">
-          <pre class="asm-code"><code>@END
-D;JLE</code></pre>
-          <div class="vertical-spec"><strong>Meaning</strong><dl><div><dt><code>@END</code></dt><dd>Load the target address into A.</dd></div><div><dt><code>D;JLE</code></dt><dd>Compute <code>D</code>; if the result is less than or equal to 0, jump to the instruction address currently in A.</dd></div><div><dt>Otherwise</dt><dd>Continue with the next instruction.</dd></div></dl></div>
-        </div>
-        <p>The Program Counter from Lecture 10 is what actually changes the next instruction address.</p>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Flow of Control</div>
-        <h2>Conditional and Unconditional Forms</h2>
-        <div class="comparison-panels machine-panels">
-          <div><span>conditional</span><strong><code>D;JGT</code></strong><p>Jump only if the computed value <code>D</code> is positive.</p></div>
-          <div><span>unconditional</span><strong><code>0;JMP</code></strong><p>Compute a harmless value, then always jump. There is no destination.</p></div>
-        </div>
+        <p class="next-step">Next: What architecture turns this idea into a computer?</p>
       </section>
 
       <section class="slide exercise-slide">
         <div class="kicker">Exercise 1</div>
-        <h2>Will It Jump?</h2>
-        <p>Assume the A register already contains the target address <code>80</code>. If the jump is not taken, the next ROM address is <code>31</code>.</p>
-        <table class="truth-table timing-table"><thead><tr><th>D</th><th>instruction</th><th>next ROM address</th></tr></thead><tbody><tr><td>5</td><td><code>D;JGT</code></td><td class="pause-step" data-step>80</td></tr><tr><td>0</td><td><code>D;JNE</code></td><td class="pause-step" data-step>31</td></tr><tr><td>-3</td><td><code>D;JLE</code></td><td class="pause-step" data-step>80</td></tr><tr><td>0</td><td><code>0;JMP</code></td><td class="pause-step" data-step>80</td></tr></tbody></table>
+        <h2>What Makes One Machine So Versatile?</h2>
+        <p>A word processor and a game can run on exactly the same physical computer. What changes, and what remains fixed?</p>
+        <div class="architecture-answer pause-step" data-step>
+          <strong>Answer</strong>
+          <p>The hardware and its instruction repertoire remain fixed. The program stored in memory changes, causing the hardware to execute a different sequence of instructions.</p>
+        </div>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Symbols</div>
-        <h2>Labels Give Addresses Names</h2>
-        <div class="program-explain-grid">
-          <pre class="asm-code"><code>(LOOP)
-@LOOP
-0;JMP</code></pre>
-          <div class="vertical-spec"><strong>Label rule</strong><dl><div><dt>Form</dt><dd><code>(NAME)</code></dd></div><div><dt>Meaning</dt><dd>Name the ROM address of the next real instruction.</dd></div><div><dt>Important</dt><dd>A label is a pseudo-command. It produces no machine instruction and consumes no ROM address.</dd></div></dl></div>
+      <section class="slide architecture-image-slide von-neumann-slide">
+        <div class="kicker">Von Neumann Architecture</div>
+        <h2>A Practical Blueprint for Computers</h2>
+        <div class="architecture-image-layout">
+          <div>
+            <ul class="architecture-list">
+              <li>The stored program concept appears in the universal Turing machine (1936) and the von Neumann machine (1945).</li>
+              <li>A <strong>Turing machine</strong> is an abstract model used to study the logical foundations of computation.</li>
+              <li>
+                The <strong>von Neumann architecture</strong> is the practical blueprint underlying almost all computer platforms.
+                <ul class="architecture-sublist">
+                  <li>It is based on a Central Processing Unit (CPU) that interacts with a memory device, receives data from an input device, and sends data to an output device.</li>
+                  <li>At its heart is the stored program concept: memory stores both the data being manipulated and the instructions that tell the computer what to do.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <figure class="book-figure von-neumann-figure">
+            <img src="../assets/images/von-neumann-architecture.png" alt="Conceptual von Neumann architecture with memory, CPU, input, and output">
+            <figcaption>Conceptual von Neumann architecture</figcaption>
+          </figure>
         </div>
+        <p class="next-step">Next: Memory, CPU, registers, and input/output.</p>
       </section>
 
       <section class="slide exercise-slide">
         <div class="kicker">Exercise 2</div>
-        <h2>Assign ROM Addresses</h2>
-        <div class="program-explain-grid">
-          <pre class="asm-code"><code>// count down
-@3
-D=A
-(LOOP)
-@END
-D;JEQ
-D=D-1
-@LOOP
-0;JMP
-(END)
-@END
-0;JMP</code></pre>
-          <div class="pause-step" data-step><strong>Answer</strong><p>Only A- and C-instructions are numbered.</p><p><code>LOOP = 2</code>, because the next real instruction after <code>(LOOP)</code> is <code>@END</code>.</p><p><code>END = 8</code>, because the next real instruction after <code>(END)</code> is <code>@END</code>.</p></div>
+        <h2>Read the Architecture</h2>
+        <div class="architecture-exercise-grid">
+          <div><span>A</span><p>Which component stores the program?</p><strong class="pause-step" data-step>Memory</strong></div>
+          <div><span>B</span><p>Which component executes its instructions?</p><strong class="pause-step" data-step>The CPU</strong></div>
+          <div><span>C</span><p>Where is the data stored?</p><strong class="pause-step" data-step>Memory</strong></div>
+          <div><span>D</span><p>What makes this a stored-program machine?</p><strong class="pause-step" data-step>Instructions and data are both represented in memory.</strong></div>
         </div>
       </section>
 
-      <section class="slide program-slide">
-        <div class="kicker">Loops</div>
-        <h2>From a While Loop to Assembly</h2>
-        <div class="loop-blocks">
-          <div><span>1</span><strong>initialize</strong><pre><code>@R0
-D=M
-@i
-M=D</code></pre></div>
-          <div class="pause-step" data-step><span>2</span><strong>test</strong><pre><code>(LOOP)
-@i
-D=M
-@END
-D;JEQ</code></pre></div>
-          <div class="pause-step" data-step><span>3</span><strong>body and back edge</strong><pre><code>@i
-M=M-1
-@LOOP
-0;JMP</code></pre></div>
-          <div class="pause-step" data-step><span>4</span><strong>terminal loop</strong><pre><code>(END)
-@END
-0;JMP</code></pre></div>
+      <section class="slide compact-architecture-slide memory-architecture-slide">
+        <div class="kicker">Von Neumann Architecture | Memory</div>
+        <h2>Memory Holds Data and Instructions</h2>
+        <p>Both are binary words stored in an addressed, random-access array of fixed-width locations. Supplying an address selects one word.</p>
+        <div class="memory-types-grid">
+          <div>
+            <strong>Data memory</strong>
+            <ul>
+              <li>Variables, arrays, and objects become sequences of binary values.</li>
+              <li>A selected word can be <strong>read</strong> or <strong>written</strong>.</li>
+              <li>A write replaces the old value at that address.</li>
+            </ul>
+          </div>
+          <div>
+            <strong>Instruction memory</strong>
+            <ul>
+              <li>Commands become binary machine-language instructions.</li>
+              <li>The instructions are written in an agreed-upon formalism called <strong>machine language</strong>.</li>
+              <li>Some computers encode an operation and its operands in one instruction word; others split them across several words.</li>
+              <li>The CPU fetches, decodes, and executes one instruction at a time.</li>
+              <li>Changing these stored instructions changes the computer's behavior.</li>
+            </ul>
+          </div>
         </div>
+        <p class="architecture-note">Architectures may place data and instructions in one physical memory or in separate memory units.</p>
       </section>
 
       <section class="slide exercise-slide">
         <div class="kicker">Exercise 3</div>
-        <h2>Write and Trace a Multiplication Loop</h2>
-        <p>For non-negative inputs, compute <code>R2 = R0 * R1</code> by repeated addition.</p>
-        <div class="exercise-card-grid">
-          <div><span>1</span><p>Initialize <code>R2</code> to 0.</p></div>
-          <div><span>2</span><p>Use one register as a counter, starting from <code>R1</code>.</p></div>
-          <div><span>3</span><p>Each iteration adds <code>R0</code> to <code>R2</code>.</p></div>
-          <div><span>4</span><p>Stop when the counter becomes 0.</p></div>
+        <h2>Data or Instruction?</h2>
+        <p>Classify each item by the role it plays while a program is running.</p>
+        <div class="architecture-exercise-grid">
+          <div><span>A</span><p>The current value of a variable <code>count</code></p><strong class="pause-step" data-step>Data</strong></div>
+          <div><span>B</span><p>The binary word encoding <code>D=D+1</code></p><strong class="pause-step" data-step>Instruction</strong></div>
+          <div><span>C</span><p>An array element</p><strong class="pause-step" data-step>Data</strong></div>
+          <div><span>D</span><p>The command that decides whether to jump</p><strong class="pause-step" data-step>Instruction</strong></div>
         </div>
-        <p class="pause-step prompt" data-step>Trace the first two iterations for <code>R0=3</code> and <code>R1=2</code>: <code>R2</code> becomes 3, then 6.</p>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Symbols</div>
-        <h2>Three Kinds of Symbols</h2>
-        <div class="symbol-grid">
-          <div><span>predefined</span><strong><code>R0</code>-<code>R15</code>, <code>SCREEN</code>, <code>KBD</code></strong><p>Known RAM addresses.</p></div>
-          <div><span>label</span><strong><code>(LOOP)</code></strong><p>Names a ROM instruction address.</p></div>
-          <div><span>variable</span><strong><code>counter</code></strong><p>Allocated by the assembler beginning at RAM address 16.</p></div>
+      <section class="slide compact-architecture-slide">
+        <div class="kicker">Von Neumann Architecture | CPU</div>
+        <h2>The Central Processing Unit</h2>
+        <p>The CPU executes the currently loaded program: it calculates, accesses memory, and controls which instruction executes next.</p>
+        <div class="cpu-parts-grid cpu-parts-detailed">
+          <div><strong>Arithmetic Logic Unit (ALU)</strong><p>Performs low-level arithmetic, logical, bitwise, and comparison operations.</p></div>
+          <div><strong>Registers</strong><p>Hold a small amount of data locally so the CPU can access intermediate values quickly.</p></div>
+          <div class="control-unit-card">
+            <strong>Control unit</strong>
+            <ul>
+              <li>A computer instruction is a binary code, typically 16, 32, or 64 bits wide.</li>
+              <li>Before execution, the instruction must be decoded. Its encoded information is then used to signal the ALU, registers, and memory.</li>
+              <li>The control unit performs this decoding and helps determine which instruction must be fetched and executed next.</li>
+              <li>Executing an instruction may make the ALU compute a value, manipulate registers, read a memory word, or write a memory word.</li>
+              <li>While coordinating these tasks, the CPU also determines the address of the next instruction.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cpu-operation-cycle">
+          <strong>How the CPU works: a repeated operating cycle</strong>
+          <div class="fetch-loop-strip"><span>fetch an instruction from memory</span><i>&rarr;</i><span>decode it</span><i>&rarr;</i><span>execute it</span><i>&rarr;</i><span>select and fetch the next instruction</span></div>
         </div>
       </section>
 
       <section class="slide exercise-slide">
         <div class="kicker">Exercise 4</div>
-        <h2>Resolve the Symbols</h2>
-        <table class="truth-table timing-table"><thead><tr><th>symbol</th><th>kind</th><th>RAM or ROM?</th></tr></thead><tbody><tr><td><code>R0</code></td><td class="pause-step" data-step>predefined</td><td class="pause-step" data-step>RAM</td></tr><tr><td><code>LOOP</code> from <code>(LOOP)</code></td><td class="pause-step" data-step>label</td><td class="pause-step" data-step>ROM</td></tr><tr><td><code>counter</code></td><td class="pause-step" data-step>variable</td><td class="pause-step" data-step>RAM</td></tr><tr><td><code>SCREEN</code></td><td class="pause-step" data-step>predefined</td><td class="pause-step" data-step>RAM</td></tr><tr><td><code>KBD</code></td><td class="pause-step" data-step>predefined</td><td class="pause-step" data-step>RAM</td></tr></tbody></table>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Input and Output</div>
-        <h2>Memory-Mapped Input/Output</h2>
-        <div class="io-map-grid">
-          <div><strong>Screen</strong><p><code>SCREEN = 16384</code></p><p>The 512-by-256 monochrome display occupies 8K words, 16 pixels per word.</p></div>
-          <div><strong>Keyboard</strong><p><code>KBD = 24576</code></p><p>After <code>@KBD</code>, reading <code>M</code> gives 0 if no key is pressed and a key code otherwise.</p></div>
-          <div><strong>Key idea</strong><p>There are no special screen or keyboard instructions. Programs use ordinary RAM reads and writes.</p></div>
+        <h2>Which CPU Part Is Responsible?</h2>
+        <div class="architecture-exercise-grid three-items">
+          <div><span>A</span><p>Add two 16-bit values.</p><strong class="pause-step" data-step>ALU</strong></div>
+          <div><span>B</span><p>Keep an intermediate result nearby.</p><strong class="pause-step" data-step>Register</strong></div>
+          <div><span>C</span><p>Interpret instruction bits and enable a memory write.</p><strong class="pause-step" data-step>Control unit</strong></div>
         </div>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Input and Output</div>
-        <h2>The Screen and Keyboard Maps</h2>
-        <div class="program-explain-grid">
-          <pre class="asm-code"><code>@SCREEN
-M=-1
-
-@KBD
-D=M
-@KEY_PRESSED
-D;JNE</code></pre>
-          <div class="vertical-spec"><strong>Reading the code</strong><dl><div><dt><code>@SCREEN</code>, <code>M=-1</code></dt><dd>Write all 1s into the first screen word, blackening 16 pixels.</dd></div><div><dt><code>@KBD</code>, <code>D=M</code></dt><dd>Read the current keyboard value.</dd></div><div><dt><code>D;JNE</code></dt><dd>Branch if some key is pressed.</dd></div></dl></div>
+      <section class="slide compact-architecture-slide register-architecture-slide">
+        <div class="kicker">Von Neumann Architecture | Registers</div>
+        <h2>Fast Storage Inside the CPU</h2>
+        <div class="register-layout vertical-register-layout">
+          <div class="architecture-callout register-motivation">
+            <strong>Why use registers instead of RAM for temporary values?</strong>
+            <p>A RAM retrieval requires a round trip:</p>
+            <ul class="ram-round-trip">
+              <li>The address travels from the CPU to RAM.</li>
+              <li>RAM's direct-access logic selects the addressed memory word.</li>
+              <li>The contents of that word travel back to the CPU.</li>
+            </ul>
+            <p class="register-benefit-lead">Registers avoid this round trip and make machine-language instructions more compact for two reasons:</p>
+            <ol class="register-reasons">
+              <li>Registers reside physically inside the CPU chip, so accessing them is almost instantaneous.</li>
+              <li>There are typically only a handful of registers, compared with millions of memory cells. A <strong>machine-language instruction</strong> therefore needs only a few bits to specify a register, resulting in a thinner instruction format.</li>
+            </ol>
+          </div>
+          <div class="register-types-grid register-types-list">
+            <div><strong>Data register</strong><p>Temporarily stores values and intermediate results, such as <code>a-b</code> while computing <code>(a-b)&middot;c</code>.</p></div>
+            <div><strong>Address register</strong><p>Stores the address of a memory word that a later operation will read or write.</p></div>
+            <div><strong>Program Counter (PC)</strong><p>Stores the address of the next instruction: increment normally, or load a jump target.</p></div>
+          </div>
         </div>
       </section>
 
       <section class="slide exercise-slide">
         <div class="kicker">Exercise 5</div>
-        <h2>Design the Fill Loop</h2>
-        <p>Outline the program before writing complete assembly.</p>
-        <div class="exercise-card-grid fill-grid">
-          <div><span>1</span><p>Repeatedly check <code>KBD</code>.</p></div>
-          <div><span>2</span><p>If a key is pressed, choose fill value <code>-1</code>.</p></div>
-          <div><span>3</span><p>If no key is pressed, choose fill value <code>0</code>.</p></div>
-          <div><span>4</span><p>Walk through all screen words from <code>SCREEN</code> to <code>SCREEN+8191</code>.</p></div>
-          <div><span>5</span><p>Write the fill value to each screen word.</p></div>
-          <div><span>6</span><p>Jump back and check the keyboard again.</p></div>
+        <h2>Choose the Register</h2>
+        <div class="architecture-exercise-grid three-items">
+          <div><span>A</span><p>Remember <code>a-b</code> before multiplying by <code>c</code>.</p><strong class="pause-step" data-step>Data register</strong></div>
+          <div><span>B</span><p>Remember which RAM word must be read next.</p><strong class="pause-step" data-step>Address register</strong></div>
+          <div><span>C</span><p>Continue at instruction 27 after a taken jump.</p><strong class="pause-step" data-step>Load 27 into the Program Counter.</strong></div>
         </div>
       </section>
 
-      <section class="slide">
-        <div class="kicker">Chapter Summary</div>
-        <h2>Assembly Files and Execution Tools</h2>
-        <div class="translation-line big-translation"><code>Prog.asm</code><i>&#8594;</i><strong>assembler</strong><i>&#8594;</i><code>Prog.hack</code><i>&#8594;</i><strong>CPU emulator</strong></div>
-        <div class="comparison-panels machine-panels">
-          <div><span><code>.asm</code></span><strong>symbolic assembly</strong><p>May contain comments, blank lines, labels, and symbols.</p></div>
-          <div><span><code>.hack</code></span><strong>binary program</strong><p>One 16-bit instruction per line.</p></div>
+      <section class="slide compact-architecture-slide memory-mapped-io-slide">
+        <div class="kicker">Von Neumann Architecture | Input and Output</div>
+        <h2>Why Memory-Mapped Input/Output?</h2>
+        <div class="io-explanation-stack">
+          <section class="io-explanation-section io-motivation-section">
+            <strong>Motivation: many different kinds of devices</strong>
+            <p>Computers interact with many different devices: screens, keyboards, printers, scanners, network interfaces, storage devices, and specialized equipment.</p>
+            <ul>
+              <li>Each device is a unique machine requiring specialized engineering knowledge.</li>
+              <li>We therefore make these different devices look the same to the computer. One important idea is <strong>memory-mapped input/output (I/O)</strong>.</li>
+            </ul>
+          </section>
+
+          <section class="io-explanation-section io-basic-idea-section pause-step" data-step>
+            <strong>The basic idea</strong>
+            <ul>
+              <li>A binary emulation makes an I/O device look to the CPU like an ordinary memory segment. Each device receives an exclusive area called its <strong>memory map</strong>.</li>
+              <li>An input device's memory map continuously reflects its physical state; an output device's memory map continuously drives its physical state.</li>
+              <li>Physical input events change values in an input map; software controls an output device by writing values into its output map.</li>
+              <li>Hardware provides a memory-like interface, while software follows the device's interaction contract.</li>
+              <li>Common standards allow many devices and computer platforms to work together.</li>
+            </ul>
+          </section>
+
+          <section class="io-explanation-section io-consequence-section pause-step" data-step>
+            <strong>Practical consequences</strong>
+            <ol>
+              <li>The design of the CPU and the overall platform can be independent of the number, nature, or make of the connected I/O devices.</li>
+              <li>Adding a device requires allocating a memory map and recording its base address, usually through the operating system. Programs can then control it by manipulating bits in memory.</li>
+            </ol>
+          </section>
         </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 6</div>
+        <h2>Reason About Memory-Mapped I/O</h2>
+        <div class="architecture-exercise-grid three-items">
+          <div><span>A</span><p>Software wants to detect a key press. Read or write the keyboard map?</p><strong class="pause-step" data-step>Read</strong></div>
+          <div><span>B</span><p>Software wants to blacken a pixel. Read or write the screen map?</p><strong class="pause-step" data-step>Write</strong></div>
+          <div><span>C</span><p>Does the CPU need a special instruction for every new device?</p><strong class="pause-step" data-step>No. It can use ordinary memory-access instructions.</strong></div>
+        </div>
+      </section>
+
+      <section class="slide compact-architecture-slide">
+        <div class="kicker">The Hack Hardware Platform</div>
+        <h2>A 16-Bit von Neumann Machine</h2>
+        <div class="hack-overview-grid">
+          <div><strong>Memories and I/O</strong><ul><li>ROM: instruction memory</li><li>RAM: data memory</li><li>Memory-mapped screen and keyboard</li></ul></div>
+          <div><strong>CPU</strong><ul><li>The 16-bit ALU</li><li>D: data register</li><li>A: data value, RAM address, or ROM address</li><li>PC: address of the next instruction</li></ul></div>
+          <div><strong>Instructions</strong><ul><li>A-instruction: <code>0vvvvvvvvvvvvvvv</code></li><li>C-instruction: <code>111accccccdddjjj</code></li><li><code>a,c</code> compute; <code>d</code> stores; <code>j</code> controls jumps</li></ul></div>
+        </div>
+        <p class="architecture-note">Programs are loaded into ROM from an external file; changing the ROM program changes what the Hack computer does.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 7</div>
+        <h2>Connect Hack to Earlier Lectures</h2>
+        <div class="architecture-exercise-grid">
+          <div><span>A</span><p>Which instruction type has MSB 0?</p><strong class="pause-step" data-step>A-instruction</strong></div>
+          <div><span>B</span><p>Which instruction fields control the ALU?</p><strong class="pause-step" data-step>The <code>a</code>- and <code>c</code>-bits</strong></div>
+          <div><span>C</span><p>Which register can identify a RAM or ROM address?</p><strong class="pause-step" data-step>The A register</strong></div>
+          <div><span>D</span><p>Which register selects the current ROM instruction?</p><strong class="pause-step" data-step>The Program Counter</strong></div>
+        </div>
+      </section>
+
+      <section class="slide compact-architecture-slide">
+        <div class="kicker">The Hack Hardware Platform</div>
+        <h2>The Fetch-Execute Cycle</h2>
+        <p>The <strong>Program Counter (PC)</strong> is connected to the ROM address input, so ROM continuously emits <code>ROM[PC]</code>&mdash;the <strong>current instruction</strong>.</p>
+        <div class="fetch-execute-grid">
+          <div><strong>Execute</strong><ul><li>If MSB = 0, load the instruction's 15-bit value into A.</li><li>If MSB = 1, use the <code>a</code>, <code>c</code>, <code>d</code>, and <code>j</code> bits to control the ALU, registers, memory, and jump logic.</li></ul></div>
+          <div><strong>Fetch next</strong><ul><li>If the jump condition is satisfied, load the PC from A.</li><li>Otherwise, increment the PC.</li><li>In the next cycle, the newly selected <code>ROM[PC]</code> becomes the current instruction.</li></ul></div>
+        </div>
+        <p class="architecture-note">Memory access usually takes two Hack instructions: first select an address with an A-instruction, then use a C-instruction to read, write, or jump.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 8</div>
+        <h2>Why Do These Operations Need Two Instructions?</h2>
+        <div class="two-programs-grid">
+          <pre><code>@17
+D=M</code></pre>
+          <pre><code>@END
+0;JMP</code></pre>
+        </div>
+        <div class="architecture-answer pause-step" data-step>
+          <strong>Answer</strong>
+          <p>The first instruction places the required RAM or ROM address in A. The second instruction performs the memory read or loads the PC with that address.</p>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 9</div>
+        <h2>We Already Built the Parts</h2>
+        <p>Match each Hack component to the earlier chapter in which its building blocks were constructed.</p>
+        <div class="reuse-grid">
+          <div><strong>CPU computation</strong><span class="pause-step" data-step>ALU from Boolean Arithmetic</span></div>
+          <div><strong>CPU storage</strong><span class="pause-step" data-step>16-bit registers and Program Counter from Sequential Logic</span></div>
+          <div><strong>RAM and ROM</strong><span class="pause-step" data-step>Memory hierarchy from Sequential Logic</span></div>
+          <div><strong>Screen and keyboard</strong><span class="pause-step" data-step>Built-in chips with RAM-like interfaces</span></div>
+        </div>
+        <p class="architecture-note pause-step" data-step>The remaining problem is architectural: connect these parts and derive the control signals that make them execute Hack instructions.</p>
       </section>
 
       <section class="slide summary-slide">
         <div class="kicker">Summary of This Lecture</div>
-        <h2>Branching, Symbols, and Input/Output</h2>
-        <div class="remember-grid">
-          <div><strong>Jump</strong><p>A jump tests the ALU output and, if taken, loads the PC from A.</p></div>
-          <div><strong>Labels</strong><p>Labels name ROM addresses and do not create instructions.</p></div>
-          <div><strong>Symbols</strong><p>Predefined and variable symbols denote RAM addresses; labels denote ROM addresses.</p></div>
-          <div><strong>I/O</strong><p>Screen and keyboard are accessed through ordinary RAM reads and writes.</p></div>
+        <h2>From Stored Programs to Hack</h2>
+        <div class="remember-grid architecture-summary-grid">
+          <div><strong>Stored program</strong><p>Instructions live in memory, so software can change the behavior of fixed hardware.</p></div>
+          <div><strong>Architecture</strong><p>CPU, memory, registers, and I/O cooperate through a fetch-decode-execute cycle.</p></div>
+          <div><strong>Hack platform</strong><p>ROM, RAM, ALU, A, D, PC, screen, and keyboard form a complete 16-bit computer.</p></div>
         </div>
-      </section>
-
-      <section class="slide title-slide lecture-preview-slide">
-        <div class="kicker">Next Chapter | Computer Architecture</div>
-        <h2>Lecture 14: Building the Computer</h2>
-        <p class="lead">We now know the instructions; next we build the CPU and computer that execute them.</p>
+        <p class="next-step">Next lecture: Build the Hack CPU and its control logic.</p>
       </section>
     </main>
 
-    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>18</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>19</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
     <script src="../assets/slides.js"></script>
   </body>
 </html>
