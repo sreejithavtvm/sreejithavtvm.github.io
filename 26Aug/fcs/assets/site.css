@@ -14,6 +14,595 @@
   --shadow: 0 18px 45px rgba(29, 37, 44, 0.12);
 }
 
+/* Lecture 16: completing the Hack CPU, Memory, and Computer. */
+.hack-completion-lecture .slide {
+  padding-top: 42px;
+}
+
+.hack-completion-lecture .slide h2 {
+  margin-bottom: 20px;
+}
+
+.hack-completion-lecture .dependency-chain,
+.hack-completion-lecture .control-problems,
+.hack-completion-lecture .execution-grid,
+.hack-completion-lecture .signal-question-grid,
+.hack-completion-lecture .testing-grid {
+  display: grid;
+  gap: 18px;
+  margin: 28px 0;
+}
+
+.hack-completion-lecture .dependency-chain {
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: stretch;
+}
+
+.hack-completion-lecture .dependency-chain > div,
+.hack-completion-lecture .control-problems > div,
+.hack-completion-lecture .execution-grid > div,
+.hack-completion-lecture .signal-question-grid > div,
+.hack-completion-lecture .testing-grid > div,
+.hack-completion-lecture .memory-prompts > div,
+.hack-completion-lecture .pc-cases > div,
+.hack-completion-lecture .vertical-contract,
+.hack-completion-lecture .computer-contract,
+.hack-completion-lecture .perspective-box {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.hack-completion-lecture .dependency-chain strong,
+.hack-completion-lecture .dependency-chain span,
+.hack-completion-lecture .testing-grid strong {
+  display: block;
+}
+
+.hack-completion-lecture .dependency-chain strong,
+.hack-completion-lecture .control-problems strong,
+.hack-completion-lecture .execution-grid strong,
+.hack-completion-lecture .signal-question-grid strong,
+.hack-completion-lecture .testing-grid strong,
+.hack-completion-lecture .memory-prompts strong,
+.hack-completion-lecture .vertical-contract strong,
+.hack-completion-lecture .computer-contract strong,
+.hack-completion-lecture .perspective-box > strong {
+  color: var(--accent-dark);
+}
+
+.hack-completion-lecture .dependency-chain span {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.hack-completion-lecture .dependency-chain > i {
+  align-self: center;
+  color: var(--warm);
+  font-size: 1.6rem;
+  font-style: normal;
+}
+
+.hack-completion-lecture .contract-layout,
+.hack-completion-lecture .jump-layout,
+.hack-completion-lecture .memory-map-layout,
+.hack-completion-lecture .computer-layout,
+.hack-completion-lecture .two-part-exercise {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+  align-items: stretch;
+}
+
+.hack-completion-lecture .vertical-contract p,
+.hack-completion-lecture .computer-contract p {
+  margin: 0 0 18px;
+  font-size: 1.04rem !important;
+  line-height: 1.48;
+}
+
+.hack-completion-lecture .vertical-contract p:last-child,
+.hack-completion-lecture .computer-contract p:last-child {
+  margin-bottom: 0;
+}
+
+.hack-completion-lecture .cpu-interface-diagram {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 5px 12px;
+  align-items: center;
+  min-height: 310px;
+  padding: 18px;
+}
+
+.hack-completion-lecture .cpu-interface-diagram > strong {
+  grid-column: 2;
+  grid-row: 1 / 5;
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  border: 3px solid var(--accent-dark);
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--accent-dark);
+  font-size: 1.65rem;
+}
+
+.hack-completion-lecture .cpu-wire {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.hack-completion-lecture .cpu-wire i {
+  flex: 1;
+  color: var(--warm);
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+.hack-completion-lecture .cpu-inm { grid-column: 1; grid-row: 1; }
+.hack-completion-lecture .cpu-instruction { grid-column: 1; grid-row: 2; }
+.hack-completion-lecture .cpu-reset { grid-column: 1; grid-row: 4; }
+.hack-completion-lecture .cpu-outm { grid-column: 3; grid-row: 1; }
+.hack-completion-lecture .cpu-writem { grid-column: 3; grid-row: 2; }
+.hack-completion-lecture .cpu-address { grid-column: 3; grid-row: 3; }
+.hack-completion-lecture .cpu-pc { grid-column: 3; grid-row: 4; }
+
+.hack-completion-lecture .signal-question-grid,
+.hack-completion-lecture .execution-grid,
+.hack-completion-lecture .testing-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hack-completion-lecture .signal-question-grid span {
+  display: block;
+  margin-top: 22px;
+  color: var(--warm);
+  font-weight: 900;
+}
+
+.hack-completion-lecture .datapath {
+  display: grid;
+  grid-template-columns: 1fr auto 1.35fr auto 1.1fr;
+  gap: 13px;
+  align-items: center;
+  margin: 16px 0 26px;
+}
+
+.hack-completion-lecture .datapath > div {
+  min-height: 76px;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+  font-weight: 800;
+}
+
+.hack-completion-lecture .datapath > i {
+  color: var(--warm);
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+.hack-completion-lecture .datapath small {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.hack-completion-lecture .datapath .alu-chip,
+.hack-completion-lecture .datapath .path-chip {
+  border-width: 2px;
+  border-color: var(--accent);
+}
+
+.hack-completion-lecture .cpu-datapath-svg {
+  width: 100%;
+  height: 350px;
+  margin-top: -4px;
+}
+
+.hack-completion-lecture .cpu-datapath-svg rect {
+  fill: #fff;
+  stroke: var(--accent-dark);
+  stroke-width: 3;
+}
+
+.hack-completion-lecture .cpu-datapath-svg .mux {
+  fill: rgba(15, 118, 110, 0.12);
+  stroke: var(--accent-dark);
+  stroke-width: 3;
+}
+
+.hack-completion-lecture .cpu-datapath-svg path {
+  fill: none;
+  stroke: var(--warm);
+  stroke-width: 2.5;
+}
+
+.hack-completion-lecture .cpu-datapath-svg marker polygon {
+  fill: var(--warm);
+}
+
+.hack-completion-lecture .cpu-datapath-svg text {
+  text-anchor: middle;
+}
+
+.hack-completion-lecture .cpu-datapath-svg .chip-name,
+.hack-completion-lecture .cpu-datapath-svg .mux-label {
+  fill: var(--ink);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.hack-completion-lecture .cpu-datapath-svg .mux-label {
+  font-size: 14px;
+}
+
+.hack-completion-lecture .cpu-datapath-svg .wire-label {
+  fill: var(--warm);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.hack-completion-lecture .control-problems {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hack-completion-lecture .control-problems span,
+.hack-completion-lecture .testing-grid span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--accent-dark);
+  color: #fff;
+  font-weight: 900;
+}
+
+.hack-completion-lecture .control-problems p,
+.hack-completion-lecture .testing-grid p {
+  margin: 15px 0 0;
+  font-size: 0.98rem !important;
+}
+
+.hack-completion-lecture .instruction-formats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+  margin: 28px 0;
+}
+
+.hack-completion-lecture .instruction-formats > div {
+  padding: 28px;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.hack-completion-lecture .instruction-formats strong,
+.hack-completion-lecture .instruction-formats code {
+  display: block;
+}
+
+.hack-completion-lecture .instruction-formats strong {
+  margin-bottom: 16px;
+  color: var(--accent-dark);
+  font-size: 1.15rem;
+}
+
+.hack-completion-lecture .instruction-formats code {
+  padding: 13px;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.hack-completion-lecture .instruction-formats p,
+.hack-completion-lecture .decode-consequences p {
+  margin: 17px 0 0;
+  font-size: 1rem !important;
+}
+
+.hack-completion-lecture .decode-consequences {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.hack-completion-lecture .decode-consequences p {
+  padding: 15px 18px;
+  border-left: 5px solid var(--warm);
+  background: rgba(194, 65, 12, 0.07);
+}
+
+.hack-completion-lecture .two-part-exercise > div {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.hack-completion-lecture .two-part-exercise p {
+  min-height: 88px;
+  font-size: 1rem !important;
+}
+
+.hack-completion-lecture .two-part-exercise .architecture-answer {
+  margin-top: 16px;
+}
+
+.hack-completion-lecture .execution-grid ul {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.hack-completion-lecture .execution-grid li {
+  font-size: 1rem !important;
+}
+
+.hack-completion-lecture .trace-table-wrap {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.hack-completion-lecture .trace-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.hack-completion-lecture .trace-table th,
+.hack-completion-lecture .trace-table td {
+  padding: 17px 20px;
+  border: 1px solid var(--line);
+  text-align: left;
+  font-size: 1.03rem;
+}
+
+.hack-completion-lecture .trace-table th {
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--accent-dark);
+}
+
+.hack-completion-lecture .jump-status,
+.hack-completion-lecture .jump-rule {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.hack-completion-lecture .jump-status strong,
+.hack-completion-lecture .jump-rule strong {
+  color: var(--accent-dark);
+  font-size: 1.15rem;
+}
+
+.hack-completion-lecture .jump-status p,
+.hack-completion-lecture .jump-rule p {
+  margin: 18px 0 0;
+  font-size: 1rem !important;
+}
+
+.hack-completion-lecture .pc-cases,
+.hack-completion-lecture .memory-prompts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.hack-completion-lecture .pc-cases p,
+.hack-completion-lecture .memory-prompts p {
+  margin: 0;
+  font-size: 0.96rem !important;
+}
+
+.hack-completion-lecture .pc-cases strong,
+.hack-completion-lecture .memory-prompts span {
+  display: block;
+  margin-top: 10px;
+  color: var(--warm);
+  font-weight: 900;
+}
+
+.hack-completion-lecture .memory-map-layout {
+  grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+}
+
+.hack-completion-lecture .memory-map-bar {
+  display: grid;
+  grid-template-rows: 2fr 1fr 0.55fr 0.55fr;
+  min-height: 345px;
+  overflow: hidden;
+  border: 2px solid var(--accent-dark);
+  border-radius: 9px;
+}
+
+.hack-completion-lecture .memory-map-bar > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+}
+
+.hack-completion-lecture .map-ram { background: #0f766e; }
+.hack-completion-lecture .map-screen { background: #2563a7; }
+.hack-completion-lecture .map-keyboard { background: #c2410c; }
+.hack-completion-lecture .map-invalid { background: #475569; }
+
+.hack-completion-lecture .computer-layout {
+  grid-template-columns: minmax(260px, 0.55fr) minmax(0, 1.45fr);
+}
+
+.hack-completion-lecture .rom-contract {
+  display: grid;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.hack-completion-lecture .rom-contract > strong {
+  margin-bottom: 2px;
+}
+
+.hack-completion-lecture .computer-wiring-svg {
+  width: 100%;
+  height: 350px;
+}
+
+.hack-completion-lecture .computer-wiring-svg rect {
+  fill: #fff;
+  stroke: var(--accent-dark);
+  stroke-width: 4;
+}
+
+.hack-completion-lecture .computer-wiring-svg path {
+  fill: none;
+  stroke: var(--warm);
+  stroke-width: 3;
+}
+
+.hack-completion-lecture .computer-wiring-svg marker polygon {
+  fill: var(--warm);
+}
+
+.hack-completion-lecture .computer-wiring-svg text {
+  text-anchor: middle;
+}
+
+.hack-completion-lecture .computer-wiring-svg .chip-name {
+  fill: var(--ink);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.hack-completion-lecture .computer-wiring-svg .chip-note {
+  fill: var(--muted);
+  font-size: 14px;
+}
+
+.hack-completion-lecture .computer-wiring-svg .wire-label {
+  fill: var(--warm);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.hack-completion-lecture .computer-wiring {
+  display: grid;
+  grid-template-columns: 1fr 0.72fr 1fr 1.25fr 1fr;
+  grid-template-rows: 1fr 0.7fr 0.7fr;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+}
+
+.hack-completion-lecture .machine-chip {
+  display: grid;
+  place-items: center;
+  min-height: 125px;
+  padding: 14px;
+  border: 3px solid var(--accent-dark);
+  background: #fff;
+  text-align: center;
+}
+
+.hack-completion-lecture .machine-chip strong,
+.hack-completion-lecture .machine-chip small {
+  display: block;
+}
+
+.hack-completion-lecture .machine-chip small {
+  color: var(--muted);
+}
+
+.hack-completion-lecture .rom-chip { grid-column: 1; grid-row: 1; }
+.hack-completion-lecture .rom-to-cpu { grid-column: 2; grid-row: 1; }
+.hack-completion-lecture .cpu-chip { grid-column: 3; grid-row: 1 / 4; }
+.hack-completion-lecture .cpu-to-memory { grid-column: 4; grid-row: 1; }
+.hack-completion-lecture .memory-chip { grid-column: 5; grid-row: 1 / 4; }
+.hack-completion-lecture .memory-to-cpu { grid-column: 4; grid-row: 2; }
+.hack-completion-lecture .pc-to-rom { grid-column: 1 / 3; grid-row: 3; text-align: center; }
+.hack-completion-lecture .machine-arrow { color: var(--warm); font-size: 0.82rem; font-weight: 900; }
+
+.hack-completion-lecture .whole-trace {
+  display: grid;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.hack-completion-lecture .whole-trace li {
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1rem !important;
+}
+
+.hack-completion-lecture .whole-trace strong {
+  float: right;
+  color: var(--warm);
+}
+
+.hack-completion-lecture .perspective-box {
+  margin-top: 22px;
+  border-left: 6px solid var(--warm);
+}
+
+.hack-completion-lecture .perspective-box p {
+  margin: 10px 0 0;
+  font-size: 1rem !important;
+}
+
+.hack-completion-lecture .hardware-chain {
+  margin-top: 32px;
+  padding: 18px;
+  border-radius: 9px;
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--accent-dark);
+  text-align: center;
+  font-weight: 700;
+}
+
+@media (max-width: 860px) {
+  .hack-completion-lecture .dependency-chain,
+  .hack-completion-lecture .contract-layout,
+  .hack-completion-lecture .jump-layout,
+  .hack-completion-lecture .memory-map-layout,
+  .hack-completion-lecture .computer-layout,
+  .hack-completion-lecture .two-part-exercise,
+  .hack-completion-lecture .instruction-formats,
+  .hack-completion-lecture .decode-consequences,
+  .hack-completion-lecture .control-problems,
+  .hack-completion-lecture .execution-grid,
+  .hack-completion-lecture .signal-question-grid,
+  .hack-completion-lecture .testing-grid,
+  .hack-completion-lecture .pc-cases,
+  .hack-completion-lecture .memory-prompts {
+    grid-template-columns: 1fr;
+  }
+
+  .hack-completion-lecture .dependency-chain > i { transform: rotate(90deg); justify-self: center; }
+  .hack-completion-lecture .datapath { grid-template-columns: 1fr; }
+  .hack-completion-lecture .datapath > i { transform: rotate(90deg); justify-self: center; }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -282,6 +871,20 @@ a {
   margin: 0;
   color: var(--muted);
   text-align: right;
+}
+
+.lab-test-notice {
+  margin: 0;
+  padding: 12px 16px;
+  border-left: 5px solid var(--warm);
+  background: #fff7ed;
+  color: var(--ink);
+}
+
+.lab-test-notice a {
+  margin-left: 8px;
+  color: var(--accent-dark);
+  font-weight: 800;
 }
 
 .course-info-grid {
