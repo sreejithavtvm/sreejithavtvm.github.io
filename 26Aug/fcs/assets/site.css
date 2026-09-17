@@ -983,6 +983,46 @@ a {
   color: var(--muted);
 }
 
+.lecture-command-list {
+  margin-top: 12px;
+  color: var(--muted);
+}
+
+.lecture-command-list summary {
+  cursor: pointer;
+  color: var(--accent-dark);
+  font-weight: 800;
+}
+
+.lecture-command-list code {
+  display: block;
+  margin-top: 8px;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.lecture-command-list > div {
+  margin-top: 10px;
+  padding-top: 2px;
+}
+
+.lecture-command-list > div + div {
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.lecture-command-list > div p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 .lab-assignment-card {
   grid-column: 1 / -1;
   padding: 24px;

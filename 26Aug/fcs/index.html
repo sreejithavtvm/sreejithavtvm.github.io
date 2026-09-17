@@ -284,7 +284,7 @@
                 <time class="lecture-date" datetime="2026-09-08">8 September</time>
                 <h3>Lecture 16: Completing the Hack Computer</h3>
                 <p>Instruction decoding, ALU and destination control, jump logic, the Hack memory map, whole-computer wiring, and layered testing.</p>
-                <a class="button-link" href="https://drive.google.com/file/d/1Z_fxYmmRNXTkAzmZ6YMoX9NXZIRVCKiw/view" target="_blank" rel="noopener noreferrer">Open slides</a>
+                <a class="button-link" href="lectures/lecture-16.html">Open slides</a>
               </article>
               <article class="lecture-card featured-card">
                 <span class="badge">Assembler</span>
@@ -306,6 +306,50 @@
                 <h3>Lab 5: Build the Hack Computer</h3>
                 <p>Complete the Chapter 5 project by implementing and testing the <code>Memory</code>, <code>CPU</code>, and top-level <code>Computer</code> chips.</p>
                 <a class="button-link" href="https://nand2tetris.github.io/web-ide/chip" target="_blank" rel="noopener noreferrer">Open web IDE</a>
+              </article>
+            </div>
+          </section>
+
+          <section class="lecture-week" aria-labelledby="week-8-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 8</span><h3 id="week-8-title">Assemblers and Native Machine Code</h3></div>
+              <p>Complete the Hack assembler, then connect a small C program to the assembly and machine instructions executed by a real processor.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card featured-card">
+                <span class="badge">Assembler</span>
+                <time class="lecture-date" datetime="2026-09-16">16 September</time>
+                <h3>Lecture 18: Completing the Assembler</h3>
+                <p>Continued from Lecture 17 by first summarizing its main ideas, then completed parsing, instruction-code generation, symbol-table construction, and symbol resolution to finish the chapter on assembly language and assemblers.</p>
+                <a class="button-link" href="https://drive.google.com/file/d/1uKGRMnL-gqk9DsgeN50z0EpHoSMWe6F5/view" target="_blank" rel="noopener noreferrer">Open assembler slides</a>
+              </article>
+              <article class="lecture-card">
+                <span class="badge">Compilation demonstration</span>
+                <time class="lecture-date" datetime="2026-09-17">17 September</time>
+                <h3>Lecture 19: From C to Machine Code</h3>
+                <p>Compiled a C program that sums the numbers from 1 to 100 and prints the result, then examined both its Intel-syntax assembly and machine code.</p>
+                <details class="lecture-command-list">
+                  <summary>Commands and what they do</summary>
+                  <div>
+                    <code>gcc -O0 -fno-pie -S -masm=intel sum.c -o sum.s</code>
+                    <p>Compile <code>sum.c</code> only as far as assembly and save it as <code>sum.s</code>. Disable optimization and position-independent code, and use Intel assembly syntax.</p>
+                  </div>
+                  <div>
+                    <code>gcc -g -O0 -fno-pie -no-pie sum.c -o sum</code>
+                    <p>Compile and link <code>sum.c</code> into the executable <code>sum</code>. Include debugging information, disable optimization, and produce a non-position-independent executable.</p>
+                  </div>
+                  <div>
+                    <code>objdump -d -S -Mintel --disassemble=main sum</code>
+                    <p>Disassemble only <code>main</code> from the executable, showing machine-code bytes together with source and Intel-syntax assembly instructions.</p>
+                  </div>
+                </details>
+              </article>
+              <article class="lecture-card" id="lab-6-assembler">
+                <span class="badge">Laboratory</span>
+                <time class="lecture-date" datetime="2026-09-17">17 September</time>
+                <h3>Lab 6: Build a Hack Assembler</h3>
+                <p>Implement the assembler in Python in two stages: first translate symbol-less programs, then add labels, variables, and predefined symbols. Verify the output using the supplied Project 6 programs and reference assembler.</p>
+                <a class="button-link" href="labs/lab-6.html">View lab question</a>
               </article>
             </div>
           </section>
