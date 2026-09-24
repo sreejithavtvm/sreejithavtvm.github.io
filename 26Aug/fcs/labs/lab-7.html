@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 7: VM Translator, Part I</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body>
+    <main class="site-shell">
+      <nav class="topbar" aria-label="Course navigation">
+        <a class="brand" href="../index.html">
+          <span class="chip-mark">CS2011</span>
+          <span class="lab-code">CS2111 Laboratory</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html#lectures">Lectures</a>
+          <a href="https://nand2tetris.github.io/web-ide/vm" target="_blank" rel="noopener noreferrer">VM Emulator</a>
+          <a href="https://nand2tetris.github.io/web-ide/" target="_blank" rel="noopener noreferrer">Web IDE</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Laboratory assignment · 24 September</p>
+          <h1>Lab 7: VM Translator, Part I</h1>
+          <p>Build the first part of a VM-to-Hack translator in Python, covering stack arithmetic, logical operations, and memory-access commands.</p>
+          <a class="primary-link" href="../index.html#lab-7-vm-translator">Back to course home</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Objective and contract</p>
+            <h2>Translate VM code into Hack assembly</h2>
+          </div>
+          <p>The generated assembly must satisfy the standard VM mapping on the Hack platform.</p>
+        </div>
+
+        <section class="lab-assignment-card">
+          <div class="lab-assignment-heading">
+            <div>
+              <span class="lab-program-number">Contract</span>
+              <h3><code>Xxx.vm</code> becomes <code>Xxx.asm</code></h3>
+            </div>
+            <p>When the generated assembly runs on the CPU emulator, it must produce the results required by the supplied test scripts and compare files.</p>
+          </div>
+          <dl class="lab-contract-list">
+            <div><dt>Program</dt><dd>Write <code>VMTranslator.py</code> in Python.</dd></div>
+            <div><dt>Input</dt><dd>One valid <code>.vm</code> file containing commands covered by this project.</dd></div>
+            <div><dt>Output</dt><dd>A Hack assembly-language file with the same base name and the extension <code>.asm</code>.</dd></div>
+            <div><dt>Example</dt><dd><code>python VMTranslator.py BasicTest.vm</code> must generate <code>BasicTest.asm</code>.</dd></div>
+          </dl>
+        </section>
+
+        <div class="lab-resource-links">
+          <a class="button-link" href="https://nand2tetris.github.io/web-ide/vm" target="_blank" rel="noopener noreferrer">Open VM Emulator</a>
+          <a class="button-link" href="https://nand2tetris.github.io/web-ide/" target="_blank" rel="noopener noreferrer">Open Web IDE</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Implementation plan</p>
+            <h2>Build and test in two stages</h2>
+          </div>
+          <p>Complete each stage before depending on it in the next one.</p>
+        </div>
+
+        <div class="lab-program-grid">
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage I</span>
+            <h3>Stack arithmetic and logic</h3>
+            <p>Implement <code>push constant x</code> and all nine arithmetic/logical commands:</p>
+            <ul class="lab-requirements">
+              <li><code>add</code>, <code>sub</code>, and <code>neg</code></li>
+              <li><code>eq</code>, <code>gt</code>, and <code>lt</code></li>
+              <li><code>and</code>, <code>or</code>, and <code>not</code></li>
+            </ul>
+          </section>
+
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage II</span>
+            <h3>Memory access</h3>
+            <p>Implement the complete <code>push segment i</code> and <code>pop segment i</code> commands for all eight VM segments:</p>
+            <ul class="lab-requirements">
+              <li><code>constant</code></li>
+              <li><code>local</code>, <code>argument</code>, <code>this</code>, and <code>that</code></li>
+              <li><code>pointer</code> and <code>temp</code></li>
+              <li><code>static</code></li>
+            </ul>
+          </section>
+        </div>
+
+        <section class="lab-workflow" aria-labelledby="stage-two-order-title">
+          <h3 id="stage-two-order-title">Recommended Stage II order</h3>
+          <ol>
+            <li>Reuse the already implemented <code>constant</code> segment.</li>
+            <li>Implement <code>local</code>, <code>argument</code>, <code>this</code>, and <code>that</code>.</li>
+            <li>Implement <code>pointer</code> and <code>temp</code>, including changes to the bases of <code>this</code> and <code>that</code>.</li>
+            <li>Implement <code>static</code>.</li>
+          </ol>
+        </section>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Test programs</p>
+            <h2>Five focused tests</h2>
+          </div>
+          <p>Each program targets the commands introduced at a particular implementation stage.</p>
+        </div>
+
+        <div class="lab-program-grid">
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage I</span>
+            <h3><code>SimpleAdd</code></h3>
+            <p>Pushes two constants and adds them. Use it as the first test of stack manipulation and <code>add</code>.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage I</span>
+            <h3><code>StackTest</code></h3>
+            <p>Executes a sequence that exercises all arithmetic and logical commands.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage II</span>
+            <h3><code>BasicTest</code></h3>
+            <p>Tests <code>push</code> and <code>pop</code> with the principal virtual memory segments.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage II</span>
+            <h3><code>PointerTest</code></h3>
+            <p>Tests <code>pointer</code>, <code>this</code>, and <code>that</code>, including modification of the segment bases.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">Stage II</span>
+            <h3><code>StaticTest</code></h3>
+            <p>Tests translation and use of the <code>static</code> segment.</p>
+          </section>
+        </div>
+
+        <p class="lab-reminder">For each program <code>Xxx</code>, use <code>Xxx.vm</code> as input. The supplied <code>XxxVME.tst</code> demonstrates its intended VM behavior; <code>Xxx.tst</code> and <code>Xxx.cmp</code> test your translated assembly on the CPU emulator.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Workflow</p>
+            <h2>Obtain, translate, and test each program</h2>
+          </div>
+          <p>Use the VM emulator to understand the source program and the CPU emulator to verify your translation.</p>
+        </div>
+
+        <section class="lab-workflow" aria-labelledby="lab-7-workflow-title">
+          <h3 id="lab-7-workflow-title">Implementation steps</h3>
+          <ol>
+            <li>Open the Nand2Tetris VM Emulator and choose <strong>Load Files</strong>.</li>
+            <li>Open <code>projects/07</code>. It contains the five test-program folders listed above.</li>
+            <li>Enter a folder—for example, <code>BasicTest</code>—select <code>BasicTest.vm</code>, and copy or download it to your computer.</li>
+            <li>Run your translator:
+              <pre class="lab-path"><code>python VMTranslator.py BasicTest.vm</code></pre>
+              It must produce <code>BasicTest.asm</code>.
+            </li>
+            <li>Repeat for the remaining programs at the appropriate implementation stage.</li>
+          </ol>
+        </section>
+
+        <section class="lab-workflow" aria-labelledby="lab-7-testing-title">
+          <h3 id="lab-7-testing-title">Testing and debugging each program</h3>
+          <ol>
+            <li>Run <code>Xxx.vm</code> in the VM emulator with <code>XxxVME.tst</code> to understand its intended behavior.</li>
+            <li>Translate <code>Xxx.vm</code> with your current translator to produce <code>Xxx.asm</code>.</li>
+            <li>Inspect the assembly output for visible syntax, label, or control-flow errors.</li>
+            <li>Load the generated assembly in the CPU emulator and run the supplied <code>Xxx.tst</code> test script.</li>
+            <li>Compare the result with <code>Xxx.cmp</code>. If it fails, correct the translator and generate the assembly again.</li>
+          </ol>
+        </section>
+
+        <p class="lab-reminder"><strong>Follow the prescribed order.</strong> Later tests depend on features exercised by earlier tests. Implementing later stages first can make failures difficult to diagnose.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Important for this lab</p>
+            <h2>Initialization is supplied by the tests</h2>
+          </div>
+          <p>Bootstrap code and segment initialization belong to the next VM-translator project.</p>
+        </div>
+        <section class="lab-assignment-card">
+          <p>A complete VM implementation normally begins with startup code that initializes the stack pointer and establishes the virtual segments' base addresses. You do <strong>not</strong> have to generate that startup code in this lab. The supplied Project 7 test scripts manually perform the initialization required by these five programs.</p>
+        </section>
+      </section>
+
+      <footer class="site-footer">
+        <p>CS2011 Foundations of Computing Systems | CS2111 Laboratory</p>
+      </footer>
+    </main>
+  </body>
+</html>

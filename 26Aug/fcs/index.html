@@ -353,6 +353,40 @@
               </article>
             </div>
           </section>
+
+          <section class="lecture-week" aria-labelledby="week-9-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 9</span><h3 id="week-9-title">The Virtual Machine</h3></div>
+              <p>Introduce a stack-based intermediate language and translate its arithmetic and memory-access commands into Hack assembly.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card featured-card">
+                <span class="badge">VM introduction</span>
+                <time class="lecture-date" datetime="2026-09-21">21 September</time>
+                <h3>Lecture 20: Introducing the Virtual Machine</h3>
+                <p>Motivated Virtual Machine (VM) code as an intermediate language between high-level programs and assembly. Introduced the stack, stack-based arithmetic and logical operations, VM memory segments, and their simulation in Hack assembly.</p>
+              </article>
+              <article class="lecture-card">
+                <span class="badge">Memory access</span>
+                <time class="lecture-date" datetime="2026-09-23">23 September</time>
+                <h3>Lecture 21: VM Memory Segments</h3>
+                <p>Studied <code>local</code>, <code>argument</code>, <code>static</code>, <code>this</code>, <code>that</code>, <code>temp</code>, and <code>pointer</code>, then translated <code>push constant 5</code>, <code>push local i</code>, and <code>pop local i</code> into Hack assembly.</p>
+              </article>
+              <article class="lecture-card">
+                <span class="badge">VM translation</span>
+                <time class="lecture-date" datetime="2026-09-24">24 September</time>
+                <h3>Lecture 22: Translating Push and Pop</h3>
+                <p>Completed the translation of <code>push</code> and <code>pop</code> for every VM memory segment and prepared the implementation plan for the first VM-translator laboratory.</p>
+              </article>
+              <article class="lecture-card" id="lab-7-vm-translator">
+                <span class="badge">Laboratory</span>
+                <time class="lecture-date" datetime="2026-09-24">24 September</time>
+                <h3>Lab 7: VM Translator, Part I</h3>
+                <p>Implement stack arithmetic, logical commands, and memory access in Python; translate the Project 7 VM programs into Hack assembly and test the results using the VM and CPU emulators.</p>
+                <a class="button-link" href="labs/lab-7.html">View lab question</a>
+              </article>
+            </div>
+          </section>
         </div>
       </section>
 
