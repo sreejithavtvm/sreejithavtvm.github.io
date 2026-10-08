@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 30: Building the Jack Syntax Analyzer</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two compiler-lecture">
+    <main class="deck" aria-label="Lecture 30 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 30 | Compiler I</div>
+        <h1>Building the Jack Syntax Analyzer</h1>
+        <p class="lead">From the Jack grammar to structured XML.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Jack Grammar</div>
+        <h2>Three Layers of Syntax</h2>
+        <div class="syntax-layer-grid">
+          <div><strong>Program structure</strong><p>Classes, class variables, subroutines, parameters, and local variables.</p></div>
+          <div><strong>Statements</strong><p><code>let</code>, <code>if</code>, <code>while</code>, <code>do</code>, and <code>return</code>.</p></div>
+          <div><strong>Expressions</strong><p>Terms, operators, array access, subroutine calls, constants, and variables.</p></div>
+        </div>
+        <p class="compiler-emphasis">The compilation unit is one class stored in one <code>.jack</code> file.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Program Structure</div>
+        <h2>The Shape of a Jack Class</h2>
+        <pre class="grammar-card large-grammar"><code>class:
+  'class' className '{'
+    classVarDec*
+    subroutineDec*
+  '}'
+
+classVarDec:
+  ('static' | 'field') type varName (',' varName)* ';'</code></pre>
+        <p class="compiler-note">All class-variable declarations precede all subroutine declarations; the grammar makes this ordering explicit.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Match Source Lines to Grammar Elements</h2>
+        <pre class="code-card"><code>class Counter {
+  field int value;
+  constructor Counter new() { ... }
+  method void increment() { ... }
+}</code></pre>
+        <div class="matching-grid">
+          <div><code>Counter</code><span class="pause-step" data-step><code>className</code></span></div>
+          <div><code>field int value;</code><span class="pause-step" data-step><code>classVarDec</code></span></div>
+          <div><code>constructor ...</code><span class="pause-step" data-step><code>subroutineDec</code></span></div>
+          <div><code>method ...</code><span class="pause-step" data-step><code>subroutineDec</code></span></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Statements</div>
+        <h2>Five Alternatives, Recognized by One Token</h2>
+        <pre class="grammar-card"><code>statements: statement*
+
+statement:
+  letStatement | ifStatement | whileStatement |
+  doStatement  | returnStatement</code></pre>
+        <div class="statement-strip"><code>let</code><code>if</code><code>while</code><code>do</code><code>return</code></div>
+        <p>These keywords allow <code>compileStatements()</code> to dispatch directly to the correct routine and to stop when the next token is not a statement keyword.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Where Does the Statement Sequence End?</h2>
+        <pre class="code-card"><code>{
+  let x = x + 1;
+  do Output.printInt(x);
+  return;
+}</code></pre>
+        <ol class="question-list">
+          <li>Which routine handles each statement?</li>
+          <li>What token tells <code>compileStatements()</code> to stop?</li>
+        </ol>
+        <div class="answer-strip pause-step" data-step><code>compileLet()</code>, <code>compileDo()</code>, and <code>compileReturn()</code>; the closing <code>}</code> ends the sequence.</div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Expressions</div>
+        <h2>An Expression Is a Sequence of Terms</h2>
+        <pre class="grammar-card"><code>expression: term (op term)*
+
+term: integerConstant | stringConstant | keywordConstant |
+      varName | varName '[' expression ']' | subroutineCall |
+      '(' expression ')' | unaryOp term</code></pre>
+        <p class="compiler-note">Jack's grammar does not encode conventional operator precedence. Parentheses must express the required grouping.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Distinguish Identifier-Led Terms</h2>
+        <p>For each token prefix, choose the grammatical form.</p>
+        <div class="lookahead-grid">
+          <div><code>x +</code><span class="pause-step" data-step>variable</span></div>
+          <div><code>a [</code><span class="pause-step" data-step>array entry</span></div>
+          <div><code>move (</code><span class="pause-step" data-step>subroutine call</span></div>
+          <div><code>Math .</code><span class="pause-step" data-step>qualified subroutine call</span></div>
+        </div>
+        <p class="compiler-note">This is the principal place where the compilation engine needs one-token lookahead.</p>
+      </section>
+
+      <section class="slide image-slide jack-analyzer-slide">
+        <div class="kicker">Analyzer Output</div>
+        <h2>XML Is a Textual Parse Tree</h2>
+        <img class="jack-analyzer-image" src="../assets/images/jack-analyser.png" alt="Jack source code transformed by the syntax analyzer into nested XML elements">
+        <p class="image-explanation">Nested XML elements make the parser's structural decisions visible and testable before code generation is added.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Analyzer Output</div>
+        <h2>Terminals and Non-Terminals Use Different Tags</h2>
+        <div class="source-output-grid">
+          <div><strong>Terminal token</strong><pre><code>&lt;keyword&gt; return &lt;/keyword&gt;
+&lt;symbol&gt; ; &lt;/symbol&gt;</code></pre><p>Its tag records one of the five token types.</p></div>
+          <div><strong>Non-terminal construct</strong><pre><code>&lt;returnStatement&gt;
+  ... recursive contents ...
+&lt;/returnStatement&gt;</code></pre><p>Its tag encloses the recursively parsed structure.</p></div>
+        </div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 4</div>
+        <h2>Write the XML for a Return Statement</h2>
+        <pre class="code-card exercise-code"><code>return;</code></pre>
+        <pre class="xml-answer pause-step" data-step><code>&lt;returnStatement&gt;
+  &lt;keyword&gt; return &lt;/keyword&gt;
+  &lt;symbol&gt; ; &lt;/symbol&gt;
+&lt;/returnStatement&gt;</code></pre>
+        <p class="compiler-note pause-step" data-step>No <code>&lt;expression&gt;</code> appears because the expression in the grammar is optional.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Software Architecture</div>
+        <h2>Three Modules, Three Responsibilities</h2>
+        <div class="module-flow">
+          <div><strong>JackAnalyzer</strong><span>find inputs and coordinate the work</span></div><i>&rarr;</i>
+          <div><strong>JackTokenizer</strong><span>characters &rarr; typed tokens</span></div><i>&rarr;</i>
+          <div><strong>CompilationEngine</strong><span>tokens &rarr; structured XML</span></div>
+        </div>
+        <p class="compiler-note">Keeping these responsibilities separate allows each part to be implemented and tested independently.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">JackAnalyzer</div>
+        <h2>The Top-Level Driver</h2>
+        <ol class="driver-steps">
+          <li>Accept one <code>Xxx.jack</code> file or a directory containing Jack files.</li>
+          <li>For each source file, create a <code>JackTokenizer</code>.</li>
+          <li>Create the corresponding <code>Xxx.xml</code> output file.</li>
+          <li>Create a <code>CompilationEngine</code> and begin with <code>compileClass()</code>.</li>
+        </ol>
+        <p class="compiler-emphasis"><code>Xxx.jack &rarr; Xxx.xml</code></p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">CompilationEngine</div>
+        <h2>Every Routine Has the Same Contract</h2>
+        <div class="routine-contract">
+          <p><strong>Precondition:</strong> construct <code>xxx</code> is next in the token stream.</p>
+          <p><strong>Work:</strong> recognize terminals, recursively compile its non-terminals, and emit XML tags.</p>
+          <p><strong>Postcondition:</strong> the tokenizer is positioned exactly after <code>xxx</code>.</p>
+        </div>
+        <div class="routine-list"><code>compileClass()</code><code>compileStatements()</code><code>compileWhile()</code><code>compileExpression()</code><code>compileTerm()</code></div>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 5</div>
+        <h2>Plan <code>compileWhile()</code></h2>
+        <pre class="grammar-card"><code>whileStatement:
+  'while' '(' expression ')' '{' statements '}'</code></pre>
+        <p>Write the sequence of emit, consume, and recursive-call operations.</p>
+        <ol class="descent-steps compact-steps">
+          <li class="pause-step" data-step>Open <code>&lt;whileStatement&gt;</code>; consume <code>while</code> and <code>(</code>.</li>
+          <li class="pause-step" data-step>Call <code>compileExpression()</code>; consume <code>)</code> and <code>{</code>.</li>
+          <li class="pause-step" data-step>Call <code>compileStatements()</code>; consume <code>}</code>.</li>
+          <li class="pause-step" data-step>Close <code>&lt;/whileStatement&gt;</code>.</li>
+        </ol>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Implementation Strategy</div>
+        <h2>Build and Test in Two Stages</h2>
+        <div class="implementation-stages">
+          <div><span>1</span><strong>Tokenizer</strong><p>Generate <code>XxxT.xml</code>. Compare it with the supplied token files before beginning the parser.</p></div>
+          <div><span>2</span><strong>Parser</strong><p>Begin with expressionless programs, then add expressions and test complete Jack programs.</p></div>
+        </div>
+        <div class="test-progression"><strong>Suggested progression</strong><code>ExpressionlessSquare</code><span>&rarr;</span><code>Square</code><span>&rarr;</span><code>ArrayTest</code></div>
+        <p class="compiler-note">Use the supplied comparison files as the contract. Indentation is for readability; the XML structure and tokens must match.</p>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Week</div>
+        <h2>The Syntax Analyzer Makes Structure Explicit</h2>
+        <div class="compiler-pipeline-summary">
+          <div><strong>Characters</strong><span>Jack source</span></div><i>&rarr;</i>
+          <div><strong>Tokens</strong><span>lexical analysis</span></div><i>&rarr;</i>
+          <div><strong>Grammar structure</strong><span>recursive descent</span></div><i>&rarr;</i>
+          <div><strong>XML</strong><span>testable parse tree</span></div>
+        </div>
+        <p class="compiler-emphasis">Next chapter: keep the parser, add semantic information, and generate executable VM code.</p>
+      </section>
+    </main>
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>17</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

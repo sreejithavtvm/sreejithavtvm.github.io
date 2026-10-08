@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 28: From Source Code to Tokens</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two compiler-lecture">
+    <main class="deck" aria-label="Lecture 28 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 28 | Compiler I</div>
+        <h1>From Source Code to Tokens</h1>
+        <p class="lead">The first stage of understanding a Jack program.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Compilation</div>
+        <h2>What Must a Compiler Do?</h2>
+        <div class="compiler-two-col">
+          <div class="concept-panel">
+            <strong>Syntax analysis</strong>
+            <p>Recognize the structure of the source program: classes, declarations, statements, expressions, and terms.</p>
+          </div>
+          <div class="concept-panel">
+            <strong>Code generation</strong>
+            <p>Use that structure to produce an equivalent program in the target language.</p>
+          </div>
+        </div>
+        <p class="compiler-emphasis">This week isolates the first task: understanding the syntax of Jack.</p>
+        <p class="next-step">Next: Locate syntax analysis inside the Jack compiler.</p>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="kicker">Syntax Analysis</div>
+        <h2>The Front End of the Jack Compiler</h2>
+        <img class="compiler-wide-image" src="../assets/images/syntax-analyser.png" alt="A Jack program enters a tokenizer and parser; XML is produced in Project 10 and VM code follows code generation in Project 11">
+        <p class="image-explanation"><strong>Project 10:</strong> generate XML that exposes the recognized structure. <strong>Later:</strong> retain the parsing logic and replace XML output with VM code generation.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Syntax Analysis</div>
+        <h2>Recognizing Nested Structure</h2>
+        <p>Humans see the structure of a program almost immediately. A syntax analyzer must discover it explicitly.</p>
+        <div class="nesting-chain">
+          <div><strong>class</strong><span>contains subroutines</span></div>
+          <i>&rarr;</i><div><strong>subroutine</strong><span>contains statements</span></div>
+          <i>&rarr;</i><div><strong>statement</strong><span>contains expressions</span></div>
+          <i>&rarr;</i><div><strong>expression</strong><span>contains terms</span></div>
+        </div>
+        <pre class="code-card"><code>while (count &lt; 100) {
+  let count = count + 1;
+}</code></pre>
+        <p class="next-step">Next: Replace the character stream with meaningful atoms.</p>
+      </section>
+
+      <section class="slide image-slide">
+        <div class="kicker">Lexical Analysis</div>
+        <h2>Characters Become Tokens</h2>
+        <img class="compiler-wide-image lexical-image" src="../assets/images/lex-analyser.png" alt="A source-code fragment is converted into a sequence of tokens while comments and layout disappear">
+        <p class="image-explanation"><strong>Lexical analysis</strong>, also called <strong>scanning</strong> or <strong>tokenizing</strong>, groups characters into the language's smallest meaningful units.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Jack Tokens</div>
+        <h2>Five Token Types</h2>
+        <div class="token-type-grid">
+          <div><strong>Keyword</strong><code>class</code><code>while</code><code>return</code></div>
+          <div><strong>Symbol</strong><code>{</code><code>+</code><code>;</code></div>
+          <div><strong>Identifier</strong><code>count</code><code>Main</code><code>sum2</code></div>
+          <div><strong>Integer constant</strong><code>0</code><code>153</code><code>32767</code></div>
+          <div><strong>String constant</strong><code>"Hello world"</code></div>
+        </div>
+        <p class="compiler-note">An identifier may contain letters, digits, and underscores, but it cannot begin with a digit.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Tokenize One Jack Statement</h2>
+        <p>Write the tokens in order and classify each one.</p>
+        <pre class="code-card exercise-code"><code>let total = total + 1;</code></pre>
+        <div class="token-stream pause-step" data-step>
+          <span><b>let</b><small>keyword</small></span><span><b>total</b><small>identifier</small></span>
+          <span><b>=</b><small>symbol</small></span><span><b>total</b><small>identifier</small></span>
+          <span><b>+</b><small>symbol</small></span><span><b>1</b><small>integer constant</small></span>
+          <span><b>;</b><small>symbol</small></span>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Lexical Analysis</div>
+        <h2>What the Tokenizer Ignores—and Preserves</h2>
+        <div class="compiler-two-col">
+          <div class="concept-panel">
+            <strong>Ignored between tokens</strong>
+            <ul><li>spaces, tabs, and newlines;</li><li><code>//</code> comments;</li><li><code>/* ... */</code> and <code>/** ... */</code> comments.</li></ul>
+          </div>
+          <div class="concept-panel">
+            <strong>Preserved as one token</strong>
+            <p>Everything between the quotes of a string constant—including spaces and punctuation—is its value.</p>
+            <code>"not // a comment"</code>
+          </div>
+        </div>
+        <p class="compiler-note">Comment removal must therefore respect whether the scanner is currently inside a string.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>What Should Survive Tokenization?</h2>
+        <pre class="code-card"><code>let message = "a // b"; // explain the value
+let x = 7/* old value */+2;</code></pre>
+        <ol class="question-list">
+          <li>Is <code>//</code> inside the string a comment?</li>
+          <li>Does removing the block comment merge <code>7</code> and <code>+</code>?</li>
+        </ol>
+        <div class="answer-strip pause-step" data-step><strong>Answer:</strong> The string remains one token with value <code>a // b</code>; the second statement tokenizes as <code>let x = 7 + 2 ;</code>.</div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Tokenizer Output</div>
+        <h2>Expose Every Token as XML</h2>
+        <div class="source-output-grid">
+          <div><strong>Jack source</strong><pre><code>if (x &lt; 153) {
+  let city = "Paris";
+}</code></pre></div>
+          <div><strong>Selected XML tokens</strong><pre><code>&lt;keyword&gt; if &lt;/keyword&gt;
+&lt;symbol&gt; ( &lt;/symbol&gt;
+&lt;identifier&gt; x &lt;/identifier&gt;
+&lt;symbol&gt; &amp;lt; &lt;/symbol&gt;
+&lt;integerConstant&gt; 153 &lt;/integerConstant&gt;</code></pre></div>
+        </div>
+        <p class="compiler-note">XML reserves <code>&lt;</code>, <code>&gt;</code>, <code>"</code>, and <code>&amp;</code>; output them as <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;quot;</code>, and <code>&amp;amp;</code>.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">JackTokenizer</div>
+        <h2>A Small, Testable Interface</h2>
+        <div class="api-grid">
+          <div><code>hasMoreTokens()</code><span>Is another token available?</span></div>
+          <div><code>advance()</code><span>Make the next token current.</span></div>
+          <div><code>tokenType()</code><span>Classify the current token.</span></div>
+          <div><code>keyWord()</code> / <code>symbol()</code><span>Return a keyword or symbol value.</span></div>
+          <div><code>identifier()</code><span>Return the identifier text.</span></div>
+          <div><code>intVal()</code> / <code>stringVal()</code><span>Return the constant's value.</span></div>
+        </div>
+        <p class="compiler-note">The value-specific routine is called only when <code>tokenType()</code> reports the matching type.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>Classify—or Reject—Each Candidate</h2>
+        <div class="classification-grid">
+          <div><code>class</code><span class="pause-step" data-step>keyword</span></div>
+          <div><code>Class</code><span class="pause-step" data-step>identifier</span></div>
+          <div><code>_count2</code><span class="pause-step" data-step>identifier</span></div>
+          <div><code>2count</code><span class="pause-step" data-step>invalid identifier</span></div>
+          <div><code>32767</code><span class="pause-step" data-step>integer constant</span></div>
+          <div><code>32768</code><span class="pause-step" data-step>not a valid Jack integer constant</span></div>
+        </div>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>A Tokenizer Gives the Parser Better Atoms</h2>
+        <div class="remember-grid">
+          <div><strong>Input</strong><p>A stream of source-code characters.</p></div>
+          <div><strong>Work</strong><p>Ignore layout and comments; recognize five token types.</p></div>
+          <div><strong>Output</strong><p>An ordered token stream that preserves program text, not yet its structure.</p></div>
+        </div>
+      </section>
+
+      <section class="slide title-slide">
+        <div class="kicker">Lecture 29 | Compiler I</div>
+        <h1>From Tokens to Structure</h1>
+        <p class="lead">Grammars, parse trees, and recursive descent.</p>
+        <a class="lecture-link" href="lecture-29.html">Go to Lecture 29</a>
+      </section>
+    </main>
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>14</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>

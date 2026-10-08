@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lecture 29: From Tokens to Structure</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body class="deck-body lecture-two compiler-lecture">
+    <main class="deck" aria-label="Lecture 29 slides">
+      <section class="slide current title-slide">
+        <div class="kicker">Lecture 29 | Compiler I</div>
+        <h1>From Tokens to Structure</h1>
+        <p class="lead">Grammars, parse trees, and recursive descent.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Parsing</div>
+        <h2>A Token Stream Is Not Yet a Program</h2>
+        <p>The tokenizer can recognize every token in both sequences. Only one follows the language's structural rules.</p>
+        <div class="compiler-two-col">
+          <pre class="code-card valid-code"><code>let x = x + 1;</code></pre>
+          <pre class="code-card invalid-code"><code>let = x 1 + ;</code></pre>
+        </div>
+        <p class="compiler-emphasis"><strong>Parsing</strong> determines whether the tokens fit the grammar and identifies the construct formed by each group.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Grammars</div>
+        <h2>Rules for Building Valid Constructs</h2>
+        <div class="definition-stack">
+          <div><strong>Terminal</strong><p>A token that appears in the source, such as <code>while</code>, <code>(</code>, or an identifier.</p></div>
+          <div><strong>Non-terminal</strong><p>A higher-level construct formed from terminals and other non-terminals, such as an expression or statement.</p></div>
+          <div><strong>Context-free grammar</strong><p>A set of rules describing how each non-terminal can be formed from simpler elements.</p></div>
+        </div>
+      </section>
+
+      <section class="slide image-slide grammar-image-slide">
+        <div class="kicker">Grammars</div>
+        <h2>Read a Grammar in Both Directions</h2>
+        <img class="compiler-wide-image grammar-image" src="../assets/images/C-grammar.png" alt="A partial C grammar beside a nested while-loop accepted by that grammar">
+        <div class="direction-grid">
+          <p><strong>Construct:</strong> use the rules to generate a valid program.</p>
+          <p><strong>Analyze:</strong> use the same rules to explain the structure of a given program.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Grammar Notation</div>
+        <h2>Alternatives, Optional Parts, and Repetition</h2>
+        <div class="notation-cards">
+          <div><code>'while'</code><strong>Terminal</strong><span>appears verbatim</span></div>
+          <div><code>expression</code><strong>Non-terminal</strong><span>another grammar rule</span></div>
+          <div><code>x | y</code><strong>Choice</strong><span>x or y</span></div>
+          <div><code>x?</code><strong>Optional</strong><span>zero or one x</span></div>
+          <div><code>x*</code><strong>Repetition</strong><span>zero or more x</span></div>
+        </div>
+        <pre class="grammar-card"><code>whileStatement: 'while' '(' expression ')' '{' statements '}'</code></pre>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 1</div>
+        <h2>Use the Grammar as a Checklist</h2>
+        <pre class="grammar-card"><code>returnStatement: 'return' expression? ';'</code></pre>
+        <p>Which sequences match this rule?</p>
+        <div class="classification-grid four-items">
+          <div><code>return;</code><span class="pause-step" data-step>valid</span></div>
+          <div><code>return x;</code><span class="pause-step" data-step>valid</span></div>
+          <div><code>return x</code><span class="pause-step" data-step>invalid: missing ;</span></div>
+          <div><code>return x y;</code><span class="pause-step" data-step>invalid unless x y forms one expression</span></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Parsing</div>
+        <h2>The Result Is Hierarchical</h2>
+        <p>Matching the token stream against nested grammar rules uncovers a hierarchy called a <strong>parse tree</strong> or <strong>derivation tree</strong>.</p>
+        <div class="tree-levels">
+          <div>statement</div><i>&darr;</i><div>whileStatement</div><i>&darr;</i>
+          <div class="tree-row"><span><code>while</code></span><span><code>(</code></span><span>expression</span><span><code>)</code></span><span>statement</span></div>
+        </div>
+        <p class="compiler-note">Non-terminals are internal nodes. Tokens are the terminal leaves.</p>
+        <p class="next-step">Next: See the complete tree for a nested statement.</p>
+      </section>
+
+      <section class="slide image-slide parse-tree-slide">
+        <div class="kicker">Parse Trees</div>
+        <h2>One Program, Many Nested Constructs</h2>
+        <img class="parse-tree-image" src="../assets/images/parse-tree.png" alt="Parse tree showing how a while statement is derived from a partial grammar">
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 2</div>
+        <h2>Sketch a Small Parse Tree</h2>
+        <pre class="grammar-card"><code>letStatement: 'let' identifier '=' expression ';'
+expression: term (op term)*
+term: identifier | integerConstant
+op: '+' | '-'</code></pre>
+        <p>Sketch the tree for <code>let x = y + 2;</code>. Which nodes are non-terminals?</p>
+        <div class="answer-strip pause-step" data-step><strong>Top-down:</strong> <code>letStatement</code> contains an <code>expression</code>; that expression contains two <code>term</code> nodes separated by the terminal <code>+</code>.</div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Recursive Descent</div>
+        <h2>Turn Every Grammar Rule into a Routine</h2>
+        <div class="rule-routine-grid">
+          <div><code>statement</code><span>&rarr;</span><code>compileStatement()</code></div>
+          <div><code>whileStatement</code><span>&rarr;</span><code>compileWhile()</code></div>
+          <div><code>expression</code><span>&rarr;</span><code>compileExpression()</code></div>
+          <div><code>term</code><span>&rarr;</span><code>compileTerm()</code></div>
+        </div>
+        <p>When a rule contains a non-terminal, its routine calls the routine for that non-terminal. The call structure mirrors the parse tree.</p>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Recursive Descent</div>
+        <h2>Tracing a While Statement</h2>
+        <pre class="code-card"><code>while (count &lt; 100) { let count = count + 1; }</code></pre>
+        <ol class="descent-steps">
+          <li class="pause-step" data-step><code>compileWhile()</code> consumes <code>while</code> and <code>(</code>.</li>
+          <li class="pause-step" data-step>It calls <code>compileExpression()</code> for <code>count &lt; 100</code>.</li>
+          <li class="pause-step" data-step>It consumes <code>)</code> and <code>{</code>.</li>
+          <li class="pause-step" data-step>It calls <code>compileStatements()</code>, which calls <code>compileLet()</code>.</li>
+          <li class="pause-step" data-step>Finally, it consumes the closing <code>}</code>.</li>
+        </ol>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Choosing a Rule</div>
+        <h2>The Current Token Usually Decides</h2>
+        <div class="dispatch-table">
+          <div><code>let</code><span>&rarr;</span><code>compileLet()</code></div>
+          <div><code>if</code><span>&rarr;</span><code>compileIf()</code></div>
+          <div><code>while</code><span>&rarr;</span><code>compileWhile()</code></div>
+          <div><code>do</code><span>&rarr;</span><code>compileDo()</code></div>
+          <div><code>return</code><span>&rarr;</span><code>compileReturn()</code></div>
+        </div>
+        <p class="compiler-note">Jack was designed so that the first token usually identifies the alternative. Parsing a term that begins with an identifier requires one-token lookahead.</p>
+      </section>
+
+      <section class="slide exercise-slide">
+        <div class="kicker">Exercise 3</div>
+        <h2>When Is Lookahead Necessary?</h2>
+        <p>An identifier can begin several kinds of term. What does the next token reveal?</p>
+        <div class="lookahead-grid">
+          <div><code>score</code><span class="pause-step" data-step>variable</span></div>
+          <div><code>items [</code><span class="pause-step" data-step>array entry</span></div>
+          <div><code>draw (</code><span class="pause-step" data-step>subroutine call</span></div>
+          <div><code>Screen .</code><span class="pause-step" data-step>qualified subroutine call</span></div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Syntax Errors</div>
+        <h2>A Failed Expectation Reveals the Error</h2>
+        <pre class="code-card"><code>while (x &lt; 10 { let x = x + 1; }</code></pre>
+        <p>After compiling the expression, the grammar requires <code>)</code>. The parser sees <code>{</code> instead.</p>
+        <div class="error-report"><strong>A useful diagnostic records:</strong><span>what was expected;</span><span>what was found;</span><span>where it was found.</span></div>
+        <p class="compiler-note">The same grammar that recognizes valid programs helps identify invalid ones.</p>
+      </section>
+
+      <section class="slide summary-slide">
+        <div class="kicker">Summary of This Lecture</div>
+        <h2>Parsing Explains How the Tokens Fit Together</h2>
+        <div class="remember-grid">
+          <div><strong>Grammar</strong><p>Defines valid constructions from terminals and non-terminals.</p></div>
+          <div><strong>Parse tree</strong><p>Records the hierarchical derivation of one program.</p></div>
+          <div><strong>Recursive descent</strong><p>Implements each grammar rule as a mutually recursive routine.</p></div>
+        </div>
+      </section>
+
+      <section class="slide title-slide">
+        <div class="kicker">Lecture 30 | Compiler I</div>
+        <h1>Building the Jack Syntax Analyzer</h1>
+        <p class="lead">From the Jack grammar to structured XML.</p>
+        <a class="lecture-link" href="lecture-30.html">Go to Lecture 30</a>
+      </section>
+    </main>
+    <nav class="controls" aria-label="Slide controls"><a href="../index.html">Home</a><button type="button" data-prev aria-label="Previous slide">&#8592;</button><span class="progress"><span data-current-slide>1</span> / <span data-total-slides>16</span></span><button type="button" data-next aria-label="Next slide">&#8594;</button></nav>
+    <script src="../assets/slides.js"></script>
+  </body>
+</html>
