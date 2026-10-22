@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 10: Build a Jack Syntax Analyzer</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body>
+    <main class="site-shell">
+      <nav class="topbar" aria-label="Course navigation">
+        <a class="brand" href="../index.html">
+          <span class="chip-mark">CS2011</span>
+          <span class="lab-code">CS2111 Laboratory</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html#lectures">Lectures</a>
+          <a href="https://www.nand2tetris.org/project10" target="_blank" rel="noopener noreferrer">Project 10</a>
+          <a href="https://www.nand2tetris.org/software/HDL" target="_blank" rel="noopener noreferrer">Project files and tools</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Laboratory assignment · 22 October</p>
+          <h1>Lab 10: Build a Jack Syntax Analyzer</h1>
+          <p>Read a Jack source file, identify its tokens, recognize its grammatical structure, and write that structure as XML. This is Chapter 10, Project 10 of the textbook.</p>
+          <a class="primary-link" href="../index.html#lab-10-syntax-analyzer">Back to course home</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Objective</p><h2>Two outputs for each Jack class</h2></div>
+          <p>Make the tokenizer correct first; then use its tokens to build the parse tree.</p>
+        </div>
+        <section class="lab-assignment-card">
+          <div class="lab-assignment-heading">
+            <div><span class="lab-program-number">Contract</span><h3><code>Xxx.jack</code> becomes <code>XxxT.xml</code> and <code>Xxx.xml</code></h3></div>
+            <p>Write a Python syntax analyzer that accepts either one <code>.jack</code> file or a directory of Jack files. Process every Jack file in the selected input.</p>
+          </div>
+          <dl class="lab-contract-list">
+            <div><dt>Token XML</dt><dd><code>XxxT.xml</code> lists the tokens in order inside a <code>&lt;tokens&gt;</code> element. Each token has one of five type tags.</dd></div>
+            <div><dt>Parse XML</dt><dd><code>Xxx.xml</code> uses nested tags such as <code>&lt;class&gt;</code>, <code>&lt;statements&gt;</code>, and <code>&lt;expression&gt;</code> to record the grammatical structure.</dd></div>
+            <div><dt>Correctness</dt><dd>For each supplied <code>Xxx.jack</code>, both generated files must match the corresponding Project 10 compare files, apart from whitespace ignored by <code>TextComparer</code>.</dd></div>
+            <div><dt>Scope</dt><dd>This project ends at syntax analysis. It does not generate VM code.</dd></div>
+          </dl>
+        </section>
+        <div class="lab-resource-links">
+          <a class="button-link" href="https://www.nand2tetris.org/project10" target="_blank" rel="noopener noreferrer">Project 10 instructions</a>
+          <a class="button-link" href="https://www.nand2tetris.org/software/HDL" target="_blank" rel="noopener noreferrer">Get project files and TextComparer</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Stage 1</p><h2>Tokenize the source</h2></div>
+          <p>Use the five token categories from Lecture 28.</p>
+        </div>
+        <div class="lab-program-grid">
+          <section class="lab-program-card">
+            <span class="lab-program-number">Read</span>
+            <h3>Recognize tokens correctly</h3>
+            <ul class="lab-requirements">
+              <li>Ignore whitespace and comments between tokens.</li>
+              <li>Keep text inside string quotes together as one string constant, even when it contains spaces or comment-like characters.</li>
+              <li>Classify each token as a keyword, symbol, identifier, integer constant, or string constant.</li>
+              <li>Remove the surrounding quotation marks from the value of a string constant.</li>
+            </ul>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">Write</span>
+            <h3>Produce valid XML</h3>
+            <p>Enclose the token list in <code>&lt;tokens&gt; ... &lt;/tokens&gt;</code>. Write one tag for each token, in source order.</p>
+            <p>Escape Jack symbols that XML uses specially: <code>&lt;</code>, <code>&gt;</code>, and <code>&amp;</code> become <code>&amp;lt;</code>, <code>&amp;gt;</code>, and <code>&amp;amp;</code> in the XML file.</p>
+          </section>
+        </div>
+        <p class="lab-reminder"><strong>Checkpoint:</strong> Generate <code>XxxT.xml</code> for every <code>.jack</code> file in <code>projects/10/Square</code> and <code>projects/10/ArrayTest</code>. Compare each file with its supplied token XML. You do not need <code>ExpressionlessSquare</code> for this tokenizer checkpoint.</p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Stage 2</p><h2>Parse the token stream</h2></div>
+          <p>Each parsing routine handles one named grammar construct.</p>
+        </div>
+        <div class="lab-program-grid">
+          <section class="lab-program-card">
+            <span class="lab-program-number">First milestone</span>
+            <h3>Program structure and statements</h3>
+            <p>Implement the routines for classes, declarations, subroutines, parameter lists, bodies, and the five statement forms. Start with <code>projects/10/ExpressionlessSquare</code>, whose expressions have been reduced to single variables.</p>
+            <p>For <code>return;</code>, for example, write a <code>&lt;returnStatement&gt;</code> element containing the <code>return</code> keyword and semicolon symbol.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">Complete analyzer</span>
+            <h3>Expressions and all term forms</h3>
+            <p>Add expression and term parsing, including operators, parentheses, unary operations, array entries, and subroutine calls. Use the next token to distinguish a simple variable from an array entry or call.</p>
+            <p>Then compare your parser output for <code>Square</code> and <code>ArrayTest</code> with the supplied <code>Xxx.xml</code> files.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Testing workflow</p><h2>Compare one class file at a time</h2></div>
+          <p>The supplied reference files have the same names as your generated files, so keep your output in a separate directory.</p>
+        </div>
+        <section class="lab-workflow" aria-labelledby="lab-10-workflow-title">
+          <h3 id="lab-10-workflow-title">Recommended order</h3>
+          <ol>
+            <li>Obtain <code>projects/10</code> and the <code>TextComparer</code> utility from the Nand to Tetris software package. Inspect one small <code>.jack</code> file beside its two reference XML files.</li>
+            <li>Implement <code>JackTokenizer</code>. Generate <code>XxxT.xml</code> for <code>Square</code> and <code>ArrayTest</code>; compare every generated token file with the matching reference.</li>
+            <li>Implement the parsing routines for the outer class structure and statements. Compare your <code>Xxx.xml</code> files for <code>ExpressionlessSquare</code>.</li>
+            <li>Implement complete expressions and terms. Compare all generated <code>Xxx.xml</code> files for <code>Square</code> and <code>ArrayTest</code>.</li>
+            <li>If a comparison fails, locate the first mismatched tag or token and fix the routine responsible for that construct. Regenerate the XML before retesting.</li>
+          </ol>
+        </section>
+        <p class="lab-reminder"><strong>Submit:</strong> your Python analyzer source files and the generated XML outputs for the supplied Project 10 programs. Keep the supplied reference XML files separate from your generated files.</p>
+      </section>
+
+      <footer class="site-footer"><p>CS2011 Foundations of Computing Systems | CS2111 Laboratory</p></footer>
+    </main>
+  </body>
+</html>

@@ -11098,6 +11098,10 @@ a {
   max-height: 64vh;
 }
 
+.compiler-lecture .jack-analyzer-slide .jack-analyzer-image {
+  max-height: 56vh;
+}
+
 .error-report {
   display: flex;
   flex-wrap: wrap;
@@ -11130,6 +11134,12 @@ a {
 
 .large-grammar {
   font-size: clamp(1rem, 1.7vw, 1.28rem);
+}
+
+.compiler-lecture .routine-answer {
+  margin-block: 10px;
+  padding-block: 10px;
+  line-height: 1.22;
 }
 
 .statement-strip {

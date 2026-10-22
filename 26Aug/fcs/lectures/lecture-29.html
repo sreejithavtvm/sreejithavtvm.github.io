@@ -27,35 +27,37 @@
 
       <section class="slide">
         <div class="kicker">Grammars</div>
-        <h2>Rules for Building Valid Constructs</h2>
+        <h2>A Grammar Is a Set of Construction Rules</h2>
+        <p>A programming language needs rules that say which token sequences form a valid statement, expression, or program.</p>
         <div class="definition-stack">
-          <div><strong>Terminal</strong><p>A token that appears in the source, such as <code>while</code>, <code>(</code>, or an identifier.</p></div>
-          <div><strong>Non-terminal</strong><p>A higher-level construct formed from terminals and other non-terminals, such as an expression or statement.</p></div>
-          <div><strong>Context-free grammar</strong><p>A set of rules describing how each non-terminal can be formed from simpler elements.</p></div>
-        </div>
-      </section>
-
-      <section class="slide image-slide grammar-image-slide">
-        <div class="kicker">Grammars</div>
-        <h2>Read a Grammar in Both Directions</h2>
-        <img class="compiler-wide-image grammar-image" src="../assets/images/C-grammar.png" alt="A partial C grammar beside a nested while-loop accepted by that grammar">
-        <div class="direction-grid">
-          <p><strong>Construct:</strong> use the rules to generate a valid program.</p>
-          <p><strong>Analyze:</strong> use the same rules to explain the structure of a given program.</p>
+          <div><strong>Exact tokens</strong><p>Words and symbols that must occur in the program, such as <code>return</code> and <code>;</code>.</p></div>
+          <div><strong>Named parts</strong><p>Places filled by another valid construct, such as an <code>expression</code>.</p></div>
+          <div><strong>Grammar rule</strong><p>A recipe that combines exact tokens and named parts to form one valid construct.</p></div>
         </div>
       </section>
 
       <section class="slide">
+        <div class="kicker">Reading One Rule</div>
+        <h2>Build a Return Statement, One Part at a Time</h2>
+        <pre class="grammar-card"><code>returnStatement: 'return' expression? ';'</code></pre>
+        <ol class="descent-steps">
+          <li class="pause-step" data-step><code>returnStatement</code> is the name of the construct being described.</li>
+          <li class="pause-step" data-step>The colon means “can be formed as follows.”</li>
+          <li class="pause-step" data-step><code>'return'</code> and <code>';'</code> are exact tokens that must appear.</li>
+          <li class="pause-step" data-step><code>expression?</code> means an expression may occur here, but it is optional.</li>
+        </ol>
+        <div class="answer-strip pause-step" data-step><strong>Therefore:</strong> both <code>return;</code> and <code>return x + 1;</code> have the required form.</div>
+      </section>
+
+      <section class="slide">
         <div class="kicker">Grammar Notation</div>
-        <h2>Alternatives, Optional Parts, and Repetition</h2>
-        <div class="notation-cards">
-          <div><code>'while'</code><strong>Terminal</strong><span>appears verbatim</span></div>
-          <div><code>expression</code><strong>Non-terminal</strong><span>another grammar rule</span></div>
-          <div><code>x | y</code><strong>Choice</strong><span>x or y</span></div>
-          <div><code>x?</code><strong>Optional</strong><span>zero or one x</span></div>
-          <div><code>x*</code><strong>Repetition</strong><span>zero or more x</span></div>
+        <h2>Three Patterns That Occur in Many Rules</h2>
+        <div class="definition-stack">
+          <div><strong>Choice: <code>x | y</code></strong><p>Use either <code>x</code> or <code>y</code>. Example: <code>'true' | 'false'</code>.</p></div>
+          <div><strong>Optional: <code>x?</code></strong><p>Use zero or one <code>x</code>. Example: the expression in <code>return expression? ;</code>.</p></div>
+          <div><strong>Repetition: <code>x*</code></strong><p>Use zero or more copies of <code>x</code>. Example: a block may contain zero or more statements.</p></div>
         </div>
-        <pre class="grammar-card"><code>whileStatement: 'while' '(' expression ')' '{' statements '}'</code></pre>
+        <p class="compiler-note">Quoted text denotes an exact token. An unquoted name refers to another rule.</p>
       </section>
 
       <section class="slide exercise-slide">
@@ -72,20 +74,22 @@
       </section>
 
       <section class="slide">
-        <div class="kicker">Parsing</div>
-        <h2>The Result Is Hierarchical</h2>
-        <p>Matching the token stream against nested grammar rules uncovers a hierarchy called a <strong>parse tree</strong> or <strong>derivation tree</strong>.</p>
-        <div class="tree-levels">
-          <div>statement</div><i>&darr;</i><div>whileStatement</div><i>&darr;</i>
-          <div class="tree-row"><span><code>while</code></span><span><code>(</code></span><span>expression</span><span><code>)</code></span><span>statement</span></div>
-        </div>
-        <p class="compiler-note">Non-terminals are internal nodes. Tokens are the terminal leaves.</p>
-        <p class="next-step">Next: See the complete tree for a nested statement.</p>
+        <div class="kicker">Parse Trees</div>
+        <h2>A Parse Tree Records How a Rule Was Used</h2>
+        <p>A <strong>parse tree</strong> is a picture of the nested structure found by the parser. The rule name is at the top; the actual program tokens appear at the bottom.</p>
+        <pre class="grammar-card parse-tree-example"><code>returnStatement
+├── 'return'
+├── expression
+│   └── term
+│       └── x
+└── ';'</code></pre>
+        <p class="compiler-note">This tree says that <code>return x;</code> is a <code>returnStatement</code>, and that <code>x</code> forms its optional expression.</p>
+        <p class="next-step">Next: Read a larger parse tree using the same top-to-bottom idea.</p>
       </section>
 
       <section class="slide image-slide parse-tree-slide">
         <div class="kicker">Parse Trees</div>
-        <h2>One Program, Many Nested Constructs</h2>
+        <h2>The Same Idea for a Larger Statement</h2>
         <img class="parse-tree-image" src="../assets/images/parse-tree.png" alt="Parse tree showing how a while statement is derived from a partial grammar">
       </section>
 
@@ -96,32 +100,42 @@
 expression: term (op term)*
 term: identifier | integerConstant
 op: '+' | '-'</code></pre>
-        <p>Sketch the tree for <code>let x = y + 2;</code>. Which nodes are non-terminals?</p>
-        <div class="answer-strip pause-step" data-step><strong>Top-down:</strong> <code>letStatement</code> contains an <code>expression</code>; that expression contains two <code>term</code> nodes separated by the terminal <code>+</code>.</div>
+        <p>Using the same parent-child style as the previous slide, sketch the tree for <code>let x = y + 2;</code>.</p>
+        <ol class="question-list">
+          <li>Begin with <code>letStatement</code> as the root.</li>
+          <li>Give it children for <code>let</code>, <code>x</code>, <code>=</code>, <code>expression</code>, and <code>;</code>.</li>
+          <li>Now expand the <code>expression</code> using its rule.</li>
+        </ol>
+        <div class="answer-strip pause-step" data-step><strong>Inside the expression:</strong> use a <code>term</code> containing <code>y</code>, the token <code>+</code>, and a second <code>term</code> containing <code>2</code>.</div>
       </section>
 
       <section class="slide">
-        <div class="kicker">Recursive Descent</div>
-        <h2>Turn Every Grammar Rule into a Routine</h2>
-        <div class="rule-routine-grid">
-          <div><code>statement</code><span>&rarr;</span><code>compileStatement()</code></div>
-          <div><code>whileStatement</code><span>&rarr;</span><code>compileWhile()</code></div>
-          <div><code>expression</code><span>&rarr;</span><code>compileExpression()</code></div>
-          <div><code>term</code><span>&rarr;</span><code>compileTerm()</code></div>
+        <div class="kicker">Implementing the Parser</div>
+        <h2>Write One Function for One Grammar Rule</h2>
+        <p>We now move from describing valid programs to writing the parser. Start with the return-statement rule we already understand.</p>
+        <div class="compiler-two-col">
+          <div><strong>Grammar rule</strong><pre class="grammar-card"><code>returnStatement:
+  'return' expression? ';'</code></pre></div>
+          <div><strong>Parser pseudocode</strong><pre class="code-card"><code>compileReturn():
+  expect('return')
+  if current token is not ';':
+      compileExpression()
+  expect(';')</code></pre></div>
         </div>
-        <p>When a rule contains a non-terminal, its routine calls the routine for that non-terminal. The call structure mirrors the parse tree.</p>
+        <p class="compiler-note"><code>expect(token)</code> checks that the current token is the expected one and then moves to the next token. Calling another parser function handles a named part such as <code>expression</code>.</p>
       </section>
 
       <section class="slide">
         <div class="kicker">Recursive Descent</div>
-        <h2>Tracing a While Statement</h2>
+        <h2>How <code>compileWhile()</code> Reads the Tokens</h2>
+        <p><strong>Read a token</strong> means: check that the current token is correct, record it, and move to the next token.</p>
         <pre class="code-card"><code>while (count &lt; 100) { let count = count + 1; }</code></pre>
         <ol class="descent-steps">
-          <li class="pause-step" data-step><code>compileWhile()</code> consumes <code>while</code> and <code>(</code>.</li>
+          <li class="pause-step" data-step><code>compileWhile()</code> reads <code>while</code> and then <code>(</code>.</li>
           <li class="pause-step" data-step>It calls <code>compileExpression()</code> for <code>count &lt; 100</code>.</li>
-          <li class="pause-step" data-step>It consumes <code>)</code> and <code>{</code>.</li>
+          <li class="pause-step" data-step>When that function returns, it reads <code>)</code> and then <code>{</code>.</li>
           <li class="pause-step" data-step>It calls <code>compileStatements()</code>, which calls <code>compileLet()</code>.</li>
-          <li class="pause-step" data-step>Finally, it consumes the closing <code>}</code>.</li>
+          <li class="pause-step" data-step>After the statements are finished, it reads the closing <code>}</code>.</li>
         </ol>
       </section>
 
@@ -163,7 +177,7 @@ op: '+' | '-'</code></pre>
         <div class="kicker">Summary of This Lecture</div>
         <h2>Parsing Explains How the Tokens Fit Together</h2>
         <div class="remember-grid">
-          <div><strong>Grammar</strong><p>Defines valid constructions from terminals and non-terminals.</p></div>
+          <div><strong>Grammar</strong><p>Combines exact tokens and named parts to describe valid constructs.</p></div>
           <div><strong>Parse tree</strong><p>Records the hierarchical derivation of one program.</p></div>
           <div><strong>Recursive descent</strong><p>Implements each grammar rule as a mutually recursive routine.</p></div>
         </div>
