@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 12: Build a Graphics Library in Jack</title>
+    <link rel="stylesheet" href="../assets/site.css">
+  </head>
+  <body>
+    <main class="site-shell">
+      <nav class="topbar" aria-label="Course navigation">
+        <a class="brand" href="../index.html">
+          <span class="chip-mark">CS2011</span>
+          <span class="lab-code">CS2111 Laboratory</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html#lectures">Lectures</a>
+          <a href="../index.html#end-semester-exams">Examination schedule</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Laboratory assignment &middot; 5 November</p>
+          <h1>Lab 12: Build a Graphics Library in Jack</h1>
+          <p>Work in a team of two and implement fundamental screen-drawing operations in the Jack programming language.</p>
+          <a class="primary-link" href="../index.html#lab-12-jack-graphics">Back to course home</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Assignment</p><h2>Build shapes from pixels</h2></div>
+          <p>Implement and test each operation before using it to build the next one.</p>
+        </div>
+        <section class="lab-assignment-card">
+          <div class="lab-assignment-heading">
+            <div><span class="lab-program-number">Team</span><h3>Two students per group</h3></div>
+            <p>Create a Jack class named <code>Draw</code>. Your routines must work for valid coordinates on the Hack screen.</p>
+          </div>
+          <dl class="lab-contract-list">
+            <div><dt>Language</dt><dd>Jack</dd></div>
+            <div><dt>Screen</dt><dd>512 pixels wide and 256 pixels high; the top-left pixel is <code>(0, 0)</code>.</dd></div>
+            <div><dt>Build order</dt><dd>Pixel &rarr; line &rarr; rectangle and circle.</dd></div>
+            <div><dt>Goal</dt><dd>Implement the drawing algorithms yourselves. Do not replace an assignment routine with the corresponding completed Jack OS drawing routine.</dd></div>
+          </dl>
+        </section>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Required functions</p><h2>Four drawing operations</h2></div>
+          <p>Use the stated parameters and keep the naming consistent throughout your program.</p>
+        </div>
+        <div class="lab-program-grid">
+          <section class="lab-program-card">
+            <span class="lab-program-number">1 &middot; Pixel</span>
+            <h3><code>Draw.Pixel(x, y)</code></h3>
+            <p>Draw one pixel at screen coordinate <code>(x, y)</code>. Determine the screen word containing the pixel and set the corresponding bit.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">2 &middot; Line</span>
+            <h3><code>Draw.Line(x0, y0, x1, y1)</code></h3>
+            <p>Draw a line from <code>(x0, y0)</code> to <code>(x1, y1)</code>. The routine should work in every direction, including horizontal and vertical lines.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">3 &middot; Rectangle</span>
+            <h3><code>Draw.Rectangle(x0, y0, x1, y1)</code></h3>
+            <p>Draw the boundary of the rectangle whose opposite corners are <code>(x0, y0)</code> and <code>(x1, y1)</code>. Reuse your line routine.</p>
+          </section>
+          <section class="lab-program-card">
+            <span class="lab-program-number">4 &middot; Circle</span>
+            <h3><code>Draw.Circle(x, y, r)</code></h3>
+            <p>Draw a circle centred at <code>(x, y)</code> with radius <code>r</code>. Exploit symmetry so that one calculation can place pixels in several octants.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><p class="eyebrow">Testing</p><h2>Demonstrate every routine</h2></div>
+          <p>Use a small Jack test program and inspect the screen output in the VM emulator.</p>
+        </div>
+        <section class="lab-workflow" aria-labelledby="lab-12-testing-title">
+          <h3 id="lab-12-testing-title">Minimum test cases</h3>
+          <ol>
+            <li>Pixels near the top-left corner, near word boundaries, and near the bottom-right corner.</li>
+            <li>Horizontal, vertical, diagonal, shallow, and steep lines, with endpoints supplied in both orders.</li>
+            <li>Rectangles of different widths and heights.</li>
+            <li>Circles with several centres and radii that remain inside the screen.</li>
+          </ol>
+        </section>
+        <p class="lab-reminder"><strong>Submission:</strong> submit the Jack source files for the <code>Draw</code> class and the test program. Both group members must be able to explain the implementation.</p>
+      </section>
+
+      <footer class="site-footer"><p>CS2011 Foundations of Computing Systems | CS2111 Laboratory</p></footer>
+    </main>
+  </body>
+</html>

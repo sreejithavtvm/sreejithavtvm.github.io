@@ -956,6 +956,60 @@ a {
   font-weight: 750;
 }
 
+.further-resources {
+  margin-top: 28px;
+  padding: 22px clamp(18px, 2.2vw, 34px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.further-resources h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+}
+
+.further-resources > p {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.further-resources ul {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.further-resources li {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.further-resources li + li {
+  border-top: 1px solid var(--line);
+}
+
+.further-resources li > span {
+  color: var(--accent-dark);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.further-resources li a {
+  font-weight: 750;
+}
+
+.further-resources li p {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+
 .lecture-card {
   min-height: 170px;
   padding: 18px;
@@ -1158,6 +1212,31 @@ a {
 
 .featured-card {
   border-top: 4px solid var(--accent);
+}
+
+.exam-schedule-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.exam-card {
+  min-height: 0;
+  border-top: 4px solid var(--warm);
+  background: #fff7ed;
+}
+
+.exam-card h3 {
+  font-size: 1.2rem;
+}
+
+.exam-card p {
+  margin-bottom: 0;
+  color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .exam-schedule-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lecture-card.unavailable {

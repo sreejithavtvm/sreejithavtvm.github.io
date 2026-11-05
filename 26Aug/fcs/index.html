@@ -15,7 +15,9 @@
         </a>
         <div class="nav-links">
           <a href="#course-information">Course information</a>
+          <a href="#further-resources">Resources</a>
           <a href="#lectures">Lectures</a>
+          <a href="#end-semester-exams">Exams</a>
           <a href="#journey">Course journey</a>
         </div>
       </nav>
@@ -68,6 +70,15 @@
             <p>Noam Nisan and Shimon Schocken, <em>The Elements of Computing Systems: Building a Modern Computer from First Principles</em>, The MIT Press.</p>
             <p><a class="text-link" href="https://www.nand2tetris.org/">Nand2Tetris course website</a></p>
           </div>
+        </div>
+        <div class="further-resources" id="further-resources">
+          <h3>Further reading and watching</h3>
+          <p>Optional resources for exploring the hardware and systems ideas beyond the lectures.</p>
+          <ul>
+            <li><span>Watch</span><div><a href="https://www.youtube.com/@BenEater/videos" target="_blank" rel="noopener noreferrer">Ben Eater's videos</a><p>Hands-on electronics and computer-building demonstrations.</p></div></li>
+            <li><span>Read</span><div><a href="https://csapp.cs.cmu.edu/3e/home.html" target="_blank" rel="noopener noreferrer"><em>Computer Systems: A Programmer's Perspective</em></a><p>Randal E. Bryant and David R. O'Hallaron.</p></div></li>
+            <li><span>Read</span><div><a href="https://shop.elsevier.com/books/digital-design-and-computer-architecture/harris/978-0-12-394424-5" target="_blank" rel="noopener noreferrer"><em>Digital Design and Computer Architecture</em></a><p>David Harris and Sarah Harris.</p></div></li>
+          </ul>
         </div>
       </section>
 
@@ -505,13 +516,86 @@
               </article>
             </div>
           </section>
+
+          <section class="lecture-week" aria-labelledby="week-13-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 13</span><h3 id="week-13-title">Compiler II: Code Generation</h3></div>
+              <p>Complete the Jack compiler by translating the parsed program into VM code.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card featured-card">
+                <span class="badge">Code generation</span>
+                <time class="lecture-date" datetime="2026-10-28T09:00">28 October &middot; Morning</time>
+                <h3>Lecture 31: Generating VM Code</h3>
+                <p>Started the code-generation stage of the Jack compiler: representing variables through symbol tables, translating expressions and statements, handling conditionals and loops, and generating code for functions.</p>
+              </article>
+              <article class="lecture-card featured-card">
+                <span class="badge">Long extra class</span>
+                <time class="lecture-date" datetime="2026-10-28T17:00">28 October &middot; Evening</time>
+                <h3>Lecture 32: Objects and Arrays</h3>
+                <p>Continued Compiler II in a long extra class, focusing on VM code generation for objects, methods, constructors, field access, arrays, and array assignments.</p>
+              </article>
+              <article class="lecture-card" id="lab-11-code-generation">
+                <span class="badge">Laboratory</span>
+                <time class="lecture-date" datetime="2026-10-29">29 October</time>
+                <h3>Lab 11: Jack-to-VM Code Generation</h3>
+                <p>Extend the syntax analyzer into a complete Jack compiler by generating VM code for variables, expressions, statements, functions, objects, and arrays.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="lecture-week" aria-labelledby="week-14-title">
+            <header class="lecture-week-heading">
+              <div><span>Week 14</span><h3 id="week-14-title">The Jack Operating System</h3></div>
+              <p>See how an operating-system library implements arithmetic, memory management, graphics, and text output.</p>
+            </header>
+            <div class="lecture-grid">
+              <article class="lecture-card featured-card">
+                <span class="badge">Operating system</span>
+                <time class="lecture-date" datetime="2026-11-05T08:00">5 November</time>
+                <h3>Lecture 33: Inside the Jack OS</h3>
+                <p>Studied how the Jack OS implements the Math class, memory allocation, drawing on the screen, and writing text on the screen. The detailed Math and memory-allocation algorithms were omitted.</p>
+              </article>
+              <article class="lecture-card" id="lab-12-jack-graphics">
+                <span class="badge">Pairs &middot; Laboratory</span>
+                <time class="lecture-date" datetime="2026-11-05T14:00">5 November &middot; Laboratory</time>
+                <h3>Lab 12: Build a Graphics Library in Jack</h3>
+                <p>Work in a team of two to implement pixel, line, rectangle, and circle drawing routines in the Jack programming language.</p>
+                <a class="button-link" href="labs/lab-12.html">View lab assignment</a>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section" id="end-semester-exams">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">End-semester assessment</p>
+            <h2>Examination schedule</h2>
+          </div>
+          <p>Please note the different dates, times, and venues for the laboratory and written examinations.</p>
+        </div>
+        <div class="lecture-grid exam-schedule-grid">
+          <article class="lecture-card exam-card">
+            <span class="badge">Laboratory examination</span>
+            <time class="lecture-date" datetime="2026-11-12T14:00">12 November &middot; 2:00-5:00 pm</time>
+            <h3>End-Semester Laboratory Examination</h3>
+            <p><strong>Venue:</strong> Laboratory, A01-109</p>
+          </article>
+          <article class="lecture-card exam-card">
+            <span class="badge">Written examination</span>
+            <time class="lecture-date" datetime="2026-11-19T09:30">19 November &middot; 9:30 am-12:30 pm</time>
+            <h3>End-Semester Written Examination</h3>
+            <p><strong>Venue:</strong> A01-002</p>
+          </article>
         </div>
       </section>
 
       <section class="section" id="journey">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Thirteen weeks</p>
+            <p class="eyebrow">Fourteen weeks</p>
             <h2>The journey</h2>
           </div>
           <p>Each layer will be built from parts created in the layer below it.</p>
