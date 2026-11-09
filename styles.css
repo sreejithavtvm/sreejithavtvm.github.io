@@ -125,6 +125,51 @@ a:hover {
   box-shadow: var(--shadow);
 }
 
+.opportunity {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(360px, 1.2fr);
+  gap: clamp(28px, 6vw, 80px);
+  align-items: center;
+  width: min(1440px, calc(100% - 20px));
+  margin: 18px auto 42px;
+  padding: 24px clamp(22px, 4vw, 48px);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--rust);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgba(37, 34, 29, 0.07);
+}
+
+.opportunity h2 {
+  font-size: clamp(1.65rem, 3vw, 2.55rem);
+}
+
+.opportunity-copy p {
+  margin: 0 0 14px;
+  color: #34373d;
+  font-size: 1.08rem;
+}
+
+.opportunity-copy a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--green-dark);
+  color: #ffffff;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.opportunity-copy a:hover {
+  background: var(--rust);
+  color: #ffffff;
+}
+
 .eyebrow,
 .section-kicker,
 .venue,
@@ -717,6 +762,7 @@ h3 {
   }
 
   .hero,
+  .opportunity,
   .two-column,
   .split-band,
   .funding-awards,
@@ -726,6 +772,10 @@ h3 {
 
   .hero {
     min-height: auto;
+  }
+
+  .opportunity {
+    grid-template-columns: 1fr;
   }
 
   .hero-media {
@@ -773,6 +823,13 @@ h3 {
 
   .hero {
     padding-top: 34px;
+  }
+
+  .opportunity {
+    width: min(100% - 18px, 1440px);
+    margin-top: 8px;
+    margin-bottom: 30px;
+    padding: 22px 18px;
   }
 
   .hero-copy {
